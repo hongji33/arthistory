@@ -31,7 +31,8 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .app{max-width:1280px;margin:0 auto}
 .top{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;padding-block:18px 14px}
-.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;border:0;background:transparent;padding:4px 8px 4px 0;cursor:pointer;text-align:left;border-radius:12px}
+.brand:hover .seal{transform:rotate(4deg) scale(1.06)}.brand .seal{transition:transform .2s}
 .seal{display:grid;place-items:center;background:var(--verm);color:#fbeedd;font-family:var(--f-display);font-weight:700;border-radius:4px;transform:rotate(-4deg);box-shadow:inset 0 0 0 2px rgba(255,240,220,.28);flex:none}
 .brand .seal{width:44px;height:44px;font-size:26px}
 .brand h1{margin:0;font-family:var(--f-logo);font-weight:400;font-size:27px;line-height:1;background:linear-gradient(180deg,#f5e4b5,#d09a3c);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -434,10 +435,10 @@ button.cmp{cursor:pointer}
 
 <div class="app">
   <header class="top">
-    <div class="brand">
+    <button type="button" class="brand" id="homeBtn" title="메인화면으로" aria-label="아트마블 미술사관 메인화면으로">
       <span class="seal" aria-hidden="true">藝</span>
       <div><h1>아트마블 미술사관</h1><p>이론으로 배우고, 명화로 감상하고, 영상으로 깊이 보는 미술사</p></div>
-    </div>
+    </button>
     <nav class="nav" aria-label="전시관 메뉴">
       <button type="button" data-view="k" aria-current="true">한국미술사</button>
       <button type="button" data-view="w">서양미술사</button>
@@ -708,6 +709,61 @@ const META={"bangudae": {"page": "https://commons.wikimedia.org/wiki/File:%EC%9A
 
 </script>
 <script>
+/* ============ 효과음 엔진 (파일 없이 브라우저에서 직접 합성) ============ */
+const SFX=(()=>{let ctx=null,master,wet;
+  function init(){if(ctx)return ctx;try{ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=.55;master.connect(ctx.destination);
+      const dl=ctx.createDelay(1);dl.delayTime.value=.19;const fb=ctx.createGain();fb.gain.value=.28;wet=ctx.createGain();wet.gain.value=.2;master.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(ctx.destination)}catch(e){ctx=null}return ctx}
+  const on=()=>typeof soundOn==='undefined'||soundOn;
+  function env(g,t,a,d,v){g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+a);g.gain.exponentialRampToValueAtTime(0.0001,t+d)}
+  function osc(f,{t=0,d=.25,type='sine',v=.2,a=.006,bend=0,lp=0,detune=0}={}){if(!on()||!init())return;const T=ctx.currentTime+t,o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f*(1+bend),T);if(bend)o.frequency.exponentialRampToValueAtTime(f,T+.06);o.detune.value=detune;
+    let n=o;if(lp){const fl=ctx.createBiquadFilter();fl.type='lowpass';fl.frequency.value=lp;o.connect(fl);n=fl}n.connect(g);g.connect(master);env(g,T,a,d,v);o.start(T);o.stop(T+d+.05)}
+  function noise({t=0,d=.1,v=.15,f=2000,q=1,type='bandpass'}={}){if(!on()||!init())return;const T=ctx.currentTime+t,len=Math.max(1,Math.floor(ctx.sampleRate*d)),buf=ctx.createBuffer(1,len,ctx.sampleRate),ch=buf.getChannelData(0);for(let i=0;i<len;i++)ch[i]=Math.random()*2-1;
+    const s=ctx.createBufferSource(),fl=ctx.createBiquadFilter(),g=ctx.createGain();s.buffer=buf;fl.type=type;fl.frequency.value=f;fl.Q.value=q;s.connect(fl);fl.connect(g);g.connect(master);env(g,T,.003,d,v);s.start(T);s.stop(T+d+.02)}
+  /* 악기 */
+  const pluck=(f,t=0,v=.22)=>{osc(f,{t,d:.9,type:'triangle',v,bend:.02,lp:2600});osc(f*2,{t,d:.35,type:'sine',v:v*.35})};            // 가야금 느낌
+  const daegeum=(f,t=0,d=.6,v=.14)=>{osc(f,{t,d,type:'sine',v,a:.06});noise({t,d:d*.6,v:.03,f:f*2,q:6})};                              // 대금(바람 소리)
+  const harpsi=(f,t=0,v=.12)=>{osc(f,{t,d:.45,type:'sawtooth',v,lp:3200});osc(f*2,{t,d:.2,type:'square',v:v*.25,lp:2000})};        // 하프시코드
+  const bell=(f,t=0,v=.16,d=1.4)=>{osc(f,{t,d,v});osc(f*2.76,{t,d:d*.5,v:v*.35});osc(f*5.4,{t,d:d*.25,v:v*.15})};                    // 종
+  const chip=(f,t=0,v=.08,d=.1)=>osc(f,{t,d,type:'square',v});                                                                      // 8비트 게임기
+  const marimba=(f,t=0,v=.22)=>{osc(f,{t,d:.45,v});osc(f*4,{t,d:.08,v:v*.3})};
+  const wood=(t=0,v=.25,f=900)=>{osc(f,{t,d:.06,type:'sine',v,bend:.4});noise({t,d:.03,v:v*.4,f:f*2,q:3})};
+  const gong=(t=0)=>{osc(98,{t,d:2.6,v:.3,a:.01});osc(98*1.48,{t,d:2,v:.12});osc(98*2.3,{t,d:1.6,v:.08});osc(98*3.9,{t,d:.9,v:.05});noise({t,d:.4,v:.05,f:400,q:.7})};
+  const KP=[261.63,293.66,349.23,392,440,523.25,587.33,698.46,783.99,880,1046.5];   // 한국 평조(궁상각치우 근사)
+  const WM=[261.63,329.63,392,523.25,659.25,783.99,1046.5,1318.5];                   // 서양 장3화음
+  const side=s=>s==='k'?'k':s==='w'?'w':(typeof VIEW!=='undefined'&&(VIEW==='k'||VIEW==='w'))?VIEW:(typeof S!=='undefined'&&S&&S.ed==='k')?'k':'w';
+  return{
+    unlock(){init();if(ctx&&ctx.state==='suspended')ctx.resume()},
+    nav(v){if(v==='k'){[0,2,4,5].forEach((i,n)=>pluck(KP[i],n*.11));daegeum(KP[7],.5,.7)}
+      else if(v==='w'){[0,1,2,3].forEach((i,n)=>harpsi(WM[i],n*.08))}
+      else if(v==='game'){[523,659,784,1047,784,1047].forEach((f,n)=>chip(f,n*.07))}
+      else{[1046.5,1318.5,1568].forEach((f,n)=>bell(f,n*.12,.1))}},
+    tab(s){s=side(s);s==='k'?pluck(KP[4],0,.14):harpsi(WM[2],0,.08)},
+    open(s){s=side(s);if(s==='k'){pluck(KP[2],0,.12);pluck(KP[5],.07,.1)}else{[0,1,2,3,4].forEach((i,n)=>osc(WM[i]*2,{t:n*.03,d:.5,type:'triangle',v:.05}))}},
+    correct(s){s=side(s);if(s==='k'){[2,4,6].forEach((i,n)=>pluck(KP[i],n*.1))}else{[0,1,2,3].forEach((i,n)=>osc(WM[i]*2,{t:n*.07,d:.45,type:'triangle',v:.12}))}},
+    wrong(){osc(220,{d:.18,type:'square',v:.06,lp:900});osc(164.8,{t:.15,d:.3,type:'square',v:.06,lp:700})},
+    click(){wood(0,.12,1200)},
+    swap(){wood(0,.2,700);wood(.05,.12,1100)},
+    flip(){noise({d:.12,v:.12,f:3000,q:.8,type:'highpass'})},
+    match(s){s=side(s);s==='k'?[5,7].forEach((i,n)=>pluck(KP[i],n*.08)):[1568,2093].forEach((f,n)=>bell(f,n*.08,.1,.6))},
+    step(k=0){marimba(KP[k%KP.length]*(side()==='w'?1:1))},
+    ask(){osc(660,{d:.12,type:'triangle',v:.1});osc(880,{t:.08,d:.15,type:'triangle',v:.08})},
+    type(){for(let i=0;i<4;i++)wood(i*.05,.1,1600+Math.random()*400);bell(2093,.24,.1,.5)},
+    dice(){for(let i=0;i<9;i++)noise({t:i*.06,d:.04,v:.12,f:1500+Math.random()*2500,q:4})},
+    coin(){osc(988,{d:.08,type:'square',v:.07});osc(1319,{t:.08,d:.35,type:'square',v:.07})},
+    move(k){chip(392+(k%2)*131,0,.05,.06)},
+    key(){for(let i=0;i<10;i++)osc(523*Math.pow(2,i/7),{t:i*.035,d:.3,type:'sine',v:.07});bell(2093,.38,.12,1)},
+    pop(){for(let i=0;i<4;i++)osc(400+i*220,{t:i*.05,d:.12,type:'square',v:.06,bend:.3})},
+    win(s){s=side(s);if(s==='k'){gong();[0,2,4,5,7,9].forEach((i,n)=>pluck(KP[i],.3+n*.1,.18));daegeum(KP[9],1,1)}
+      else{[[523,0],[659,.12],[784,.24],[1047,.36],[784,.6],[1047,.72]].forEach(([f,t])=>{osc(f,{t,d:.3,type:'sawtooth',v:.07,lp:2400});osc(f/2,{t,d:.3,type:'triangle',v:.06})});bell(2093,.9,.12,1.2)}},
+    fanfare(){[[392,0],[392,.1],[392,.2],[523,.32],[659,.6],[784,.85]].forEach(([f,t])=>{osc(f,{t,d:.35,type:'sawtooth',v:.08,lp:2600});osc(f*1.5,{t,d:.3,type:'square',v:.03,lp:2000})});[0,1,2].forEach(n=>bell(1046.5*Math.pow(1.26,n),1.1+n*.12,.1,1.2))},
+    badge(b){const g=b&&b.grp;
+      if(g==='k'){gong();[0,2,4,5,7,9,10].forEach((i,n)=>pluck(KP[i],.25+n*.09,.18));bell(1046.5,1,.12,1.6)}
+      else if(g==='w'){[[523,0],[659,.1],[784,.2],[1047,.3]].forEach(([f,t])=>{osc(f,{t,d:.5,type:'sawtooth',v:.08,lp:3000});osc(f*.5,{t,d:.5,type:'triangle',v:.06})});[1568,2093,2637].forEach((f,n)=>bell(f,.5+n*.1,.1,1.4))}
+      else{[784,988,1175,1568].forEach((f,n)=>chip(f,n*.08,.07,.12));[2093,2637].forEach((f,n)=>bell(f,.35+n*.1,.1,1))}},
+    rank(){[0,2,4,5,7,9,10].forEach((i,n)=>bell(KP[i]*2,n*.09,.09,1));[392,523,659,784].forEach((f,n)=>osc(f,{t:.7+n*.02,d:1.6,type:'triangle',v:.06}))}
+  }})();
+['pointerdown','keydown'].forEach(ev=>window.addEventListener(ev,()=>SFX.unlock(),{once:true,capture:true}));
+
 /* ============ 기본 ============ */
 const BY={};WORKS.forEach(w=>BY[w.id]=w);
 const SIDE={k:{name:'한국미술사',seal:'韓',eb:'KOREAN ART HISTORY',intro:'바위에 새긴 고래부터 안중식의 경복궁 그림까지, 우리 조상들이 남긴 미술을 시대 순서로 만나요. 시대 이론을 읽고, 실제 작품을 크게 감상하고, 유튜브 영상으로 더 깊이 알아보세요.'},
@@ -725,8 +781,8 @@ let progress=store.get('artmarble-progress',{read:{},solved:{}});
 const saveProg=()=>{store.set('artmarble-progress',progress);checkBadges()};
 let soundOn=store.get('artmarble-sound',true),AC=null;
 function beep(f=440,d=.06,type='sine',v=.05,delay=0){if(!soundOn)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
-const chime=()=>{beep(660,.12,'sine',.06);beep(880,.14,'sine',.06,.1);beep(1320,.2,'sine',.05,.2)};
-const buzz=()=>beep(180,.18,'sawtooth',.04);
+const chime=()=>SFX.correct();
+const buzz=()=>SFX.wrong();
 
 /* ============ 이미지 ============ */
 function pic(w,attrs=''){return IMG[w.id]?`<img src="${IMG[w.id]}" alt="${w.name}" loading="lazy" ${attrs}>`:`<canvas data-id="${w.id}" aria-label="${w.name} 색채 스케치"></canvas>`}
@@ -748,7 +804,7 @@ function renderHall(s){const el=$('#view-'+s),info=SIDE[s],list=sideWorks(s),H=H
   const mos=list.filter(w=>IMG[w.id]).filter((_,i)=>i%2===0).slice(0,6).map(w=>`<img src="${IMG[w.id]}" alt="">`).join('');
   el.innerHTML=`<div class="hallHead"><div class="mos" aria-hidden="true">${mos}</div><div class="hallIn"><div class="eb">${info.eb}</div><h2><span class="seal">${info.seal}</span>${info.name}</h2><p>${info.intro}</p>
    <div class="subtabs" role="tablist">${[['learn','시대별 이론·감상','論'],['tl','연표로 보기','年'],['quiz','퀴즈 놀이터','遊']].map(([k,l,c])=>`<button type="button" data-sub="${k}" aria-pressed="${H.sub===k}"><b>${c}</b>${l}</button>`).join('')}</div></div></div><div class="hallBody"></div>`;
-  el.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{H.sub=b.dataset.sub;store.set('artmarble-sub-'+s,H.sub);renderHall(s)});
+  el.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{H.sub=b.dataset.sub;SFX.tab(s);store.set('artmarble-sub-'+s,H.sub);renderHall(s)});
   const body=el.querySelector('.hallBody');
   if(H.sub==='learn')body.innerHTML=learnHTML(s);
   else if(H.sub==='tl')body.innerHTML=tlHTML(s);
@@ -782,7 +838,7 @@ let A=null,modalClosable=true;
 function showModal(html,closable=true,small=false){$('#modalBody').innerHTML=html;$('#sheet').classList.toggle('small',small);$('#modalX').hidden=!closable;modalClosable=closable;$('#modal').hidden=false;$('#sheet').scrollTop=0}
 function closeModal(){$('#modal').hidden=true;if(A&&A.mode==='browse'){A=null;refreshCurrent()}}
 function nearestOther(w){return WORKS.filter(x=>x.side!==w.side).reduce((b,x)=>Math.abs(x.y-w.y)<Math.abs(b.y-w.y)?x:b)}
-function openArt(w,mode='browse',pos=null){
+function openArt(w,mode='browse',pos=null){SFX.open(w.side);
   A={art:w,mode,pos:pos??posOf(w.id),tab:'story',answered:null};const G=GROUPS[w.g],M=META[w.id];
   const list=sideWorks(w.side),idx=list.indexOf(w);
   const cap=w.cr?`<span>이 작품은 아직 저작권이 보호되고 있어서 앱에는 색과 분위기만 본뜬 스케치를 넣었어요. 진짜 작품은 미술관 공식 누리집에서 감상해요.</span>${w.official?`<a class="bigBtn" href="${w.official}" target="_blank" rel="noopener">${w.offName}에서 진짜 작품 보기 ↗</a>`:''}`
@@ -827,7 +883,7 @@ function mountQuiz(el,w,done){const q=w.q,order=shuffle([0,1,2,3]);
   let fin=false;el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(fin)return;fin=true;const ok=+b.dataset.oi===q.a;
     el.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.oi===q.a)x.classList.add('right')});if(!ok)b.classList.add('wrong');
     const ex=el.querySelector('.qexp');ex.hidden=false;ex.className='qexp '+(ok?'ok':'no');ex.innerHTML=`<b>${ok?'정답!':'아쉬워요.'}</b> ${q.e}`;
-    if(ok){progress.solved[w.id]=true;saveProg();chime()}else buzz();done&&done(ok)})}
+    if(ok){progress.solved[w.id]=true;saveProg();SFX.correct(w.side)}else buzz();done&&done(ok)})}
 
 /* ============ 마블 게임 ============ */
 const SLOTS=[1,2,3,4,6,8,9,10,11,12,13,15,16,17,18,19,20,22,24,25,26,27];
@@ -883,8 +939,8 @@ function renderCenter(){const P=cur(),t=TOKENS[P.tok],btn=$('#rollBtn');
 function render(){renderBoard();renderPanel();renderCenter();renderLog()}
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 function setDie(el,n){if(!el.children.length)el.innerHTML='<i class="pip"></i>'.repeat(9);[...el.children].forEach((p,k)=>p.classList.toggle('on',PIPS[n].includes(k)));el.classList.toggle('one',n===1);el.setAttribute('aria-label','주사위 '+n)}
-async function rollDice(){const d1=$('#d1'),d2=$('#d2');d1.classList.add('rolling');d2.classList.add('rolling');for(let k=0;k<10;k++){setDie(d1,1+rnd(6));setDie(d2,1+rnd(6));beep(260+rnd(200),.03,'square',.02);await sleep(65)}const a=1+rnd(6),b=1+rnd(6);setDie(d1,a);setDie(d2,b);d1.classList.remove('rolling');d2.classList.remove('rolling');return[a,b]}
-async function moveSteps(n,speed=170){const P=cur();for(let k=0;k<n;k++){P.pos=(P.pos+1)%28;if(P.pos===0){P.coins+=100;log(`${P.name} 출발점 통과! 장학금 +100`);beep(990,.1)}S.here=P.pos;renderBoard();renderPanel();beep(600+(k%2)*80,.035,'triangle',.03);await sleep(speed)}save()}
+async function rollDice(){const d1=$('#d1'),d2=$('#d2');SFX.dice();d1.classList.add('rolling');d2.classList.add('rolling');for(let k=0;k<10;k++){setDie(d1,1+rnd(6));setDie(d2,1+rnd(6));await sleep(65)}const a=1+rnd(6),b=1+rnd(6);setDie(d1,a);setDie(d2,b);d1.classList.remove('rolling');d2.classList.remove('rolling');return[a,b]}
+async function moveSteps(n,speed=170){const P=cur();for(let k=0;k<n;k++){P.pos=(P.pos+1)%28;if(P.pos===0){P.coins+=100;log(`${P.name} 출발점 통과! 장학금 +100`);SFX.coin()}S.here=P.pos;renderBoard();renderPanel();SFX.move(k);await sleep(speed)}save()}
 async function moveTo(t){await moveSteps((t-cur().pos+28)%28,75)}
 async function onRoll(){if(S.phase==='over'){gameOver();return}if(S.phase!=='roll')return;const P=cur();
   if(P.skip>0){S.phase='action';renderCenter();const ids=EDITIONS[S.ed].ids();const w=BY[ids[rnd(ids.length)]];
@@ -894,7 +950,7 @@ function resolve(){const P=cur(),c=CELLS[P.pos];S.phase='action';renderCenter();
   if(c.t==='art')return openArt(c.art,'game',P.pos);
   if(c.t==='start')return info({s:'始',title:'출발점',body:'한 바퀴를 돌았어요! 장학금 100코인을 받았어요.',ok:'턴 마치기',on:endTurn});
   if(c.t==='rest'){P.skip=1;S.dbl=false;log(`${P.name} 복원실에 들어갔어요`);return info({s:'復',title:'복원실',body:'오래된 작품 복원을 돕느라 다음 차례를 한 번 쉬어요. 다음 차례에 퀴즈를 맞히면 바로 탈출할 수 있어요!',ok:'알겠어요',on:endTurn})}
-  if(c.t==='fair'){const n=1+rnd(6);P.coins+=n*20;log(`${P.name} 아트페어 수익 +${n*20}`);chime();return info({s:'市',title:'아트페어',body:`작품 판매 부스가 대성공! 주사위 ${n} × 20코인을 벌었어요.`,big:'+'+n*20,ok:'턴 마치기',on:endTurn})}
+  if(c.t==='fair'){const n=1+rnd(6);P.coins+=n*20;log(`${P.name} 아트페어 수익 +${n*20}`);SFX.coin();return info({s:'市',title:'아트페어',body:`작품 판매 부스가 대성공! 주사위 ${n} × 20코인을 벌었어요.`,big:'+'+n*20,ok:'턴 마치기',on:endTurn})}
   if(c.t==='time')return timeMachine();if(c.t==='key')return goldenKey()}
 function endTurn(){$('#modal').hidden=true;A=null;S.here=-1;if(checkGameOver())return;const P=cur();
   if(S.dbl&&S.dblCount<2&&!P.out&&!P.skip){S.dblCount++;S.dbl=false;S.phase='roll';log(`${P.name} 더블 보너스! 한 번 더`);render();save();return}
@@ -903,7 +959,7 @@ function endTurn(){$('#modal').hidden=true;A=null;S.here=-1;if(checkGameOver())r
 function handleDebt(P){const idx=S.players.indexOf(P);while(P.coins<0){const mine=Object.keys(S.owners).filter(k=>S.owners[k].p===idx).map(Number).sort((x,y)=>CELLS[x].price-CELLS[y].price);if(!mine.length)break;const pos=mine[0],pr=Math.round(CELLS[pos].price/2);delete S.owners[pos];P.coins+=pr;log(`${P.name} ‘${CELLS[pos].art.short}’ 매각 (+${pr})`)}if(P.coins<0){P.out=true;P.coins=0;log(`${P.name} 파산… 게임에서 빠져요`)}}
 const activeCount=()=>S.players.filter(p=>!p.out).length;
 function checkGameOver(){if(S.phase==='over')return true;if(activeCount()===0||(S.players.length>1&&activeCount()<=1)){gameOver();return true}return false}
-function gameOver(){S.phase='over';render();save();chime();stat('marble',true);const order=S.players.map((p,i)=>({p,i,v:assets(i)})).sort((a,b)=>b.v-a.v);
+function gameOver(){S.phase='over';render();save();SFX.fanfare();stat('marble',true);const order=S.players.map((p,i)=>({p,i,v:assets(i)})).sort((a,b)=>b.v-a.v);
   showModal(`<div class="info"><span class="seal big gold">賞</span><h2>${S.players.length>1?order[0].p.name+' 우승!':'게임 완주!'}</h2><p>코인과 소장품 가치를 더한 총자산으로 순위를 매겼어요.</p><div class="rank">${order.map((o,k)=>`<div><b>${k+1}</b><span class="tk" style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:${TOKENS[o.p.tok].c}">${TOKENS[o.p.tok].e}</span><span>${o.p.name}<br><small style="color:var(--pMuted)">소장 ${ownedCount(o.i)}점</small></span><strong>${o.v}</strong></div>`).join('')}</div><div class="acts"><button class="btn primary" id="goNew">새 게임</button><button class="btn" id="goBook">나의 도감</button></div></div>`,true,true);
   $('#goNew').onclick=setup;$('#goBook').onclick=()=>{closeModal();showView('book')}}
 function info({s,title,body,big,ok='확인',on,closable=false,gold=false}){showModal(`<div class="info"><span class="seal big${gold?' gold':''}">${s}</span><h2>${title}</h2>${big?`<div class="bigNum">${big}</div>`:''}<p>${body}</p><div class="acts"><button class="btn primary" id="infoOk">${ok}</button></div></div>`,closable,true);$('#infoOk').onclick=()=>{on?on():closeModal()}}
@@ -912,7 +968,7 @@ function quizModal(w,title,sub,done){showModal(`<div class="info" style="text-al
 function timeMachine(){const half=(a,b)=>SLOTS.filter(p=>p>=a&&p<b).map(p=>{const w=CELLS[p].art,o=S.owners[p];return `<button type="button" class="tmBtn" data-pos="${p}">${pic(w)}<span>${w.short}<small>${w.ys}${o?' · '+S.players[o.p].name:''}</small></span></button>`}).join('');const E=EDITIONS[S.ed];
   showModal(`<div class="info wide"><span class="seal big">時</span><h2>타임머신</h2><p>가고 싶은 시대의 작품을 고르세요. 출발점을 지나가면 장학금도 받아요.</p><h3>${E.zones[0]}</h3><div class="tmGrid">${half(1,14)}</div><h3>${E.zones[1]}</h3><div class="tmGrid">${half(15,28)}</div><div class="acts"><button class="btn" id="tmStay">여기 머무르기</button></div></div>`,false);
   paintAll($('#modalBody'));$$('.tmBtn').forEach(b=>b.onclick=async()=>{$('#modal').hidden=true;log(`${cur().name} 타임머신 출발!`);await moveTo(+b.dataset.pos);resolve()});$('#tmStay').onclick=endTurn}
-function goldenKey(){const P=cur(),k=KEYS[rnd(KEYS.length)];beep(1200,.15);
+function goldenKey(){const P=cur(),k=KEYS[rnd(KEYS.length)];SFX.key();
   showModal(`<div class="info keycard"><span class="seal big gold">鍵</span><div class="keyEyebrow">황금열쇠</div><h2>${k.t}</h2><p>${k.d}</p><div class="acts"><button class="btn primary" id="kOk">${k.quiz?'퀴즈 풀기':'확인'}</button></div></div>`,false,true);
   $('#kOk').onclick=async()=>{log(`${P.name} 황금열쇠: ${k.t}`);
     if(k.quiz){const ids=EDITIONS[S.ed].ids();return quizModal(BY[ids[rnd(ids.length)]],'도슨트 퀴즈','맞히면 80코인을 받아요.',ok=>{if(ok){P.coins+=80;log(`${P.name} 도슨트 퀴즈 정답 +80`)}endTurn()})}
@@ -934,8 +990,8 @@ function renderActions(){const el=$('#acActions');if(!el||!A)return;const B=(t,a
   el.innerHTML=h}
 function artAct(act){if(act==='goQuiz'){A.tab='quiz';renderArt();return}const P=cur(),pos=A.pos,w=A.art,o=S.owners[pos];
   if(act==='pass')return endTurn();
-  if(act==='buy'){const pr=CELLS[pos].price;if(P.coins>=pr){P.coins-=pr;S.owners[pos]={p:S.turn,lvl:1};log(`${P.name} ‘${w.name}’ 소장! (-${pr})`);chime()}return endTurn()}
-  if(act==='up'){const c=upCost(pos);if(o&&P.coins>=c&&o.lvl<3){P.coins-=c;o.lvl++;log(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);chime()}return endTurn()}
+  if(act==='buy'){const pr=CELLS[pos].price;if(P.coins>=pr){P.coins-=pr;S.owners[pos]={p:S.turn,lvl:1};log(`${P.name} ‘${w.name}’ 소장! (-${pr})`);SFX.coin()}return endTurn()}
+  if(act==='up'){const c=upCost(pos);if(o&&P.coins>=c&&o.lvl<3){P.coins-=c;o.lvl++;log(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);SFX.match()}return endTurn()}
   if(act==='free'){P.freePass=false;log(`${P.name} 자유이용권 사용`);return endTurn()}
   if(act==='pay'){let t=tollOf(pos);if(A.answered)t=Math.ceil(t/2);const ow=S.players[o.p];P.coins-=t;ow.coins+=t;log(`${P.name} → ${ow.name} 관람료 ${t}코인`);handleDebt(P);return endTurn()}}
 function setup(){let n=Math.min(4,Math.max(1,S.players.length)),rounds=S.maxRounds,ed=S.ed;const names=[0,1,2,3].map(i=>S.players[i]?S.players[i].name:`${i+1}모둠`);
@@ -949,7 +1005,7 @@ function setup(){let n=Math.min(4,Math.max(1,S.players.length)),rounds=S.maxRoun
   $$('#edPick button').forEach(b=>b.onclick=()=>{ed=b.dataset.ed;$$('#edPick button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   $$('#segN button').forEach(b=>b.onclick=()=>{n=+b.dataset.n;$$('#segN button').forEach(x=>x.setAttribute('aria-pressed',x===b));[0,1,2,3].forEach(i=>$('#row'+i).hidden=i>=n)});
   $$('#segR button').forEach(b=>b.onclick=()=>{rounds=+b.dataset.r;$$('#segR button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
-  $('#startBtn').onclick=()=>{const nm=[0,1,2,3].slice(0,n).map(i=>($('#pn'+i).value.trim()||`${i+1}모둠`).replace(/[<>&"]/g,''));S=newGame(nm,rounds,ed);CELLS=makeCells(ed);$('#modal').hidden=true;A=null;buildBoard();showView('game');render();save();chime()}}
+  $('#startBtn').onclick=()=>{const nm=[0,1,2,3].slice(0,n).map(i=>($('#pn'+i).value.trim()||`${i+1}모둠`).replace(/[<>&"]/g,''));S=newGame(nm,rounds,ed);CELLS=makeCells(ed);$('#modal').hidden=true;A=null;buildBoard();showView('game');render();save();SFX.nav('game')}}
 function rules(){showModal(`<div class="info"><span class="seal big">法</span><h2>게임 방법</h2><ol class="rules">
   <li><b>편 고르기</b>: 한국미술사편, 서양미술사편, 통합편 중에서 골라요. 보드의 작품은 시대 순서대로 놓여 있어요.</li>
   <li><b>주인 없는 작품 칸</b>: 작품을 감상하고 퀴즈를 맞히면 소장할 수 있어요. 정답 보너스 20코인!</li>
@@ -976,9 +1032,10 @@ function boot(data){
   ['k','w'].forEach(s=>{const v=store.get('artmarble-sub-'+s,'learn');HALL[s].sub=['learn','tl','quiz'].includes(v)?v:'learn'});
   S=(data&&data.S)||store.get('artmarble-game',null);if(!S||S.v!==2||!EDITIONS[S.ed])S=newGame(['1모둠','2모둠'],10,'mix');
   CELLS=makeCells(S.ed);buildBoard();setDie($('#d1'),5);setDie($('#d2'),1);if(S.phase==='moving'||S.phase==='action')S.phase='roll';render();
-  $$('.nav button').forEach(b=>b.onclick=()=>showView(b.dataset.view));
+  $$('.nav button').forEach(b=>b.onclick=()=>{showView(b.dataset.view);SFX.nav(b.dataset.view)});
+  const home=$('#homeBtn');if(home)home.onclick=()=>{HALL.k.sub='learn';HALL.k.game=null;store.set('artmarble-sub-k','learn');$('#modal').hidden=true;A=null;showView('k');SFX.nav('k')};
   $('#rollBtn').onclick=onRoll;$('#newBtn').onclick=setup;$('#rulesBtn').onclick=rules;
-  const sb=$('#soundBtn'),upd=()=>{sb.textContent=soundOn?'소리 켜짐':'소리 꺼짐';sb.setAttribute('aria-pressed',soundOn)};upd();sb.onclick=()=>{soundOn=!soundOn;store.set('artmarble-sound',soundOn);upd();beep(700,.06)};
+  const sb=$('#soundBtn'),upd=()=>{sb.textContent=soundOn?'소리 켜짐':'소리 꺼짐';sb.setAttribute('aria-pressed',soundOn)};upd();sb.onclick=()=>{soundOn=!soundOn;store.set('artmarble-sound',soundOn);upd();SFX.click()};
   let armed=false;$('#resetBtn').onclick=e=>{if(!armed){armed=true;e.target.textContent='한 번 더 누르면 지워져요';setTimeout(()=>{armed=false;e.target.textContent='기록 지우기'},3000);return}progress={read:{},solved:{},stats:{},badges:{}};saveProg();armed=false;e.target.textContent='기록 지우기';renderBook()};
   $('#modalX').onclick=closeModal;$('#modal').addEventListener('click',e=>{if(e.target.id==='modal'&&modalClosable)closeModal()});
   document.addEventListener('keydown',e=>{const open=!$('#modal').hidden;
@@ -1015,8 +1072,9 @@ function checkBadges(){let got=[];badgeDefs().forEach(b=>{if(b.done&&!progress.b
   if(got.length){store.set('artmarble-progress',progress);got.forEach((b,i)=>setTimeout(()=>toast(b),i*900))}renderRankChip()}
 function medal(b,cls=''){return `<span class="medal ${b.done?'on':''} ${cls}" style="--c:${b.c}"><span>${b.seal}</span></span>`}
 function toast(b){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');document.body.appendChild(t)}
-  const el=document.createElement('div');el.className='tst';el.innerHTML=`${medal({...b,done:true})}<div><small>배지 획득!</small><b>${b.n}</b></div>`;t.appendChild(el);chime();setTimeout(()=>el.classList.add('out'),3800);setTimeout(()=>el.remove(),4400)}
-function renderRankChip(){const c=$('#rankChip');if(!c)return;const p=points(),r=rankOf(p);c.innerHTML=`<span class="rk">${r.name}</span><b>${p}점</b><small>배지 ${Object.keys(progress.badges).length}</small>`}
+  const el=document.createElement('div');el.className='tst';el.innerHTML=`${medal({...b,done:true})}<div><small>${b.silent?'축하해요!':'배지 획득!'}</small><b>${b.n}</b></div>`;t.appendChild(el);if(!b.silent)SFX.badge(b);setTimeout(()=>el.classList.add('out'),3800);setTimeout(()=>el.remove(),4400)}
+let lastRank=null;
+function renderRankChip(){const c=$('#rankChip');if(!c)return;const p=points(),r=rankOf(p);if(lastRank!==null&&r.i>lastRank){setTimeout(()=>{SFX.rank();toast({seal:'昇',n:'등급 상승! ‘'+r.name+'’',c:'#8cc3b0',done:true,silent:true})},1200)}lastRank=r.i;c.innerHTML=`<span class="rk">${r.name}</span><b>${p}점</b><small>배지 ${Object.keys(progress.badges).length}</small>`}
 function stat(k,v){progress.stats[k]=v;saveProg()}
 
 /* ============ 퀴즈 놀이터 ============ */
@@ -1029,7 +1087,7 @@ const GAMES=[
  {id:'memory',n:'짝 맞추기 카드',s:'對',d:'작품 그림과 이름의 짝을 찾아요.'}];
 function renderPlay(s,body){const H=HALL[s];
   if(!H.game){body.innerHTML=`<div class="picker">${GAMES.filter(g=>!g.side||g.side===s).map((g,i)=>`<button type="button" class="gcard" data-game="${g.id}" style="--d:${i*60}ms"><span class="seal">${g.s}</span><b>${g.n}</b><small>${g.d}</small></button>`).join('')}</div>`;
-    body.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{H.game=b.dataset.game;H.qz=null;renderHall(s)});return}
+    body.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{H.game=b.dataset.game;SFX.pop();H.qz=null;renderHall(s)});return}
   const G=GAMES.find(g=>g.id===H.game);
   body.innerHTML=`<div class="gbar"><button type="button" class="ghost" id="backPick">← 다른 놀이 고르기</button><h3><span class="seal">${G.s}</span>${SIDE[s].name} ${G.n}</h3></div><div class="gstage" id="stage-${s}"></div>`;
   $('#backPick').onclick=()=>{H.game=null;renderHall(s)};
@@ -1048,9 +1106,9 @@ function puzzle(s,el){const pool=sideWorks(s).filter(w=>IMG[w.id]);let w=pool[rn
     $('#pzB').style.setProperty('--img',`url(${IMG[w.id]})`);
     $('#pzSel').onchange=e=>{w=BY[e.target.value];start()};$('#pzNew').onclick=()=>{w=pool[rnd(pool.length)];start()};
     el.querySelectorAll('.seg2 button').forEach(b=>b.onclick=()=>{n=+b.dataset.n;store.set('pz-n',n);start()});
-    el.querySelectorAll('.pt').forEach(b=>b.onclick=()=>{if(done)return;const k=+b.dataset.k;if(sel===null){sel=k;beep(520,.03);draw();return}
-      if(sel!==k){[tiles[sel],tiles[k]]=[tiles[k],tiles[sel]];moves++;beep(700,.04,'triangle')}sel=null;
-      if(tiles.every((t,i)=>t===i)){done=true;stat('puzzles',(progress.stats.puzzles||0)+1)}draw();
+    el.querySelectorAll('.pt').forEach(b=>b.onclick=()=>{if(done)return;const k=+b.dataset.k;if(sel===null){sel=k;SFX.click();draw();return}
+      if(sel!==k){[tiles[sel],tiles[k]]=[tiles[k],tiles[sel]];moves++;SFX.swap()}sel=null;
+      if(tiles.every((t,i)=>t===i)){done=true;stat('puzzles',(progress.stats.puzzles||0)+1);SFX.win(s)}draw();
       if(done){$('#pzWin').innerHTML=winBox('명화 완성!',`‘${w.name}’을(를) ${moves}번 만에 맞췄어요.`,`<button class="btn verm" id="pzAgain">다른 작품 도전</button><button class="btn" id="pzSee">이 작품 감상하기</button>`);$('#pzAgain').onclick=()=>{w=pool[rnd(pool.length)];start()};$('#pzSee').onclick=()=>openArt(w)}})}
   start()}
 
@@ -1084,8 +1142,8 @@ function cross(s,el){let C=genCross(CW[s]),act=null;
     $('#cwNew').onclick=()=>{C=genCross(CW[s]);act=null;draw()};
     el.querySelectorAll('.cc').forEach(b=>b.onclick=()=>{const a=+b.dataset.w,a2=b.dataset.w2===''?null:+b.dataset.w2;act=(act===a&&a2!==null)?a2:(C.placed[a].solved&&a2!==null?a2:a);draw();const i=$('#cwA');if(i&&!i.disabled)i.focus()});
     el.querySelectorAll('.cl').forEach(b=>b.onclick=()=>{act=+b.dataset.i;draw();const i=$('#cwA');if(i&&!i.disabled)i.focus()});
-    if(A&&!A.solved){$('#cwF').onsubmit=e=>{e.preventDefault();const v=$('#cwA').value.replace(/\s/g,'');if(v===A.w){A.solved=true;chime();const nx=C.placed.findIndex(p=>!p.solved);act=nx<0?null:nx;draw();
-        if(nx<0){stat('cross',(progress.stats.cross||0)+1);$('#cwWin').innerHTML=winBox('낱말퀴즈 완성!','모든 칸을 채웠어요. 미술 용어 박사네요!','<button class="btn verm" id="cwAgain">새 퍼즐</button>');$('#cwAgain').onclick=()=>{C=genCross(CW[s]);act=null;draw()}}}
+    if(A&&!A.solved){$('#cwF').onsubmit=e=>{e.preventDefault();const v=$('#cwA').value.replace(/\s/g,'');if(v===A.w){A.solved=true;SFX.type();const nx=C.placed.findIndex(p=>!p.solved);act=nx<0?null:nx;draw();
+        if(nx<0){stat('cross',(progress.stats.cross||0)+1);SFX.win(s);$('#cwWin').innerHTML=winBox('낱말퀴즈 완성!','모든 칸을 채웠어요. 미술 용어 박사네요!','<button class="btn verm" id="cwAgain">새 퍼즐</button>');$('#cwAgain').onclick=()=>{C=genCross(CW[s]);act=null;draw()}}}
       else{buzz();$('#cwMsg').textContent=v.length!==A.w.length?`${A.w.length}글자로 입력해 보세요.`:'아쉬워요. 다시 생각해 볼까요?';$('#cwA').select()}};
       $('#cwHint').onclick=()=>{$('#cwMsg').textContent=`첫 글자는 ‘${A.w[0]}’예요.`}}}
   draw()}
@@ -1106,8 +1164,8 @@ function twenty(s,el){const pool=sideWorks(s),Qs=twentyQs(s);let secret,asked,us
       <div class="twPool">${pool.map(w=>`<button type="button" class="tc${alive(w)?'':' gone'}${picked===w.id?' pk':''}" data-id="${w.id}" ${over?'disabled':''} title="${w.name}">${pic(w)}<span>${w.short}</span></button>`).join('')}</div></div><div id="twWin"></div>`;
     paintAll(el);
     $('#twNew').onclick=start;
-    el.querySelectorAll('.tq').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;asked.push({i,fn:Qs[i][1],ans:Qs[i][1](secret)});used++;beep(560,.04);if(used>=20)over=true;draw();if(over)lose()});
-    el.querySelectorAll('.tc').forEach(b=>b.onclick=()=>{const w=BY[b.dataset.id];used++;if(w===secret){over=true;draw();const ace=used<=8;if(ace)stat('twentyAce',true);chime();
+    el.querySelectorAll('.tq').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;asked.push({i,fn:Qs[i][1],ans:Qs[i][1](secret)});used++;SFX.ask();if(used>=20)over=true;draw();if(over)lose()});
+    el.querySelectorAll('.tc').forEach(b=>b.onclick=()=>{const w=BY[b.dataset.id];used++;if(w===secret){over=true;draw();const ace=used<=8;if(ace)stat('twentyAce',true);SFX.win(s);
         $('#twWin').innerHTML=winBox('정답이에요!',`숨은 작품은 ‘${secret.name}’. 질문과 추측 ${used}번 만에 맞혔어요.${ace?' 명탐정 실력이네요!':''}`,'<button class="btn verm" id="twAgain">한 판 더</button><button class="btn" id="twSee">작품 감상하기</button>');$('#twAgain').onclick=start;$('#twSee').onclick=()=>openArt(secret)}
       else{buzz();picked=w.id;if(used>=20){over=true;draw();lose()}else draw()}})}
   function lose(){$('#twWin').innerHTML=winBox('스무 번을 다 썼어요','숨은 작품은 ‘'+secret.name+'’였어요.','<button class="btn verm" id="twAgain">다시 도전</button><button class="btn" id="twSee">작품 감상하기</button>');$('#twAgain').onclick=start;$('#twSee').onclick=()=>openArt(secret)}
@@ -1121,10 +1179,10 @@ function orderGame(s,el){let set,seq,checked;
      <div class="ordRow">${set.map(w=>{const k=seq.indexOf(w.id),ok=checked?right[k]===w:null;return `<button type="button" class="oc${k>=0?' on':''}${checked?(ok?' ok':' bad'):''}" data-id="${w.id}" ${checked?'disabled':''}><div class="ofr">${pic(w)}</div>${k>=0?`<span class="onum">${k+1}</span>`:''}<b>${w.name}</b>${checked?`<small>${w.ys} · 정답 ${right.indexOf(w)+1}번</small>`:`<small>${w.artist}</small>`}</button>`}).join('')}</div>
      <div class="wbtns"><button class="btn primary" id="ordChk" ${seq.length<5||checked?'disabled':''}>순서 확인</button><button class="btn" id="ordNew">새 작품 5점</button></div><div id="ordWin"></div>`;
     paintAll(el);
-    el.querySelectorAll('.oc').forEach(b=>b.onclick=()=>{const id=b.dataset.id,k=seq.indexOf(id);if(k>=0)seq.splice(k,1);else seq.push(id);beep(600,.03);draw()});
+    el.querySelectorAll('.oc').forEach(b=>b.onclick=()=>{const id=b.dataset.id,k=seq.indexOf(id);if(k>=0)seq.splice(k,1);else seq.push(id);SFX.step(seq.length*2);draw()});
     $('#ordNew').onclick=start;
     $('#ordChk').onclick=()=>{checked=true;const n=seq.filter((id,k)=>right[k].id===id).length;draw();
-      if(n===5){chime();stat('order',(progress.stats.order||0)+1);$('#ordWin').innerHTML=winBox('완벽한 시간 여행!','다섯 작품의 순서를 모두 맞혔어요.','<button class="btn verm" id="ordAgain">한 번 더</button>')}
+      if(n===5){SFX.win(s);stat('order',(progress.stats.order||0)+1);$('#ordWin').innerHTML=winBox('완벽한 시간 여행!','다섯 작품의 순서를 모두 맞혔어요.','<button class="btn verm" id="ordAgain">한 번 더</button>')}
       else{buzz();$('#ordWin').innerHTML=winBox(`${n} / 5 맞혔어요`,'초록색은 맞은 자리, 빨간색은 틀린 자리예요. 연표를 보고 다시 도전해요!','<button class="btn verm" id="ordAgain">다시 도전</button>')}
       $('#ordAgain').onclick=start}}
   start()}
@@ -1148,9 +1206,9 @@ function memory(s,el){let cards,open,matched,moves,lock,won=false;
     fit();
     $('#mmNew').onclick=start;$('#mmClose').onclick=close;
     if(won){$('#mmAgain').onclick=start;$('#mmBack').onclick=close}
-    wrap.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,c=cards[i];if(won||lock||open.includes(i)||matched.has(c.id))return;open.push(i);beep(500,.03);
-      if(open.length===2){moves++;const[a,b2]=open.map(x=>cards[x]);if(a.id===b2.id){matched.add(a.id);open=[];chime();
-          if(matched.size===6){won=true;stat('memory',(progress.stats.memory||0)+1)}}
+    wrap.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,c=cards[i];if(won||lock||open.includes(i)||matched.has(c.id))return;open.push(i);SFX.flip();
+      if(open.length===2){moves++;const[a,b2]=open.map(x=>cards[x]);if(a.id===b2.id){matched.add(a.id);open=[];SFX.match(s);
+          if(matched.size===6){won=true;SFX.win(s);stat('memory',(progress.stats.memory||0)+1)}}
         else{lock=true;draw();setTimeout(()=>{open=[];lock=false;draw()},900);return}}
       draw()})}
   launch()}
@@ -1208,7 +1266,7 @@ function popart(s,el){let src=null,style=store.get('pop-style','warhol'),grid=st
     $$('#psStyle button').forEach(b=>b.onclick=()=>{style=b.dataset.v;store.set('pop-style',style);render()});
     $$('#psGrid button').forEach(b=>b.onclick=()=>{grid=+b.dataset.v;store.set('pop-grid',grid);render()});
     const wi=$('#psWord');if(wi)wi.onchange=()=>{word=wi.value;store.set('pop-word',word);render()};
-    if(src){const c=style==='warhol'?warhol():comic();$('#psImg').src=c.toDataURL('image/png');if(!progress.stats.popart){stat('popart',true)}}}
+    if(src){SFX.pop();const c=style==='warhol'?warhol():comic();$('#psImg').src=c.toDataURL('image/png');if(!progress.stats.popart){stat('popart',true)}}}
   render()}
 
 window.claude?.hot?.snapshot?.(()=>({S}));
