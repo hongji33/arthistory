@@ -397,8 +397,10 @@ button.cmp{cursor:pointer}
 .oc b{font-family:var(--f-display);font-size:15px;padding:0 10px;line-height:1.3}.oc small{color:var(--muted);font-size:12px;padding:0 10px}
 .oc.on{border-color:var(--gold)}.oc.ok{border-color:var(--ok)}.oc.bad{border-color:var(--bad)}
 .onum{position:absolute;top:8px;left:8px;width:34px;height:34px;border-radius:50%;background:var(--gold);color:#2a1d08;font-family:var(--f-logo);font-size:18px;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.5)}
-.mmGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:760px}
-@media (max-width:560px){.mmGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mmGrid{--cols:6;--rows:2;--gap:10px;display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:var(--gap);margin:0 auto;
+  width:min(100%,calc((100vh - 170px) / var(--rows) * .75 * var(--cols) + (var(--cols) - 1) * var(--gap)))}
+@media (max-width:760px){.mmGrid{--cols:4;--rows:3;--gap:8px}}
+@media (max-width:760px) and (orientation:landscape){.mmGrid{--cols:6;--rows:2}}
 .mc{position:relative;aspect-ratio:3/4;border:0;padding:0;background:transparent;cursor:pointer;perspective:800px}
 .mc .back,.mc .face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .45s;display:grid;place-items:center;overflow:hidden}
 .mc .back{background:repeating-linear-gradient(45deg,#2a3a36 0 8px,#22312d 8px 16px);border:1px solid var(--line)}
@@ -1123,8 +1125,8 @@ function orderGame(s,el){let set,seq,checked;
   start()}
 
 /* --- 짝 맞추기 카드 --- */
-function memory(s,el){let cards,open,matched,moves,lock;
-  function start(){const ws=shuffle(sideWorks(s).filter(w=>IMG[w.id])).slice(0,6);cards=shuffle(ws.flatMap(w=>[{id:w.id,k:'img'},{id:w.id,k:'name'}]));open=[];matched=new Set();moves=0;lock=false;draw()}
+function memory(s,el){let cards,open,matched,moves,lock,first=true;
+  function start(){const ws=shuffle(sideWorks(s).filter(w=>IMG[w.id])).slice(0,6);cards=shuffle(ws.flatMap(w=>[{id:w.id,k:'img'},{id:w.id,k:'name'}]));open=[];matched=new Set();moves=0;lock=false;draw();if(first){first=false;requestAnimationFrame(()=>{const g=$('.gbar');if(g)g.scrollIntoView({behavior:'smooth',block:'start'})})}}
   function draw(){el.innerHTML=`<div class="twTop"><span class="cnt">뒤집은 횟수 <b>${moves}</b></span><span class="cnt">찾은 짝 <b>${matched.size} / 6</b></span><button type="button" class="ghost" id="mmNew">새 카드</button></div>
      <div class="mmGrid">${cards.map((c,i)=>{const up=open.includes(i)||matched.has(c.id),w=BY[c.id];return `<button type="button" class="mc${up?' up':''}${matched.has(c.id)?' got':''}" data-i="${i}" aria-label="${up?(c.k==='img'?w.name+' 그림':w.name):'뒤집힌 카드'}"><span class="back"><span class="seal">藝</span></span><span class="face">${c.k==='img'?pic(w):`<b>${w.name}</b><small>${w.artist}</small>`}</span></button>`}).join('')}</div><div id="mmWin"></div>`;
     $('#mmNew').onclick=start;
