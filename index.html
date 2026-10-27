@@ -427,6 +427,48 @@ button.cmp{cursor:pointer}
 .psOut{background:#0a0f0e;border-radius:14px;min-height:300px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--line)}
 .psOut img{width:100%;display:block}
 .psEmpty{text-align:center;color:var(--muted);padding:30px;display:grid;justify-items:center;gap:8px}.psEmpty .seal{width:56px;height:56px;font-size:30px}
+/* ===== 실시간 대전 ===== */
+.modeBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.modeBar .on{background:var(--paper);color:var(--pInk);border-color:var(--paper);font-weight:700}
+#toLive{border-color:var(--gold);color:var(--gold);font-weight:700}
+.lvWarn{background:#3a1f16;border:1px solid #8a3d28;color:#ffd9cc;border-radius:12px;padding:12px 14px;margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.lvPick{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.lvCard{display:grid;justify-items:start;gap:8px;text-align:left;padding:24px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--ink3),var(--ink2));cursor:pointer;transition:transform .15s,border-color .15s}
+.lvCard:hover{transform:translateY(-4px);border-color:var(--gold)}
+.lvCard .seal.big{width:58px;height:58px;font-size:32px}.lvCard b{font-family:var(--f-display);font-size:24px}.lvCard small{color:var(--muted);font-size:14px}
+.lvHow{margin:20px 0 0;padding-left:20px;color:#d6d0c0;display:grid;gap:6px}
+.codeCard{display:grid;gap:4px;text-align:center;background:linear-gradient(160deg,#2c2a1c,#1c1a12)}
+.codeCard small{color:var(--muted)}.codeCard>b{font-family:var(--f-logo);font-weight:400;font-size:46px;color:var(--gold);letter-spacing:.12em;line-height:1.1}
+.bigCode{font-family:var(--f-logo);font-size:clamp(40px,13cqw,120px);line-height:1;color:var(--paper);letter-spacing:.1em;display:grid;justify-items:center}
+.bigCode small{font-family:var(--f-body);font-size:clamp(10px,1.8cqw,15px);color:var(--muted);letter-spacing:.2em}
+.cHint{margin:0;font-size:clamp(9px,1.9cqw,16px);color:#d6d0c0;line-height:1.5}.cUrl{margin:0;font-size:clamp(8px,1.5cqw,13px);color:var(--gold);word-break:break-all}
+.evArt{height:52%;max-width:92%;display:grid;place-items:center}.evArt img,.evArt canvas{max-height:100%;max-width:100%;object-fit:contain;border-radius:6px;box-shadow:0 0 0 4px #2a221a,0 0 0 6px #8a6a3a,0 18px 40px rgba(0,0,0,.6)}
+.evArt canvas{width:min(60cqw,320px);aspect-ratio:4/3;height:auto}
+.evName{font-family:var(--f-display);font-weight:700;font-size:clamp(14px,3.4cqw,30px);line-height:1.2;display:grid}.evName small{font-family:var(--f-body);font-weight:400;font-size:clamp(9px,1.6cqw,14px);color:var(--muted)}
+.rankBig{display:grid;gap:6px;width:min(80%,420px)}
+.rankBig div{display:grid;grid-template-columns:auto auto 1fr auto;gap:10px;align-items:center;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:clamp(11px,2.2cqw,18px)}
+.rankBig div:first-child{border-color:var(--gold);background:rgba(220,174,82,.15)}
+.rankBig b{font-family:var(--f-logo);font-weight:400;color:var(--gold)}.rankBig em{font-style:normal;font-variant-numeric:tabular-nums}
+.rankBig .tk{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#7a3d33;margin-left:6px;vertical-align:middle}.dot.on{background:#3fcf7f;box-shadow:0 0 6px #3fcf7f}
+.joinBox{max-width:440px;margin:10px auto;display:grid;gap:12px;justify-items:center;text-align:center;background:var(--paper);color:var(--pInk);border-radius:18px;padding:28px 22px}
+.joinBox h2{margin:0;font-family:var(--f-display)}.joinBox .seal.big{width:58px;height:58px;font-size:32px}
+.joinBox form{display:grid;gap:12px;width:100%}.joinBox label{display:grid;gap:4px;text-align:left;font-weight:700;font-size:14px}
+.joinBox input{font:inherit;font-size:20px;border:1px solid var(--pLine);border-radius:12px;padding:10px 14px;background:#fffaf0;color:var(--pInk)}
+.joinBox .muted{color:var(--pMuted)}.joinBox .ghost{color:var(--pMuted);border-color:var(--pLine)}
+.joinBox .lvWarn{width:100%;text-align:left}
+.jHead{display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;background:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:14px}
+.jHead .tk{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:18px;box-shadow:0 0 0 2px #fff8e8}.jHead>b{font-family:var(--f-display);font-size:19px}
+.jWait{max-width:640px;margin:0 auto;display:grid;gap:10px;justify-items:center;text-align:center;background:var(--paper);color:var(--pInk);border-radius:18px;padding:28px 22px}
+.jWait h3{margin:0;font-family:var(--f-display);font-size:24px}.jWait p{margin:0}.jWait .muted{color:var(--pMuted)}.jWait .seal.big{width:58px;height:58px;font-size:32px}
+.tkBig{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:32px;box-shadow:0 0 0 3px #fff8e8}
+.jRoll{display:grid;gap:16px;justify-items:center;text-align:center;padding:30px 10px}.jRoll h3{margin:0;font-family:var(--f-display);font-size:30px;color:var(--gold)}.jRoll .roll{font-size:28px;padding:.6em 1.8em}
+.jArt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);background:var(--paper);color:var(--pInk);border-radius:18px;overflow:hidden}
+@media (max-width:760px){.jArt{grid-template-columns:minmax(0,1fr)}}
+.jPic{background:#14110c;display:grid;place-items:center;padding:16px;min-height:240px}.jPic img{max-width:100%;max-height:52vh;object-fit:contain}.jPic canvas{width:100%;max-width:360px;aspect-ratio:4/3;height:auto}
+.jBody{padding:20px;display:grid;gap:10px;align-content:start}.jBody h3{margin:0;font-family:var(--f-display);font-size:26px}
+.jStory summary{cursor:pointer;font-weight:700;color:var(--verm)}.jStory p{margin:8px 0 0;font-size:14.5px}
+.jActs{display:flex;gap:8px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -473,6 +515,7 @@ button.cmp{cursor:pointer}
         </aside>
       </div>
     </section>
+    <section id="view-live" hidden></section>
     <section id="view-book" hidden>
       <div class="sechead"><div><h2>나의 배지와 도감</h2><p>시대별 작품의 퀴즈를 모두 맞히면 그 시대의 ‘마스터 배지’를 받아요. 퀴즈 놀이터의 여러 놀이로 도전 배지도 모아 보세요.</p></div><button type="button" class="ghost" id="resetBtn">기록 지우기</button></div>
       <div class="prog" id="prog"></div>
@@ -1023,9 +1066,9 @@ function renderBook(){const all=WORKS.length,r=WORKS.filter(w=>progress.read[w.i
 
 /* ============ 화면 전환 ============ */
 let VIEW='k';
-function showView(v){VIEW=v;['k','w','game','book'].forEach(k=>$('#view-'+k).hidden=k!==v);$$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===v));
+function showView(v){VIEW=v;['k','w','game','book','live'].forEach(k=>{const e=$('#view-'+k);if(e)e.hidden=k!==v});$$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===v||(v==='live'&&b.dataset.view==='game')));if(v==='live'&&typeof renderLive==='function')renderLive();
   if(v==='k'||v==='w')renderHall(v);if(v==='book')renderBook();if(v==='game')requestAnimationFrame(()=>paintAll($('#board')));
-  store.set('artmarble-view',v);window.scrollTo({top:0})}
+  if(v!=='live')store.set('artmarble-view',v);window.scrollTo({top:0})}
 function refreshCurrent(){if(VIEW==='book')renderBook();else if((VIEW==='k'||VIEW==='w')&&HALL[VIEW].sub!=='quiz'){const y=window.scrollY;renderHall(VIEW);window.scrollTo({top:y})}}
 
 function boot(data){
@@ -1268,6 +1311,206 @@ function popart(s,el){let src=null,style=store.get('pop-style','warhol'),grid=st
     const wi=$('#psWord');if(wi)wi.onchange=()=>{word=wi.value;store.set('pop-word',word);render()};
     if(src){SFX.pop();const c=style==='warhol'?warhol():comic();$('#psImg').src=c.toDataURL('image/png');if(!progress.stats.popart){stat('popart',true)}}}
   render()}
+
+/* ============ 실시간 대전 (교사 화면 + 모둠 크롬북) ============ */
+const LIVE={role:null,peer:null,conns:[],L:null,cells:null,conn:null,me:-1,name:'',code:'',busy:false};
+const PEER_PREFIX='artmarble-live-2026-';
+const inClaude=()=>/claude\.ai|claudeusercontent|claude\.site/.test(location.hostname);
+function loadPeer(){return new Promise((res,rej)=>{if(window.Peer)return res();const s=document.createElement('script');s.src='https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';s.onload=()=>window.Peer?res():rej(new Error('peer'));s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)})}
+const lv=()=>$('#view-live');
+const esc2=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- 첫 화면 ---------- */
+function liveHome(){LIVE.role=null;
+  lv().innerHTML=`<div class="sechead"><div><h2>실시간 대전</h2><p>교사 PC(전자칠판)에 큰 보드판을 띄우고, 모둠마다 크롬북으로 들어와 한 판에서 함께 겨뤄요. 학생 로그인은 필요 없어요.</p></div><button type="button" class="ghost" id="lvBack">← 한 기기 모드로</button></div>
+   ${inClaude()?`<div class="lvWarn"><b>이 화면에서는 실시간 대전이 연결되지 않아요.</b> 깃허브 페이지 주소(예: hongji33.github.io/artmarble)에서 열어 주세요.</div>`:''}
+   <div class="lvPick"><button type="button" class="lvCard" id="lvHost"><span class="seal big">師</span><b>교사용 · 방 만들기</b><small>교사 PC나 전자칠판에서 눌러요. 방 번호와 큰 보드판이 나타나요.</small></button>
+   <button type="button" class="lvCard" id="lvJoin"><span class="seal big gold">組</span><b>모둠용 · 방 참가하기</b><small>모둠 크롬북에서 눌러요. 방 번호와 모둠 이름을 넣으면 내 조종기가 열려요.</small></button></div>
+   <ol class="lvHow"><li>선생님이 <b>방 만들기</b>를 누르면 4자리 방 번호가 나와요.</li><li>모둠은 같은 주소에서 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b>를 눌러 번호를 입력해요.</li><li>모두 들어오면 선생님이 <b>게임 시작</b>! 자기 차례에 크롬북으로 주사위를 굴리고 퀴즈를 풀어요.</li></ol>`;
+  $('#lvBack').onclick=()=>showView('game');$('#lvHost').onclick=hostStart;$('#lvJoin').onclick=joinForm}
+function lvError(msg){lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn">${msg}</div>`)}
+function peerErr(e){const t=e&&e.type;
+  return t==='peer-unavailable'?'그 번호의 방을 찾을 수 없어요. 방 번호를 다시 확인해 주세요.':t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'?'연결 서버에 닿지 못했어요. 인터넷 연결이나 학교 방화벽을 확인해 주세요.':t==='browser-incompatible'?'이 브라우저는 실시간 연결을 지원하지 않아요. 크롬을 사용해 주세요.':'연결 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'}
+
+/* ---------- 교사(호스트) ---------- */
+async function hostStart(){lv().innerHTML='<p class="lead">방을 만드는 중이에요…</p>';
+  try{await loadPeer()}catch(e){liveHome();lvError('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');return}
+  const tryOpen=n=>{const code=String(1000+rnd(9000));const p=new Peer(PEER_PREFIX+code,{debug:0});
+    p.on('open',()=>{LIVE.peer=p;LIVE.code=code;LIVE.role='host';LIVE.conns=[];LIVE.L={code,ed:'mix',maxRounds:10,phase:'lobby',players:[],owners:{},turn:0,round:1,log:['방을 만들었어요. 모둠이 들어오기를 기다리는 중…'],dice:[5,1],here:-1,pending:null,ev:null,dbl:false,dblCount:0};LIVE.cells=makeCells('mix');renderHost()});
+    p.on('connection',c=>{c.on('data',d=>hostMsg(c,d));c.on('close',()=>hostDrop(c));c.on('error',()=>hostDrop(c))});
+    p.on('error',e=>{if(e.type==='unavailable-id'&&n<5){p.destroy();tryOpen(n+1)}else if(!LIVE.L){liveHome();lvError(peerErr(e))}});
+    p.on('disconnected',()=>{try{p.reconnect()}catch(_){}})};
+  tryOpen(0)}
+function hostDrop(c){const L=LIVE.L;LIVE.conns=LIVE.conns.filter(x=>x!==c);if(!L)return;const P=L.players[c.pid];if(P&&P.cid===c.peer){P.online=false;hlog(`${P.name} 연결이 끊어졌어요`);push()}}
+const hlog=m=>{LIVE.L.log.unshift(m);LIVE.L.log=LIVE.L.log.slice(0,30)};
+function push(){const L=LIVE.L;LIVE.conns.forEach(c=>{try{c.open&&c.send({t:'state',L,you:c.pid})}catch(_){}});renderHost()}
+const hcur=()=>LIVE.L.players[LIVE.L.turn];
+function hostMsg(c,d){const L=LIVE.L;if(!d||!L)return;
+  if(d.t==='join'){const name=String(d.name||'').trim().slice(0,10).replace(/[<>&"]/g,'')||'모둠';let i=L.players.findIndex(p=>p.name===name);
+    if(i<0){if(L.phase!=='lobby'){c.send({t:'err',m:'이미 게임이 시작됐어요. 같은 모둠 이름으로만 다시 들어올 수 있어요.'});return}
+      if(L.players.length>=4){c.send({t:'err',m:'방이 가득 찼어요 (최대 4모둠).'});return}
+      i=L.players.length;L.players.push({name,tok:i,coins:500,pos:0,skip:0,freePass:false,out:false,online:true,cid:c.peer});hlog(`${name} 입장!`);SFX.coin()}
+    else{L.players[i].online=true;L.players[i].cid=c.peer;hlog(`${name} 다시 연결됐어요`)}
+    c.pid=i;if(!LIVE.conns.includes(c))LIVE.conns.push(c);c.send({t:'welcome',pid:i,ed:L.ed});push();return}
+  if(c.pid!==L.turn||L.phase==='over'||LIVE.busy)return;const pd=L.pending;if(!pd)return;
+  if(d.t==='roll'&&pd.type==='roll')return hostRoll();
+  if(d.t==='ok'&&(pd.type==='info'||pd.type==='key'))return pd.type==='key'?keyApply():hostEnd();
+  if(d.t==='answer'&&pd.type==='quiz'&&pd.answered==null){pd.answered=!!d.ok;d.ok?SFX.correct():SFX.wrong();
+    const P=hcur();if(pd.reason==='rest'){P.skip=0;if(d.ok){hlog(`${P.name} 복원실 탈출!`);L.pending={type:'roll'};L.ev={who:L.turn,text:`${P.name} 퀴즈 정답! 바로 주사위를 굴려요`};push()}else{hlog(`${P.name} 이번 차례는 쉬어요`);setTimeout(hostEnd,1500);push()}return}
+    if(pd.reason==='key'){if(d.ok){P.coins+=80;hlog(`${P.name} 도슨트 퀴즈 정답 +80`)}setTimeout(hostEnd,1500);push();return}}
+  if(d.t==='answer'&&pd.type==='art'&&pd.answered==null){pd.answered=!!d.ok;const o=L.owners[pd.pos],P=hcur();
+    if(d.ok){SFX.correct();if(!o){P.coins+=20;hlog(`${P.name} 퀴즈 정답 +20`)}}else SFX.wrong();
+    L.ev.text=`${P.name} ${d.ok?'정답!':'아쉽게 오답'}`;push();return}
+  if(d.t==='act'&&pd.type==='art')return hostAct(d.act);
+  if(d.t==='time'&&pd.type==='time'){if(d.pos==null)return hostEnd();return hostMove((+d.pos-hcur().pos+28)%28,90).then(hostResolve)}}
+function hostStartGame(){const L=LIVE.L;if(!L.players.length)return;L.phase='roll';L.turn=0;L.round=1;L.players.forEach(p=>{p.coins=500;p.pos=0;p.skip=0;p.out=false;p.freePass=false});L.owners={};L.pending={type:'roll'};L.ev=null;LIVE.cells=makeCells(L.ed);hlog(`${EDITIONS[L.ed].name} 시작! ${L.players[0].name}부터`);SFX.fanfare();buildLiveBoard();push()}
+async function hostRoll(){const L=LIVE.L,P=hcur();if(P.skip>0){const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'rest',id:ids[rnd(ids.length)],answered:null};L.ev={who:L.turn,text:`${P.name} 복원실 탈출 퀴즈 도전 중`};push();return}
+  LIVE.busy=true;L.phase='moving';L.pending=null;L.rolling=true;push();SFX.dice();await sleep(700);
+  const a=1+rnd(6),b=1+rnd(6);L.dice=[a,b];L.rolling=false;L.dbl=a===b;hlog(`${P.name} 주사위 ${a}+${b}=${a+b}${L.dbl?' (더블!)':''}`);L.ev={who:L.turn,text:`${P.name} 주사위 ${a+b}`};push();
+  await hostMove(a+b,260);LIVE.busy=false;hostResolve()}
+async function hostMove(n,speed){const L=LIVE.L,P=hcur();for(let k=0;k<n;k++){P.pos=(P.pos+1)%28;if(P.pos===0){P.coins+=100;hlog(`${P.name} 출발점 통과 +100`);SFX.coin()}else SFX.move(k);L.here=P.pos;push();await sleep(speed)}}
+const H_TOLL=pos=>{const o=LIVE.L.owners[pos];return o?Math.round(LIVE.cells[pos].price*[0,.4,.8,1.3][o.lvl]):0};
+function hostResolve(){const L=LIVE.L,P=hcur(),c=LIVE.cells[P.pos];L.phase='action';
+  if(c.t==='art'){const o=L.owners[P.pos];L.pending={type:'art',pos:P.pos,id:c.art.id,answered:null};L.ev={who:L.turn,id:c.art.id,text:o?(o.p===L.turn?`${P.name} 자기 소장품에 도착`:`${P.name} → ${L.players[o.p].name}의 소장품! 할인 퀴즈 도전 중`):`${P.name} 작품 감상과 퀴즈 도전 중`};SFX.open(c.art.side);push();return}
+  if(c.t==='start'){L.pending={type:'info',seal:'始',title:'출발점',body:'한 바퀴를 돌았어요! 장학금 100코인을 받았어요.'};}
+  else if(c.t==='rest'){P.skip=1;L.dbl=false;L.pending={type:'info',seal:'復',title:'복원실',body:'작품 복원을 돕느라 다음 차례에 한 번 쉬어요. 다음 차례에 퀴즈를 맞히면 바로 탈출!'};hlog(`${P.name} 복원실 입장`)}
+  else if(c.t==='fair'){const n=1+rnd(6);P.coins+=n*20;SFX.coin();hlog(`${P.name} 아트페어 +${n*20}`);L.pending={type:'info',seal:'市',title:'아트페어',body:`주사위 ${n} × 20 = ${n*20}코인을 벌었어요!`}}
+  else if(c.t==='time'){L.pending={type:'time'};L.ev={who:L.turn,text:`${P.name} 타임머신으로 갈 곳을 고르는 중`};push();return}
+  else if(c.t==='key'){const k=rnd(LKEYS.length);L.pending={type:'key',k};SFX.key();L.ev={who:L.turn,text:`${P.name} 황금열쇠: ${LKEYS[k].t}`};hlog(`${P.name} 황금열쇠: ${LKEYS[k].t}`);push();return}
+  L.ev={who:L.turn,text:`${P.name} · ${L.pending.title}`};push();clearTimeout(LIVE.autoT);const turnAt=L.turn,rd=L.round;LIVE.autoT=setTimeout(()=>{if(LIVE.L.pending&&LIVE.L.pending.type==='info'&&LIVE.L.turn===turnAt&&LIVE.L.round===rd)hostEnd()},6000)}
+const LKEYS=[
+ {t:'경매 대박!',d:'소장품 이야기가 화제가 됐어요. 축하금 100코인!',f:P=>{P.coins+=100}},
+ {t:'복원 비용',d:'작품 물감이 벗겨졌어요. 복원 비용 40코인을 내요.',f:P=>{P.coins-=40}},
+ {t:'미술관 자유이용권',d:'다음 관람료 한 번이 무료예요.',f:P=>{P.freePass=true}},
+ {t:'도슨트 퀴즈',d:'퀴즈를 맞히면 80코인!',quiz:true},
+ {t:'타임머신 오작동',d:'무작위 작품 칸으로 이동해요.',goRandom:true},
+ {t:'명화 도난 사건',d:'수사를 돕느라 복원실에서 1턴 쉬어요.',go:7,rest:true},
+ {t:'장학금',d:'출발점으로 이동하며 장학금 100코인!',go:0},
+ {t:'나눔 전시회',d:'다른 모둠에게 20코인씩 나눠 줘요.',f:(P,L)=>{L.players.forEach((q,i)=>{if(i!==L.turn&&!q.out){P.coins-=20;q.coins+=20}})}}];
+async function keyApply(){const L=LIVE.L,P=hcur(),k=LKEYS[L.pending.k];
+  if(k.quiz){const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'key',id:ids[rnd(ids.length)],answered:null};push();return}
+  if(k.f){k.f(P,L);hostDebt(P);return hostEnd()}
+  const target=k.goRandom?SLOTS[rnd(SLOTS.length)]:k.go;L.pending=null;LIVE.busy=true;await hostMove((target-P.pos+28)%28,90);LIVE.busy=false;
+  if(k.rest){P.skip=1;L.dbl=false;return hostEnd()}if(target===0)return hostEnd();hostResolve()}
+function hostAct(act){const L=LIVE.L,P=hcur(),pd=L.pending,pos=pd.pos,o=L.owners[pos],cell=LIVE.cells[pos],w=cell.art;
+  if(act==='buy'&&!o&&pd.answered&&P.coins>=cell.price){P.coins-=cell.price;L.owners[pos]={p:L.turn,lvl:1};hlog(`${P.name} ‘${w.name}’ 소장!`);SFX.coin()}
+  else if(act==='up'&&o&&o.p===L.turn&&o.lvl<3){const c=Math.round(cell.price*.5);if(P.coins>=c){P.coins-=c;o.lvl++;hlog(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);SFX.match()}}
+  else if(act==='free'&&o&&o.p!==L.turn&&P.freePass){P.freePass=false;hlog(`${P.name} 자유이용권 사용`)}
+  else if(act==='pay'&&o&&o.p!==L.turn){let t=H_TOLL(pos);if(pd.answered)t=Math.ceil(t/2);P.coins-=t;L.players[o.p].coins+=t;hlog(`${P.name} → ${L.players[o.p].name} 관람료 ${t}`);hostDebt(P)}
+  else if(act!=='pass')return;
+  hostEnd()}
+function hostDebt(P){const L=LIVE.L,idx=L.players.indexOf(P);while(P.coins<0){const mine=Object.keys(L.owners).filter(k=>L.owners[k].p===idx).map(Number).sort((a,b)=>LIVE.cells[a].price-LIVE.cells[b].price);if(!mine.length)break;const pos=mine[0],pr=Math.round(LIVE.cells[pos].price/2);delete L.owners[pos];P.coins+=pr;hlog(`${P.name} ‘${LIVE.cells[pos].art.short}’ 매각 +${pr}`)}if(P.coins<0){P.out=true;P.coins=0;hlog(`${P.name} 파산…`)}}
+function hostEnd(){const L=LIVE.L;if(!L||L.phase==='over')return;clearTimeout(LIVE.autoT);L.here=-1;const P=hcur();
+  const alive=L.players.filter(p=>!p.out).length;if(alive===0||(L.players.length>1&&alive<=1))return hostOver();
+  if(L.dbl&&L.dblCount<2&&!P.out&&!P.skip){L.dblCount++;L.dbl=false;L.phase='roll';L.pending={type:'roll'};L.ev={who:L.turn,text:`${P.name} 더블! 한 번 더`};hlog(`${P.name} 더블 보너스`);push();return}
+  L.dbl=false;L.dblCount=0;let n=L.turn,g=0;do{n=(n+1)%L.players.length;if(n===0)L.round++;g++}while(L.players[n].out&&g<10);L.turn=n;
+  if(L.round>L.maxRounds)return hostOver();L.phase='roll';L.pending={type:'roll'};L.ev={who:n,text:`${L.players[n].name} 차례`};push()}
+function hAssets(i){const L=LIVE.L;let v=L.players[i].coins;for(const k in L.owners){const o=L.owners[k];if(o.p===i)v+=Math.round(LIVE.cells[k].price*(1+.5*(o.lvl-1)))}return v}
+function hostOver(){const L=LIVE.L;L.phase='over';L.pending=null;L.rank=L.players.map((p,i)=>({i,name:p.name,tok:p.tok,v:hAssets(i),n:Object.values(L.owners).filter(o=>o.p===i).length})).sort((a,b)=>b.v-a.v);L.ev={text:`${L.rank[0].name} 우승!`};hlog('게임 종료!');SFX.fanfare();push()}
+function buildLiveBoard(){const b=$('#lvBoard');if(!b)return;b.querySelectorAll('.cell').forEach(e=>e.remove());const f=document.createDocumentFragment();
+  LIVE.cells.forEach((c,i)=>{const[r,col]=gp(i),d=document.createElement('div');d.className='cell';d.style.gridRow=r;d.style.gridColumn=col;d.dataset.i=i;
+    if(c.t==='art'){const a=c.art;d.classList.add('art',sideCls(i));d.style.setProperty('--g',GROUPS[a.g].c);d.innerHTML=`${pic(a)}<span class="lbl"><b>${a.short}</b><span>${c.price}코인</span></span><span class="own" hidden></span><span class="tokens"></span>`}
+    else{const k=CORNER[c.t];d.classList.add(c.t==='key'?'keycell':'corner');d.innerHTML=`<span class="seal">${k.s}</span><b>${k.n}</b><small>${k.d}</small><span class="tokens"></span>`}
+    f.appendChild(d)});b.prepend(f);requestAnimationFrame(()=>paintAll(b))}
+function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')return;
+  if(!$('#lvBoard')){lv().innerHTML=`<div class="gamewrap"><div class="boardBox"><div class="board" id="lvBoard"><div class="center" id="lvCenter"></div></div></div>
+     <aside class="panel"><div class="pcard codeCard"><small>방 번호</small><b id="lvCode"></b><span class="muted">모둠은 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b></span></div>
+     <div class="pcard"><h3>참가 모둠 <small id="lvRound"></small></h3><div class="players" id="lvPlayers"></div></div>
+     <div class="pcard" id="lvSet"></div><div class="btnrow" id="lvCtl"></div><div class="pcard"><h3>게임 기록</h3><ul class="log" id="lvLog"></ul></div></aside></div>`;buildLiveBoard()}
+  $('#lvCode').textContent=L.code;
+  $('#lvRound').textContent=L.phase==='lobby'?'대기 중':L.phase==='over'?'게임 종료':`${Math.min(L.round,L.maxRounds)} / ${L.maxRounds} 라운드`;
+  $('#lvPlayers').innerHTML=L.players.length?L.players.map((p,i)=>{const t=TOKENS[p.tok];return `<div class="pl${i===L.turn&&L.phase!=='lobby'&&L.phase!=='over'?' now':''}${p.out?' out':''}"><span class="tk" style="background:${t.c}">${t.e}</span><span class="nm"><b>${esc2(p.name)}<i class="dot${p.online?' on':''}" title="${p.online?'연결됨':'연결 끊김'}"></i>${p.skip?'<span class="chip">쉬는 중</span>':''}</b><small>소장 ${Object.values(L.owners).filter(o=>o.p===i).length}점</small></span><span class="cn">${p.coins}<small>코인</small></span></div>`}).join(''):'<p class="muted">아직 들어온 모둠이 없어요.</p>';
+  $('#lvLog').innerHTML=L.log.slice(0,12).map(m=>`<li>${esc2(m)}</li>`).join('');
+  const set=$('#lvSet');
+  if(L.phase==='lobby'){set.hidden=false;set.innerHTML=`<h3>게임 설정</h3><div class="seg2 lvEd">${Object.entries(EDITIONS).map(([k,E])=>`<button type="button" data-ed="${k}" aria-pressed="${L.ed===k}">${E.name}</button>`).join('')}</div><div class="seg2" style="margin-top:8px">${[6,10,15].map(n=>`<button type="button" data-r="${n}" aria-pressed="${L.maxRounds===n}">${n}라운드</button>`).join('')}</div>`;
+    set.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>{L.ed=b.dataset.ed;LIVE.cells=makeCells(L.ed);buildLiveBoard();push()});
+    set.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{L.maxRounds=+b.dataset.r;push()})}else set.hidden=true;
+  const ctl=$('#lvCtl');
+  ctl.innerHTML=L.phase==='lobby'?`<button type="button" class="btn verm" id="lvGo" ${L.players.length?'':'disabled'}>게임 시작 (${L.players.length}모둠)</button><button type="button" class="ghost" id="lvQuit">방 닫기</button>`
+   :L.phase==='over'?`<button type="button" class="btn verm" id="lvAgain">같은 모둠으로 새 게임</button><button type="button" class="ghost" id="lvQuit">방 닫기</button>`
+   :`<button type="button" class="ghost" id="lvSkip">이번 차례 넘기기</button><button type="button" class="ghost" id="lvStop">게임 끝내기</button>`;
+  const on=(id,f)=>{const e=$('#'+id);if(e)e.onclick=f};
+  on('lvGo',hostStartGame);on('lvAgain',()=>{L.phase='lobby';L.rank=null;hostStartGame()});on('lvSkip',()=>{LIVE.busy=false;hlog('선생님이 차례를 넘겼어요');hostEnd()});on('lvStop',hostOver);
+  on('lvQuit',()=>{try{LIVE.peer.destroy()}catch(_){}LIVE.L=null;liveHome()});
+  // 보드
+  $$('#lvBoard .cell').forEach(el=>{const i=+el.dataset.i,o=L.owners[i],ov=el.querySelector('.own');
+    if(ov){if(o){const pc=TOKENS[L.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=`<i style="background:${pc}">${'★'.repeat(o.lvl)}</i>`;ov.hidden=false}else ov.hidden=true}
+    el.querySelector('.tokens').innerHTML=L.phase==='lobby'?'':L.players.map((p,k)=>p.out||p.pos!==i?'':`<i class="tok${k===L.turn?' me':''}" style="--pc:${TOKENS[p.tok].c}">${TOKENS[p.tok].e}</i>`).join('');
+    el.classList.toggle('here',i===L.here)});
+  // 가운데
+  const c=$('#lvCenter'),ev=L.ev,cur=L.players[L.turn];
+  if(L.phase==='lobby')c.innerHTML=`<div class="logo">아트마블</div><div class="edBadge">${EDITIONS[L.ed].name} · 실시간 대전</div><div class="bigCode"><small>방 번호</small>${L.code}</div><p class="cHint">모둠 크롬북에서 이 주소를 열고<br><b>미술사 마블 → 실시간 대전 → 방 참가하기</b></p><p class="cUrl">${esc2(location.href.split('#')[0])}</p>`;
+  else if(L.phase==='over')c.innerHTML=`<div class="logo">게임 종료</div><div class="rankBig">${L.rank.map((r,k)=>`<div><b>${k+1}</b><span class="tk" style="background:${TOKENS[r.tok].c}">${TOKENS[r.tok].e}</span><span>${esc2(r.name)}</span><em>${r.v}</em></div>`).join('')}</div>`;
+  else{const w=ev&&ev.id?BY[ev.id]:null,t=cur?TOKENS[cur.tok]:null;
+    c.innerHTML=`${w?`<div class="evArt">${pic(w)}</div><div class="evName">${w.name}<small>${w.artist} · ${w.ys}</small></div>`:`<div class="logo">아트마블</div>`}
+     <div class="turn">${t?`<i style="background:${t.c}">${t.e}</i>`:''}<b>${esc2(ev?ev.text:(cur?cur.name+' 차례':''))}</b></div>
+     ${w?'':`<div class="dice"><div class="die${L.rolling?' rolling':''}" id="lvD1"></div><div class="die${L.rolling?' rolling':''}" id="lvD2"></div></div>`}`;
+    if(!w){setDie($('#lvD1'),L.rolling?1+rnd(6):L.dice[0]);setDie($('#lvD2'),L.rolling?1+rnd(6):L.dice[1])}
+    paintAll(c)}}
+
+/* ---------- 모둠(참가자) ---------- */
+function joinForm(msg=''){LIVE.role='join';const saved=store.get('lv-join',{code:'',name:''});
+  lv().innerHTML=`<div class="joinBox"><span class="seal big gold">組</span><h2>방 참가하기</h2>${msg?`<div class="lvWarn">${msg}</div>`:''}
+   <form id="jf"><label>방 번호<input id="jCode" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" required value="${esc2(saved.code)}" placeholder="4자리 숫자"></label>
+   <label>모둠 이름<input id="jName" maxlength="10" required value="${esc2(saved.name)}" placeholder="예: 1모둠"></label>
+   <button class="btn verm">들어가기</button></form><p class="muted">연결이 끊기면 같은 방 번호와 같은 모둠 이름으로 다시 들어오면 이어서 할 수 있어요.</p><button type="button" class="ghost" id="jBack">← 처음으로</button></div>`;
+  $('#jBack').onclick=liveHome;
+  $('#jf').onsubmit=e=>{e.preventDefault();const code=$('#jCode').value.trim(),name=$('#jName').value.trim();if(!/^\d{4}$/.test(code)||!name)return;store.set('lv-join',{code,name});joinConnect(code,name)}}
+async function joinConnect(code,name){lv().innerHTML='<p class="lead">방에 연결하는 중이에요…</p>';LIVE.code=code;LIVE.name=name;
+  try{await loadPeer()}catch(e){joinForm('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');return}
+  if(LIVE.peer){try{LIVE.peer.destroy()}catch(_){}}
+  const p=new Peer({debug:0});LIVE.peer=p;let opened=false;
+  const to=setTimeout(()=>{if(!opened){try{p.destroy()}catch(_){}joinForm('10초 안에 연결되지 않았어요. 방 번호를 확인하고, 그래도 안 되면 학교 인터넷(방화벽)에서 실시간 연결이 막혀 있을 수 있어요.')}},10000);
+  p.on('open',()=>{const c=p.connect(PEER_PREFIX+code,{reliable:true});LIVE.conn=c;
+    c.on('open',()=>{opened=true;clearTimeout(to);c.send({t:'join',name})});
+    c.on('data',d=>joinMsg(d));
+    c.on('close',()=>{if(LIVE.role==='join')joinLost()})});
+  p.on('error',e=>{clearTimeout(to);if(!opened)joinForm(peerErr(e));else joinLost()})}
+function joinLost(){if($('#jLost'))return;lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn" id="jLost">선생님 화면과 연결이 끊어졌어요. <button type="button" class="btn" id="jRe">다시 연결</button></div>`);$('#jRe').onclick=()=>joinConnect(LIVE.code,LIVE.name)}
+function joinMsg(d){if(!d)return;if(d.t==='err'){LIVE.role='join';joinForm(d.m);return}
+  if(d.t==='welcome'){LIVE.me=d.pid;SFX.nav('game');return}
+  if(d.t==='state'){const prev=LIVE.L;LIVE.L=d.L;if(d.you!=null)LIVE.me=d.you;
+    const myTurnNow=LIVE.L.turn===LIVE.me&&LIVE.L.pending&&LIVE.L.pending.type==='roll';if(myTurnNow&&!(prev&&prev.turn===LIVE.me&&prev.pending&&prev.pending.type==='roll'))SFX.nav('game');
+    renderJoin(prev)}}
+const jsend=m=>{try{LIVE.conn&&LIVE.conn.open&&LIVE.conn.send(m)}catch(_){}};
+function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LIVE.me];if(!me)return;const t=TOKENS[me.tok],mine=L.turn===LIVE.me,pd=L.pending;
+  const cells=makeCells(L.ed);const here=cells[me.pos];
+  const keyOf=JSON.stringify([L.phase,L.turn,pd&&pd.type,pd&&pd.id,pd&&pd.pos,pd&&pd.answered,pd&&pd.k,me.coins,me.pos,L.round,L.rolling,L.owners]);
+  if(LIVE.lastKey===keyOf&&$('#jMain'))return;LIVE.lastKey=keyOf;
+  let main='';
+  if(L.phase==='lobby')main=`<div class="jWait"><span class="seal big">待</span><h3>입장 완료!</h3><p>선생님이 게임을 시작할 때까지 기다려 주세요.</p><p class="muted">지금 들어온 모둠: ${L.players.map(p=>esc2(p.name)).join(', ')}</p></div>`;
+  else if(L.phase==='over'){const r=L.rank.findIndex(x=>x.i===LIVE.me);main=`<div class="jWait"><span class="seal big gold">賞</span><h3>${r===0?'우승이에요!':`${r+1}등이에요`}</h3><p>총자산 ${L.rank[r].v} · 소장 ${L.rank[r].n}점</p><p class="muted">선생님 화면에서 최종 순위를 확인해요.</p></div>`}
+  else if(!mine){const c=L.players[L.turn];main=`<div class="jWait"><span class="tkBig" style="background:${TOKENS[c.tok].c}">${TOKENS[c.tok].e}</span><h3>${esc2(c.name)} 차례예요</h3><p>${esc2(L.ev&&L.ev.text||'')}</p><p class="muted">내 차례가 되면 소리와 함께 화면이 바뀌어요.</p></div>`}
+  else if(L.phase==='moving')main=`<div class="jWait"><span class="seal big">走</span><h3>말이 움직이는 중…</h3><p>선생님 화면을 봐요!</p></div>`;
+  else if(pd&&pd.type==='roll')main=`<div class="jRoll"><h3>우리 모둠 차례!</h3>${me.skip?'<p>복원실에 있어요. 퀴즈를 맞히면 바로 탈출해요.</p>':''}<button type="button" class="roll" id="jRollBtn">${me.skip?'탈출 퀴즈 풀기':'주사위 굴리기'}</button></div>`;
+  else if(pd&&pd.type==='info')main=`<div class="jWait"><span class="seal big">${pd.seal}</span><h3>${pd.title}</h3><p>${pd.body}</p><button type="button" class="btn primary" id="jOk">확인 · 턴 마치기</button></div>`;
+  else if(pd&&pd.type==='key'){const k=LKEYS[pd.k];main=`<div class="jWait keycard"><span class="seal big gold">鍵</span><div class="keyEyebrow">황금열쇠</div><h3>${k.t}</h3><p>${k.d}</p><button type="button" class="btn primary" id="jOk">${k.quiz?'퀴즈 풀기':'확인'}</button></div>`}
+  else if(pd&&pd.type==='time')main=`<div class="jWait" style="text-align:left"><h3>타임머신: 갈 곳을 골라요</h3><div class="tmGrid">${SLOTS.map(p=>{const w=cells[p].art;return `<button type="button" class="tmBtn" data-pos="${p}">${pic(w)}<span>${w.short}<small>${w.ys}</small></span></button>`}).join('')}</div><button type="button" class="btn" id="jStay" style="margin-top:10px">여기 머무르기</button></div>`;
+  else if(pd&&pd.type==='quiz'){const w=BY[pd.id];main=`<div class="jArt"><div class="jPic">${pic(w)}</div><div class="jBody"><div class="keyEyebrow">${pd.reason==='rest'?'복원실 탈출 퀴즈':'도슨트 퀴즈 (맞히면 +80)'}</div><h3>${w.name}</h3>${pd.answered==null?'<div id="jQuiz"></div>':`<div class="qdone ${pd.answered?'ok':'no'}"><b>${pd.answered?'정답!':'아쉬워요.'}</b> ${w.q.e}</div>`}</div></div>`}
+  else if(pd&&pd.type==='art'){const w=BY[pd.id],o=L.owners[pd.pos],price=cells[pd.pos].price;const toll=o?Math.round(price*[0,.4,.8,1.3][o.lvl]):0;
+    let acts='';const B=(tx,a,cls='',dis=false)=>`<button type="button" class="btn ${cls}" data-act="${a}" ${dis?'disabled':''}>${tx}</button>`;
+    if(!o){acts=pd.answered===null?B('그냥 지나가기','pass'):pd.answered?B(`소장하기 · ${price}코인`,'buy','verm',me.coins<price)+B('지나가기','pass'):B('턴 마치기','pass','primary')}
+    else if(o.p===LIVE.me){const c=Math.round(price*.5);acts=(o.lvl<3?B(`특별전 열기 · ${c}코인`,'up','verm',me.coins<c):'')+B('지나가기','pass')}
+    else acts=me.freePass?B('자유이용권으로 무료 관람','free','verm'):B(`관람료 ${pd.answered?Math.ceil(toll/2):toll}코인 내기`,'pay',pd.answered===null?'':'primary');
+    const strip=!o?`주인 없는 작품 · 소장가 <b>${price}코인</b> · 퀴즈를 맞혀야 소장할 수 있어요`:o.p===LIVE.me?`우리 소장품 · 특별전 Lv${o.lvl}`:`${esc2(L.players[o.p].name)}의 소장품 · 관람료 ${toll}코인 · 퀴즈를 맞히면 반값`;
+    const needQuiz=pd.answered===null&&!(o&&o.p===LIVE.me);
+    main=`<div class="jArt"><div class="jPic">${pic(w)}</div><div class="jBody"><div class="eyebrow"><i style="--c:${GROUPS[w.g].c}"></i>${GROUPS[w.g].n}</div><h3>${w.name}</h3><small class="muted">${w.artist} · ${w.year}</small><div class="strip">${strip}</div>
+      <details class="jStory" ${needQuiz?'':'open'}><summary>작품 이야기 읽기</summary>${w.story.map(p=>`<p>${p}</p>`).join('')}</details>
+      ${needQuiz?'<div id="jQuiz"></div>':pd.answered!==null?`<div class="qdone ${pd.answered?'ok':'no'}"><b>${pd.answered?'정답!':'아쉬워요.'}</b> ${w.q.e}</div>`:''}<div class="acts jActs">${acts}</div></div></div>`}
+  lv().innerHTML=`<div class="jHead"><span class="tk" style="background:${t.c}">${t.e}</span><b>${esc2(me.name)}</b><span class="cnt">코인 <b>${me.coins}</b></span><span class="cnt">소장 <b>${Object.values(L.owners).filter(o=>o.p===LIVE.me).length}</b>점</span><span class="cnt">위치 <b>${here.t==='art'?here.art.short:CORNER[here.t].n}</b></span><span class="cnt">${L.phase==='lobby'?'대기 중':`${Math.min(L.round,L.maxRounds)}/${L.maxRounds} 라운드`}</span></div><div id="jMain">${main}</div>`;
+  paintAll(lv());
+  const on=(id,f)=>{const e=$('#'+id);if(e)e.onclick=f};
+  on('jRollBtn',()=>{$('#jRollBtn').disabled=true;SFX.dice();jsend({t:'roll'})});on('jOk',()=>{jsend({t:'ok'});SFX.click()});on('jStay',()=>jsend({t:'time',pos:null}));
+  $$('#jMain .tmBtn').forEach(b=>b.onclick=()=>jsend({t:'time',pos:+b.dataset.pos}));
+  $$('#jMain [data-act]').forEach(b=>b.onclick=()=>{if(b.disabled)return;$$('#jMain [data-act]').forEach(x=>x.disabled=true);jsend({t:'act',act:b.dataset.act})});
+  const q=$('#jQuiz');if(q&&pd)mountQuiz(q,BY[pd.id],ok=>setTimeout(()=>jsend({t:'answer',ok}),700))}
+
+/* ---------- 연결 ---------- */
+function renderLive(){if(LIVE.role==='host'&&LIVE.L){const b=$('#lvBoard');if(!b){renderHost()}else{renderHost()}}else if(LIVE.role==='join'&&LIVE.L){LIVE.lastKey=null;renderJoin()}else if(LIVE.role==='join')joinForm();else liveHome()}
+function liveInit(){const bar=document.createElement('div');bar.className='modeBar';bar.innerHTML=`<span class="muted">게임 방식</span><button type="button" class="ghost on">한 기기에서 함께</button><button type="button" class="ghost" id="toLive">실시간 대전 · 교사 화면 + 모둠 크롬북</button>`;
+  $('#view-game').prepend(bar);$('#toLive').onclick=()=>{showView('live');SFX.nav('game')};
+  if(location.hash==='#join'){showView('live');joinForm()}else if(location.hash==='#host'){showView('live')}}
+setTimeout(liveInit,0);
 
 window.claude?.hot?.snapshot?.(()=>({S}));
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
