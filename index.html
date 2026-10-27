@@ -769,6 +769,21 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 .htMore{width:100%;justify-content:center;background:#fff7e0!important;border:2px dashed #e9c06a!important;color:#5a3b00!important;font-weight:700}.htMore small{opacity:.7;font-weight:400}
 .htMeter{display:flex;gap:4px;margin-top:10px}.htMeter i{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#3fae6a,#f0c35c,#e5482f);opacity:.18}.htMeter i.on{opacity:1}
 .tc.ans{outline:4px solid #2f9a5c;outline-offset:2px;animation:mpWin .6s ease}.tc.bad{outline:4px solid #d0402f;outline-offset:2px;filter:grayscale(.5)}
+
+/* 교사 화면 퀴즈 중계 */
+.hq{flex:none;width:100%;background:#fff;border:2px solid #e9c06a;border-radius:12px;padding:8px 10px;text-align:left;font-size:clamp(11px,1.9cqw,17px);box-shadow:0 6px 16px rgba(120,80,10,.15)}
+.hqQ{font-weight:700;line-height:1.4;display:flex;flex-wrap:wrap;gap:6px;align-items:center}.hqQ b{color:#c8372b}
+.hqWait{font-weight:600;font-size:.85em;color:#8a5f12;background:#fff3cf;border-radius:99px;padding:2px 10px;animation:hqBlink 1.2s ease-in-out infinite}
+@keyframes hqBlink{50%{opacity:.45}}
+.hqRes{font-weight:900;border-radius:99px;padding:2px 12px;animation:mpWin .6s ease}.hqRes.ok{background:#dff3e6;color:#1f8a4c}.hqRes.no{background:#fbe1dd;color:#c8372b}
+.hqO{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}
+.hqO div{display:flex;gap:6px;align-items:center;border:1.5px solid var(--line);border-radius:8px;padding:4px 7px;line-height:1.3;background:#fffdf7}
+.hqO i{font-style:normal;flex:none;width:1.5em;height:1.5em;border-radius:50%;display:grid;place-items:center;background:#f1ebdd;font-weight:700;font-size:.85em}
+.hqO .right{border-color:#2f9a5c;background:#dff3e6}.hqO .right i{background:#2f9a5c;color:#fff}
+.hqO .wrong{border-color:#d0402f;background:#fbe1dd}.hqO .wrong i{background:#d0402f;color:#fff}
+.hqO .pk{box-shadow:0 0 0 3px rgba(0,0,0,.08)}.hqO .pk::after{content:"← 선택";margin-left:auto;font-size:.8em;font-weight:700;color:#555}
+.hqE{margin-top:6px;font-size:.88em;color:#4a443a;line-height:1.45}
+.center.spot .evArt{min-height:60px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -3589,7 +3604,7 @@ function mountQuiz(el,w,done){const q=w.q,order=shuffle([0,1,2,3]);
   let fin=false;el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(fin)return;fin=true;const ok=+b.dataset.oi===q.a;
     el.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.oi===q.a)x.classList.add('right')});if(!ok)b.classList.add('wrong');
     const ex=el.querySelector('.qexp');ex.hidden=false;ex.className='qexp '+(ok?'ok':'no');ex.innerHTML=`<b>${ok?'정답!':'아쉬워요.'}</b> ${q.e}`;
-    if(ok){progress.solved[w.id]=true;saveProg();SFX.correct(w.side)}else buzz();done&&done(ok);setTimeout(()=>{const sc=el.closest('.acBody'),sh=el.closest('.sheet');[sc,sh].forEach(s=>{if(s&&s.scrollHeight>s.clientHeight)s.scrollTo({top:s.scrollHeight,behavior:'smooth'})})},150)})}
+    if(ok){progress.solved[w.id]=true;saveProg();SFX.correct(w.side)}else buzz();done&&done(ok,+b.dataset.oi);setTimeout(()=>{const sc=el.closest('.acBody'),sh=el.closest('.sheet');[sc,sh].forEach(s=>{if(s&&s.scrollHeight>s.clientHeight)s.scrollTo({top:s.scrollHeight,behavior:'smooth'})})},150)})}
 
 /* ============ 마블 게임 ============ */
 const SLOTS=[1,2,3,4,6,8,9,10,11,12,13,15,16,17,18,19,20,22,24,25,26,27];
@@ -4045,10 +4060,10 @@ function hostMsg(c,d){const L=LIVE.L;if(!d||!L)return;
   if(c.pid!==L.turn||L.phase==='over'||LIVE.busy)return;const pd=L.pending;if(!pd)return;
   if(d.t==='roll'&&pd.type==='roll')return hostRoll();
   if(d.t==='ok'&&(pd.type==='info'||pd.type==='key'))return pd.type==='key'?keyApply():hostEnd();
-  if(d.t==='answer'&&pd.type==='quiz'&&pd.answered==null){pd.answered=!!d.ok;d.ok?SFX.correct():SFX.wrong();
+  if(d.t==='answer'&&pd.type==='quiz'&&pd.answered==null){pd.answered=!!d.ok;pd.pick=(d.pick>=0&&d.pick<4)?d.pick|0:null;d.ok?SFX.correct():SFX.wrong();
     const P=hcur();if(pd.reason==='rest'){P.skip=0;if(d.ok){hlog(`${P.name} 복원실 탈출!`);L.pending={type:'roll'};L.ev={who:L.turn,text:`${P.name} 퀴즈 정답! 바로 주사위를 굴려요`};push()}else{hlog(`${P.name} 이번 차례는 쉬어요`);setTimeout(hostEnd,1500);push()}return}
     if(pd.reason==='key'){if(d.ok){P.coins+=80;hlog(`${P.name} 과거 시험 합격 +80`)}setTimeout(hostEnd,1500);push();return}}
-  if(d.t==='answer'&&pd.type==='art'&&pd.answered==null){pd.answered=!!d.ok;const o=L.owners[pd.pos],P=hcur();
+  if(d.t==='answer'&&pd.type==='art'&&pd.answered==null){pd.answered=!!d.ok;pd.pick=(d.pick>=0&&d.pick<4)?d.pick|0:null;const o=L.owners[pd.pos],P=hcur();
     if(d.ok){SFX.correct();if(!o){P.coins+=20;hlog(`${P.name} 퀴즈 정답 +20`)}}else SFX.wrong();
     L.ev.text=`${P.name} ${d.ok?'정답!':'아쉽게 오답'}`;push();return}
   if(d.t==='act'&&pd.type==='art')return hostAct(d.act);
@@ -4094,7 +4109,7 @@ async function keyApply(){const L=LIVE.L,P=hcur(),k=POUCH[L.pending.k];L.pending
     case 'rest':await to(7);P.skip=1;L.dbl=false;return hostEnd();
     case 'start':await to(0);return hostEnd();
     case 'random':await to(SLOTS[rnd(SLOTS.length)]);return hostResolve();
-    case 'quiz':{const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'key',id:ids[rnd(ids.length)],answered:null};push();return}}}
+    case 'quiz':{const ids=EDITIONS[L.ed].ids(),id=ids[rnd(ids.length)];L.pending={type:'quiz',reason:'key',id,answered:null};L.ev={who:L.turn,id,text:`${P.name} 과거 시험장 문제 도전 중`};push();return}}}
 function hostAct(act){const L=LIVE.L,P=hcur(),pd=L.pending,pos=pd.pos,o=L.owners[pos],cell=LIVE.cells[pos],w=cell.art;
   if(act==='buy'&&!o&&pd.answered&&P.coins>=cell.price){P.coins-=cell.price;L.owners[pos]={p:L.turn,lvl:1};hlog(`${P.name} ‘${w.name}’ 소장!`);SFX.coin();goldCelebrate(w,P.name)}
   else if(act==='up'&&o&&o.p===L.turn&&o.lvl<3){const c=Math.round(cell.price*.5);if(P.coins>=c){P.coins-=c;o.lvl++;hlog(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);SFX.match()}}
@@ -4148,7 +4163,7 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
     c.innerHTML=`<div class="logo">아트마블</div><div class="edBadge">${EDITIONS[L.ed].name} · 실시간 대전</div><div class="lobbyRow">${web?`<div class="qrBox">${qrSvg(jurl)}<small>카메라로 찍으면 바로 참가</small></div>`:''}<div class="bigCode"><small>방 번호</small>${L.code}</div></div><p class="cHint">QR을 찍거나, 이 주소에서 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b></p><p class="cUrl">${esc2(base)}</p>`}
   else if(L.phase==='over')c.innerHTML=`<div class="logo">게임 종료</div><div class="rankBig">${L.rank.map((r,k)=>`<div><b>${k+1}</b><span class="tk" style="background:${TOKENS[r.tok].c}">${TOKENS[r.tok].e}</span><span>${esc2(r.name)}</span><em>${r.v}</em></div>`).join('')}</div>`;
   else{const w=ev&&ev.id?BY[ev.id]:null,t=cur?TOKENS[cur.tok]:null;
-    c.classList.toggle('spot',!!w);c.innerHTML=`${w?`<button type="button" class="evArt" data-full="${w.id}" title="크게 보기">${pic(w)}<span class="evZoom">⤢ 크게</span></button><div class="evName">${w.name}<small>${w.artist} · ${w.ys}</small></div>`:(ev&&ev.pouch!=null&&L.pending&&L.pending.type==='key')?`<div class="mpHost"><div class="mpSpin">${ICON.get('mapae')}</div><b>${POUCH[ev.pouch].e} ${POUCH[ev.pouch].t}</b></div>`:`<div class="logo">아트마블</div>`}
+    c.classList.toggle('spot',!!w);c.innerHTML=`${w?`<button type="button" class="evArt" data-full="${w.id}" title="크게 보기">${pic(w)}<span class="evZoom">⤢ 크게</span></button><div class="evName">${w.name}<small>${w.artist} · ${w.ys}</small></div>${hostQuizHTML(L,w)}`:(ev&&ev.pouch!=null&&L.pending&&L.pending.type==='key')?`<div class="mpHost"><div class="mpSpin">${ICON.get('mapae')}</div><b>${POUCH[ev.pouch].e} ${POUCH[ev.pouch].t}</b></div>`:`<div class="logo">아트마블</div>`}
      <div class="turn">${t?`<i style="background:${t.c}">${t.e}</i>`:''}<b>${esc2(ev?ev.text:(cur?cur.name+' 차례':''))}</b></div>
      ${w||(ev&&ev.pouch!=null&&L.pending&&L.pending.type==='key')?'':`<div class="dice"><div class="die" id="lvD1"></div><div class="die" id="lvD2"></div></div>`}`;
     if(!w&&$('#lvD1')){const an=!L.rolling&&!!LIVE.wasRolling;['#lvD1','#lvD2'].forEach((s,k)=>{setDie($(s),L.dice[k],an);$(s).classList.toggle('spinning',!!L.rolling)})}
@@ -4213,7 +4228,7 @@ function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LI
   on('jRollBtn',()=>{$('#jRollBtn').disabled=true;SFX.dice();jsend({t:'roll'})});on('jOk',()=>{jsend({t:'ok'});SFX.click()});on('jStay',()=>jsend({t:'time',pos:null}));
   $$('#jMain .tmBtn').forEach(b=>b.onclick=()=>jsend({t:'time',pos:+b.dataset.pos}));
   $$('#jMain [data-act]').forEach(b=>b.onclick=()=>{if(b.disabled)return;$$('#jMain [data-act]').forEach(x=>x.disabled=true);jsend({t:'act',act:b.dataset.act})});
-  const q=$('#jQuiz');if(q&&pd)mountQuiz(q,BY[pd.id],ok=>setTimeout(()=>jsend({t:'answer',ok}),700))}
+  const q=$('#jQuiz');if(q&&pd)mountQuiz(q,BY[pd.id],(ok,pick)=>setTimeout(()=>jsend({t:'answer',ok,pick}),700))}
 
 /* ---------- 연결 ---------- */
 function renderLive(){if(LIVE.role==='host'&&LIVE.L){const b=$('#lvBoard');if(!b){renderHost()}else{renderHost()}}else if(LIVE.role==='join'&&LIVE.L){LIVE.lastKey=null;renderJoin()}else if(LIVE.role==='join')joinForm();else liveHome()}
@@ -4223,6 +4238,12 @@ function liveInit(){const bar=document.createElement('div');bar.className='modeB
 setTimeout(liveInit,0);
 
 function artFull(w){const d=document.createElement('div');d.className='artFull';d.innerHTML=`<div class="afIn">${pic(w)}</div><div class="afCap"><b>${w.name}</b> ${w.artist} · ${w.ys}<small>화면을 누르면 닫혀요</small></div>`;document.body.appendChild(d);paintAll(d);SFX.open();d.onclick=()=>d.remove()}
+
+function hostQuizHTML(L,w){const pd=L.pending;if(!pd||!(pd.type==='quiz'||pd.type==='art')||pd.id!==w.id)return '';
+  if(pd.type==='art'){const o=L.owners[pd.pos];if(o&&o.p===L.turn)return ''}
+  const q=w.q,ans=pd.answered,P=L.players[L.turn];
+  const st=ans==null?`<span class="hqWait">⏳ ${esc2(P?P.name:'')} 모둠이 푸는 중…</span>`:ans?'<span class="hqRes ok">⭕ 정답!</span>':'<span class="hqRes no">❌ 아쉬워요</span>';
+  return `<div class="hq${ans==null?'':' done'}"><div class="hqQ"><b>Q.</b> ${q.q} ${st}</div><div class="hqO">${q.o.map((t,i)=>`<div class="${ans!=null&&i===q.a?'right':''}${ans!=null&&pd.pick===i&&i!==q.a?' wrong':''}${ans!=null&&pd.pick===i?' pk':''}"><i>${'ABCD'[i]}</i>${t}</div>`).join('')}</div>${ans!=null?`<div class="hqE">${q.e}</div>`:''}</div>`}
 
 /* ============ 골드 소장 카드 · 3D 주사위 · 암행어사 마패 ============ */
 function goldCard(w,{lvl=1,size='m',who=''}={}){const G=GROUPS[w.g];
