@@ -785,6 +785,7 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 .hqE{margin-top:6px;font-size:.88em;color:#4a443a;line-height:1.45}
 .center.spot .evArt{min-height:60px}
 .resetRow{display:flex;gap:8px;flex-wrap:wrap}.ghost.danger{color:#c8372b;border-color:#e9a39c}.ghost.danger:hover{background:#c8372b;color:#fff}
+.lvResume{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff7e0;border:2px solid #e9c06a;border-radius:14px;padding:12px 16px;margin-bottom:14px}.lvResume>div{flex:1;min-width:200px;display:grid;gap:2px}.lvResume small{color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -827,7 +828,7 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
         </div>
         <aside class="panel">
           <div class="pcard"><h3>플레이어 <small id="roundInfo"></small></h3><div class="players" id="players"></div></div>
-          <div class="btnrow"><button type="button" class="ghost" id="newBtn">편 바꾸기 · 새 게임</button><button type="button" class="ghost" id="rulesBtn">게임 방법</button></div>
+          <div class="btnrow"><button type="button" class="ghost danger" id="restartBtn">🔄 처음부터 다시</button><button type="button" class="ghost" id="newBtn">편 바꾸기 · 새 게임</button><button type="button" class="ghost" id="rulesBtn">게임 방법</button></div>
           <div class="pcard"><h3>게임 기록</h3><ul class="log" id="log"></ul></div>
         </aside>
       </div>
@@ -3734,7 +3735,7 @@ function rules(){showModal(`<div class="info"><span class="seal big">法</span><
   <li><b>주인 없는 작품 칸</b>: 작품을 감상하고 퀴즈를 맞히면 소장할 수 있어요. 정답 보너스 20코인!</li>
   <li><b>다른 사람의 소장품</b>: 관람료를 내요. 할인 퀴즈를 맞히면 반값이에요.</li>
   <li><b>내 소장품</b>: 특별전을 열면 관람료가 올라가요(최대 별 3개).</li>
-  <li><b>특수 칸</b>: 출발(+100), 복원실(1턴 쉬기), 타임머신(원하는 작품으로), 아트페어(주사위×20), 마패.</li>
+  <li><b>특수 칸</b>: 출발(+100), 복원실(1턴 쉬기), 타임머신(원하는 작품으로), 아트페어(주사위×20), 암행어사 마패(장원급제·어명이오·귀양살이 등 깜짝 이벤트 14가지).</li><li><b>골드 소장 카드</b>: 작품을 소장하면 그 시대 유물이 그려진 금빛 카드를 받아요. 많이 모을수록 부자!</li>
   <li>더블이면 한 번 더! 정한 라운드가 끝나면 코인+작품 가치가 가장 큰 사람이 우승해요.</li></ol><div class="acts"><button class="btn primary" id="infoOk">알겠어요</button></div></div>`,true,true);$('#infoOk').onclick=closeModal}
 
 /* ============ 도감 ============ */
@@ -3757,7 +3758,9 @@ function boot(data){
   CELLS=makeCells(S.ed);buildBoard();setDie($('#d1'),5);setDie($('#d2'),1);if(S.phase==='moving'||S.phase==='action')S.phase='roll';render();
   $$('.nav button').forEach(b=>b.onclick=()=>{showView(b.dataset.view);SFX.nav(b.dataset.view)});
   const home=$('#homeBtn');if(home)home.onclick=()=>{$('#modal').hidden=true;A=null;showView('game');SFX.nav('game')};
-  $('#rollBtn').onclick=onRoll;$('#newBtn').onclick=setup;$('#rulesBtn').onclick=rules;
+  $('#rollBtn').onclick=onRoll;$('#newBtn').onclick=setup;
+  let armR=false;$('#restartBtn').onclick=e=>{const b=e.currentTarget;if(!armR){armR=true;b.textContent='한 번 더 누르면 리셋!';setTimeout(()=>{armR=false;b.textContent='🔄 처음부터 다시'},3000);return}armR=false;b.textContent='🔄 처음부터 다시';
+    $('#modal').hidden=true;A=null;S=newGame(S.players.map(p=>p.name),S.maxRounds,S.ed);CELLS=makeCells(S.ed);buildBoard();TOKPOS.g={};COINMEM.g=null;setDie($('#d1'),5);setDie($('#d2'),1);render();save();SFX.pop()};$('#rulesBtn').onclick=rules;
   const sb=$('#soundBtn'),upd=()=>{sb.textContent=soundOn?'🔊':'🔇';sb.title=soundOn?'소리 켜짐':'소리 꺼짐';sb.setAttribute('aria-pressed',soundOn)};upd();sb.onclick=()=>{soundOn=!soundOn;store.set('artmarble-sound',soundOn);upd();SFX.click()};
   let armed=false;$('#resetBtn').onclick=e=>{if(!armed){armed=true;e.target.textContent='한 번 더 누르면 지워져요';setTimeout(()=>{armed=false;e.target.textContent='기록 지우기'},3000);return}progress={read:{},solved:{},stats:{},badges:{}};saveProg();armed=false;e.target.textContent='기록 지우기';renderBadges()};
   $('#modalX').onclick=closeModal;$('#modal').addEventListener('click',e=>{if(e.target.id==='modal'&&modalClosable)closeModal()});
@@ -3935,7 +3938,7 @@ function memory(s,el){let cards,open,matched,moves,lock,won=false;
   el.innerHTML=`<p class="lead">짝 맞추기는 카드가 한눈에 보이도록 <b>전체 화면</b>으로 열려요.</p><button class="btn verm" id="mmOpen">전체 화면으로 다시 열기</button>`;
   $('#mmOpen').onclick=()=>launch();
   let wrap=null;
-  function launch(){wrap=document.createElement('div');wrap.className='mmFull';wrap.setAttribute('role','dialog');wrap.setAttribute('aria-label','짝 맞추기 카드');document.body.appendChild(wrap);document.documentElement.style.overflow='hidden';window.addEventListener('resize',fit);document.addEventListener('keydown',esc);start()}
+  function launch(){document.querySelectorAll('.mmFull').forEach(e=>e.remove());wrap=document.createElement('div');wrap.className='mmFull';wrap.setAttribute('role','dialog');wrap.setAttribute('aria-label','짝 맞추기 카드');document.body.appendChild(wrap);document.documentElement.style.overflow='hidden';window.addEventListener('resize',fit);document.addEventListener('keydown',esc);start()}
   function close(){if(!wrap)return;wrap.remove();wrap=null;document.documentElement.style.overflow='';window.removeEventListener('resize',fit);document.removeEventListener('keydown',esc)}
   function esc(e){if(e.key==='Escape'&&$('#modal').hidden)close()}
   function start(){const ws=shuffle(sideWorks(s).filter(w=>IMG[w.id])).slice(0,6);cards=shuffle(ws.flatMap(w=>[{id:w.id,k:'img'},{id:w.id,k:'name'}]));open=[];matched=new Set();moves=0;lock=false;won=false;draw()}
@@ -4029,21 +4032,24 @@ const esc2=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 /* ---------- 첫 화면 ---------- */
 function liveHome(){LIVE.role=null;
   lv().innerHTML=`<div class="sechead"><div><h2>실시간 대전</h2><p>교사 PC(전자칠판)에 큰 보드판을 띄우고, 모둠마다 크롬북으로 들어와 한 판에서 함께 겨뤄요. 학생 로그인은 필요 없어요.</p></div><button type="button" class="ghost" id="lvBack">← 한 기기 모드로</button></div>
-   ${inClaude()?`<div class="lvWarn"><b>이 화면에서는 실시간 대전이 연결되지 않아요.</b> 깃허브 페이지 주소(예: hongji33.github.io/artmarble)에서 열어 주세요.</div>`:''}
+   ${inClaude()?`<div class="lvWarn"><b>이 화면에서는 실시간 대전이 연결되지 않아요.</b> 깃허브 페이지 주소(hongji33.github.io/arthistory)에서 열어 주세요.</div>`:''}
+   ${(()=>{const sv=store.get('lv-host',null);return sv&&sv.L&&Date.now()-sv.t<6*3600e3?`<div class="lvResume"><div><b>진행 중이던 방 ${esc2(sv.code)}</b><small>${sv.L.players.map(p=>esc2(p.name)).join(', ')} · ${Math.min(sv.L.round,sv.L.maxRounds)}/${sv.L.maxRounds} 라운드 · 실수로 새로고침했다면 이어서 열 수 있어요.</small></div><button type="button" class="btn verm" id="lvResume">이어서 열기</button><button type="button" class="ghost" id="lvDrop">버리기</button></div>`:''})()}
    <div class="lvPick"><button type="button" class="lvCard" id="lvHost"><span class="seal big">師</span><b>교사용 · 방 만들기</b><small>교사 PC나 전자칠판에서 눌러요. 방 번호와 큰 보드판이 나타나요.</small></button>
    <button type="button" class="lvCard" id="lvJoin"><span class="seal big gold">組</span><b>모둠용 · 방 참가하기</b><small>모둠 크롬북에서 눌러요. 방 번호와 모둠 이름을 넣으면 내 조종기가 열려요.</small></button></div>
    <ol class="lvHow"><li>선생님이 <b>방 만들기</b>를 누르면 4자리 방 번호가 나와요.</li><li>모둠은 같은 주소에서 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b>를 눌러 번호를 입력해요.</li><li>모두 들어오면 선생님이 <b>게임 시작</b>! 자기 차례에 크롬북으로 주사위를 굴리고 퀴즈를 풀어요.</li></ol>`;
-  $('#lvBack').onclick=()=>showView('game');$('#lvHost').onclick=hostStart;$('#lvJoin').onclick=()=>joinForm()}
+  $('#lvBack').onclick=()=>showView('game');$('#lvHost').onclick=hostStart;$('#lvJoin').onclick=()=>joinForm();
+  const rs=$('#lvResume');if(rs)rs.onclick=()=>{const sv=store.get('lv-host',null);if(sv)hostStart(sv)};const dr=$('#lvDrop');if(dr)dr.onclick=()=>{try{localStorage.removeItem('lv-host')}catch(_){}liveHome()}}
 function lvError(msg){lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn">${msg}</div>`)}
 function peerErr(e){const t=e&&e.type;
   return t==='peer-unavailable'?'그 번호의 방을 찾을 수 없어요. 방 번호를 다시 확인해 주세요.':t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'?'연결 서버에 닿지 못했어요. 인터넷 연결이나 학교 방화벽을 확인해 주세요.':t==='browser-incompatible'?'이 브라우저는 실시간 연결을 지원하지 않아요. 크롬을 사용해 주세요.':'연결 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'}
 
 /* ---------- 교사(호스트) ---------- */
-async function hostStart(){lv().innerHTML='<p class="lead">방을 만드는 중이에요…</p>';
+async function hostStart(resume){if(resume&&resume.type)resume=null;lv().innerHTML='<p class="lead">방을 만드는 중이에요…</p>';
   try{await loadPeer()}catch(e){liveHome();lvError('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');return}
-  const tryOpen=n=>{const code=String(1000+rnd(9000));const p=new Peer(PEER_PREFIX+code,{debug:0});
-    p.on('open',()=>{LIVE.peer=p;LIVE.code=code;LIVE.role='host';LIVE.conns=[];LIVE.L={code,ed:'mix',maxRounds:10,phase:'lobby',players:[],owners:{},turn:0,round:1,log:['방을 만들었어요. 모둠이 들어오기를 기다리는 중…'],dice:[5,1],here:-1,pending:null,ev:null,dbl:false,dblCount:0};LIVE.cells=makeCells('mix');renderHost()});
+  const tryOpen=n=>{const code=resume&&n<8?String(resume.code):String(1000+rnd(9000));const p=new Peer(PEER_PREFIX+code,{debug:0});
+    p.on('open',()=>{LIVE.peer=p;LIVE.code=code;LIVE.role='host';LIVE.conns=[];if(resume){LIVE.L=resume.L;LIVE.L.players.forEach(q=>q.online=false);if(!LIVE.L.pending||LIVE.L.phase==='moving'||LIVE.L.rolling){LIVE.L.pending={type:'roll'};LIVE.L.phase='roll'}LIVE.L.rolling=false;LIVE.cells=makeCells(LIVE.L.ed);LIVE.L.log.unshift('방을 다시 열었어요. 모둠 화면이 자동으로 다시 연결돼요.');buildLiveBoard&&$('#lvBoard')&&buildLiveBoard();resume=null;renderHost();return}LIVE.L={code,ed:'mix',maxRounds:10,phase:'lobby',players:[],owners:{},turn:0,round:1,log:['방을 만들었어요. 모둠이 들어오기를 기다리는 중…'],dice:[5,1],here:-1,pending:null,ev:null,dbl:false,dblCount:0};LIVE.cells=makeCells('mix');renderHost()});
     LIVE.clients={};relayListen(p,(src,d)=>{if(!d)return;let c=LIVE.clients[src];if(!c)c=LIVE.clients[src]={peer:src,open:true,send:m=>relaySend(src,m)};c.last=Date.now();{const L=LIVE.L,P=L&&c.pid!=null&&L.players[c.pid];if(P&&P.cid===src&&!P.online){P.online=true;hlog(`${P.name} 다시 연결됐어요`);push()}}
+      if(c.pid==null&&d.t!=='join'&&LIVE.L&&LIVE.L.phase!=='lobby'){c.send({t:'rejoin'});if(d.t==='ping')c.send({t:'pong'});return}
       if(d.t==='ping'){c.send({t:'pong'});const L=LIVE.L,P=L&&L.players[c.pid];if(P&&P.cid===src&&!P.online){P.online=true;hlog(`${P.name} 다시 연결됐어요`);push()}return}hostMsg(c,d)});
     clearInterval(LIVE.hb);LIVE.hb=setInterval(()=>{const now=Date.now();Object.values(LIVE.clients||{}).forEach(c=>{if(c.pid!=null&&now-c.last>45000){const P=LIVE.L&&LIVE.L.players[c.pid];if(P&&P.cid===c.peer&&P.online){P.online=false;hlog(`${P.name} 응답 대기 중…`);push()}}})},5000);
     p.on('error',e=>{if(e.type==='unavailable-id'&&n<5){p.destroy();tryOpen(n+1)}else if(!LIVE.L){liveHome();lvError(peerErr(e))}});
@@ -4051,7 +4057,7 @@ async function hostStart(){lv().innerHTML='<p class="lead">방을 만드는 중�
   tryOpen(0)}
 function hostDrop(c){const L=LIVE.L;LIVE.conns=LIVE.conns.filter(x=>x!==c);if(!L)return;const P=L.players[c.pid];if(P&&P.cid===c.peer){P.online=false;hlog(`${P.name} 연결이 끊어졌어요`);push()}}
 const hlog=m=>{LIVE.L.log.unshift(m);LIVE.L.log=LIVE.L.log.slice(0,30)};
-function push(){const L=LIVE.L;LIVE.conns.forEach(c=>{try{c.open&&c.send({t:'state',L,you:c.pid})}catch(_){}});renderHost()}
+function push(){const L=LIVE.L;try{if(L&&L.phase!=='over'&&L.phase!=='lobby')store.set('lv-host',{code:LIVE.code,L,t:Date.now()});else if(L&&L.phase==='over')localStorage.removeItem('lv-host')}catch(_){}LIVE.conns.forEach(c=>{try{c.open&&c.send({t:'state',L,you:c.pid})}catch(_){}});renderHost()}
 const hcur=()=>LIVE.L.players[LIVE.L.turn];
 function hostMsg(c,d){const L=LIVE.L;if(!d||!L)return;
   if(d.t==='join'){const name=String(d.name||'').trim().slice(0,10).replace(/[<>&"]/g,'')||'모둠';let i=L.players.findIndex(p=>p.name===name);
@@ -4071,7 +4077,7 @@ function hostMsg(c,d){const L=LIVE.L;if(!d||!L)return;
     L.ev.text=`${P.name} ${d.ok?'정답!':'아쉽게 오답'}`;push();return}
   if(d.t==='act'&&pd.type==='art')return hostAct(d.act);
   if(d.t==='time'&&pd.type==='time'){if(d.pos==null)return hostEnd();return hostMove((+d.pos-hcur().pos+28)%28,90).then(hostResolve)}}
-function hostStartGame(){const L=LIVE.L;if(!L.players.length)return;L.phase='roll';L.turn=0;L.round=1;L.players.forEach(p=>{p.coins=500;p.pos=0;p.skip=0;p.out=false;p.freePass=false});L.owners={};L.pending={type:'roll'};L.ev=null;LIVE.cells=makeCells(L.ed);hlog(`${EDITIONS[L.ed].name} 시작! ${L.players[0].name}부터`);SFX.fanfare();buildLiveBoard();push()}
+function hostStartGame(){const L=LIVE.L;if(!L.players.length)return;L.phase='roll';L.turn=0;L.round=1;L.players.forEach(p=>{p.coins=500;p.pos=0;p.skip=0;p.out=false;p.freePass=false});L.owners={};L.pending={type:'roll'};L.ev=null;L.dbl=false;L.dblCount=0;L.extra=false;L.here=-1;L.rolling=false;LIVE.cells=makeCells(L.ed);hlog(`${EDITIONS[L.ed].name} 시작! ${L.players[0].name}부터`);SFX.fanfare();buildLiveBoard();push()}
 async function hostRoll(){const L=LIVE.L,P=hcur();if(P.skip>0){const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'rest',id:ids[rnd(ids.length)],answered:null};L.ev={who:L.turn,text:`${P.name} 복원실 탈출 퀴즈 도전 중`};push();return}
   LIVE.busy=true;L.phase='moving';L.pending=null;L.rolling=true;push();SFX.dice();await sleep(800);
   const a=1+rnd(6),b=1+rnd(6);L.dice=[a,b];L.rolling=false;L.dbl=a===b;hlog(`${P.name} 주사위 ${a}+${b}=${a+b}${L.dbl?' (더블!)':''}`);L.ev={who:L.turn,text:`${P.name} 주사위 ${a+b}`};push();
@@ -4151,9 +4157,9 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
   const ctl=$('#lvCtl');
   ctl.innerHTML=L.phase==='lobby'?`<button type="button" class="btn verm" id="lvGo" ${L.players.length?'':'disabled'}>게임 시작 (${L.players.length}모둠)</button><button type="button" class="ghost" id="lvQuit">방 닫기</button>`
    :L.phase==='over'?`<button type="button" class="btn verm" id="lvAgain">같은 모둠으로 새 게임</button><button type="button" class="ghost" id="lvQuit">방 닫기</button>`
-   :`<button type="button" class="ghost" id="lvSkip">이번 차례 넘기기</button><button type="button" class="ghost" id="lvStop">게임 끝내기</button>`;
+   :`<button type="button" class="ghost" id="lvSkip">이번 차례 넘기기</button><button type="button" class="ghost" id="lvStop">게임 끝내기(순위 보기)</button><button type="button" class="ghost danger" id="lvRestart">🔄 처음부터 다시</button>`;
   const on=(id,f)=>{const e=$('#'+id);if(e)e.onclick=f};
-  on('lvGo',hostStartGame);on('lvAgain',()=>{L.phase='lobby';L.rank=null;hostStartGame()});on('lvSkip',()=>{LIVE.busy=false;hlog('선생님이 차례를 넘겼어요');hostEnd()});on('lvStop',hostOver);
+  on('lvGo',hostStartGame);on('lvAgain',()=>{L.phase='lobby';L.rank=null;hostStartGame()});on('lvSkip',()=>{LIVE.busy=false;hlog('선생님이 차례를 넘겼어요');hostEnd()});on('lvStop',hostOver);on('lvRestart',e=>{const b=e.currentTarget;if(!LIVE.armR){LIVE.armR=true;b.textContent='한 번 더 누르면 리셋!';setTimeout(()=>{LIVE.armR=false;const x=$('#lvRestart');if(x)x.textContent='🔄 처음부터 다시'},3000);return}LIVE.armR=false;clearTimeout(LIVE.autoT);LIVE.busy=false;TOKPOS.l={};COINMEM.l=null;L.phase='lobby';L.rank=null;hostStartGame();hlog('선생님이 게임을 처음부터 다시 시작했어요')});
   on('lvQuit',()=>{try{LIVE.peer.destroy()}catch(_){}LIVE.L=null;liveHome()});
   // 보드
   $$('#lvBoard .cell').forEach(el=>{const i=+el.dataset.i,o=L.owners[i],ov=el.querySelector('.own');
@@ -4195,9 +4201,9 @@ async function joinConnect(code,name){lv().innerHTML='<p class="lead">방에 연
   p.on('disconnected',()=>{try{p.reconnect()}catch(_){}});
   p.on('error',e=>{if(!opened){clearTimeout(to);try{p.destroy()}catch(_){}joinForm(peerErr(e))}})}
 function joinLost(){if($('#jLost'))return;lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn" id="jLost">선생님 화면과 연결이 끊어졌어요. <button type="button" class="btn" id="jRe">다시 연결</button></div>`);$('#jRe').onclick=()=>joinConnect(LIVE.code,LIVE.name)}
-function joinMsg(d){if(!d)return;if(d.t==='err'){LIVE.role='join';joinForm(d.m);return}
-  if(d.t==='welcome'){LIVE.me=d.pid;SFX.nav('game');return}
-  if(d.t==='state'){const prev=LIVE.L;LIVE.L=d.L;if(d.you!=null)LIVE.me=d.you;
+function joinMsg(d){if(!d)return;if(d.t==='rejoin'){if(LIVE.conn&&LIVE.name)LIVE.conn.send({t:'join',name:LIVE.name});return}if(d.t==='err'){LIVE.role='join';joinForm(d.m);return}
+  if(d.t==='welcome'){LIVE.me=d.pid;SFX.nav('game');store.set('lv-join',{code:LIVE.code,name:LIVE.name,active:true,t:Date.now()});return}
+  if(d.t==='state'){const prev=LIVE.L;LIVE.L=d.L;if(d.L&&d.L.phase==='over'){const sj=store.get('lv-join',{});if(sj.active)store.set('lv-join',{code:sj.code,name:sj.name})}if(d.you!=null)LIVE.me=d.you;
     const myTurnNow=LIVE.L.turn===LIVE.me&&LIVE.L.pending&&LIVE.L.pending.type==='roll';if(myTurnNow&&!(prev&&prev.turn===LIVE.me&&prev.pending&&prev.pending.type==='roll'))SFX.nav('game');
     renderJoin(prev)}}
 const jsend=m=>{try{LIVE.conn&&LIVE.conn.open&&LIVE.conn.send(m)}catch(_){}};
@@ -4237,7 +4243,8 @@ function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LI
 function renderLive(){if(LIVE.role==='host'&&LIVE.L){const b=$('#lvBoard');if(!b){renderHost()}else{renderHost()}}else if(LIVE.role==='join'&&LIVE.L){LIVE.lastKey=null;renderJoin()}else if(LIVE.role==='join')joinForm();else liveHome()}
 function liveInit(){const bar=document.createElement('div');bar.className='modeBar';bar.innerHTML=`<span class="muted">게임 방식</span><button type="button" class="ghost on">한 기기에서</button><button type="button" class="ghost" id="toLive" title="교사 화면 + 모둠 크롬북">실시간 대전</button>`;
   $('#view-game .panel').prepend(bar);$('#toLive').onclick=()=>{showView('live');SFX.nav('game')};
-  const m=location.hash.match(/^#join(\d{4})?$/);if(m){showView('live');joinForm('',m[1]||'');setTimeout(()=>{const n=$('#jName');if(n)n.focus()},50)}else if(location.hash==='#host'){showView('live')}}
+  const m=location.hash.match(/^#join(\d{4})?$/);if(m){showView('live');joinForm('',m[1]||'');setTimeout(()=>{const n=$('#jName');if(n)n.focus()},50)}else if(location.hash==='#host'){showView('live')}
+  else{const sj=store.get('lv-join',null);if(sj&&sj.active&&Date.now()-sj.t<3*3600e3&&!store.get('lv-host',null)){showView('live');joinConnect(sj.code,sj.name)}}}
 setTimeout(liveInit,0);
 
 function artFull(w){const d=document.createElement('div');d.className='artFull';d.innerHTML=`<div class="afIn">${pic(w)}</div><div class="afCap"><b>${w.name}</b> ${w.artist} · ${w.ys}<small>화면을 누르면 닫혀요</small></div>`;document.body.appendChild(d);paintAll(d);SFX.open();d.onclick=()=>d.remove()}
