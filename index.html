@@ -753,6 +753,22 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 @keyframes mpWin{0%{transform:scale(1)}40%{transform:scale(1.15)}100%{transform:scale(1)}}
 .mpRest{animation:fadeIn .4s both}.mpRest p{margin:6px 0 12px;line-height:1.6;font-size:16px}
 .mpHost{display:grid;justify-items:center;gap:6px}.mpHost .mpSpin{width:clamp(70px,22cqw,190px);height:clamp(70px,22cqw,190px)}.mpHost b{font-family:var(--f-display);font-size:clamp(14px,3cqw,28px);color:#8f2412}
+
+/* ===== 힌트 탐정 ===== */
+.htTop{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;margin-bottom:14px}
+.htStat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 16px;display:grid;min-width:92px}.htStat small{color:var(--muted);font-size:12px}.htStat b{font-size:24px;font-variant-numeric:tabular-nums;color:var(--text)}
+.htStat .htPts{color:#c8372b;font-size:30px}
+.htTop #htNew{margin-left:auto;align-self:center}
+.htWrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:18px;align-items:start}
+@media (max-width:820px){.htWrap{grid-template-columns:minmax(0,1fr)}}
+.htList{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}
+.htList li{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;line-height:1.55;font-size:15.5px}
+.htList li span{flex:none;width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.htList li.new{animation:htIn .45s cubic-bezier(.2,1.4,.4,1);border-color:#e9c06a;background:#fffbea}
+@keyframes htIn{from{transform:translateX(-20px) scale(.96);opacity:0}}
+.htMore{width:100%;justify-content:center;background:#fff7e0!important;border:2px dashed #e9c06a!important;color:#5a3b00!important;font-weight:700}.htMore small{opacity:.7;font-weight:400}
+.htMeter{display:flex;gap:4px;margin-top:10px}.htMeter i{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#3fae6a,#f0c35c,#e5482f);opacity:.18}.htMeter i.on{opacity:1}
+.tc.ans{outline:4px solid #2f9a5c;outline-offset:2px;animation:mpWin .6s ease}.tc.bad{outline:4px solid #d0402f;outline-offset:2px;filter:grayscale(.5)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -3751,7 +3767,7 @@ function badgeDefs(){const P=progress,st=P.stats,L=[];
    {id:'perfect',seal:'滿',n:'퀴즈 만점왕',d:'객관식 퀴즈 10문제 모두 맞히기',cur:st.perfect?1:0,max:1,grp:'x'},
    {id:'puzzle',seal:'片',n:'퍼즐 장인',d:'명화 퍼즐 3번 완성하기',cur:Math.min(st.puzzles||0,3),max:3,grp:'x'},
    {id:'cross',seal:'字',n:'낱말 박사',d:'가로세로 낱말퀴즈 한 판 완성하기',cur:Math.min(st.cross||0,1),max:1,grp:'x'},
-   {id:'twenty',seal:'探',n:'스무고개 명탐정',d:'질문 8개 이하로 숨은 작품 맞히기',cur:st.twentyAce?1:0,max:1,grp:'x'},
+   {id:'twenty',seal:'探',n:'힌트 명탐정',d:'힌트 2개 이하로 숨은 작품 맞히기',cur:st.twentyAce?1:0,max:1,grp:'x'},
    {id:'order',seal:'序',n:'시간 여행자',d:'시대 순서 맞추기 만점 3번',cur:Math.min(st.order||0,3),max:3,grp:'x'},
    {id:'memory',seal:'對',n:'기억력 왕',d:'짝 맞추기 카드 완성하기',cur:Math.min(st.memory||0,1),max:1,grp:'x'},
    {id:'marble',seal:'賞',n:'마블 완주',d:'미술사 마블 게임 끝까지 하기',cur:st.marble?1:0,max:1,grp:'x'},
@@ -3773,7 +3789,7 @@ const GAMES=[
  {id:'mc',n:'객관식 퀴즈',s:'問',d:'10문제에 도전해요. 만점이면 배지!'},
  {id:'puzzle',n:'명화 퍼즐',s:'片',d:'뒤섞인 조각을 바꿔 명화를 완성해요.'},
  {id:'cross',n:'가로세로 낱말퀴즈',s:'字',d:'미술 용어와 작가 이름으로 칸을 채워요.'},
- {id:'twenty',n:'스무고개',s:'廿',d:'예/아니요 질문으로 숨은 작품을 찾아요.'},
+ {id:'twenty',n:'힌트 탐정',s:'探',d:'힌트를 적게 볼수록 높은 점수! 틀리면 끝나요.'},
  {id:'order',n:'시대 순서 맞추기',s:'序',d:'가장 오래된 작품부터 차례로 골라요.'},
  {id:'memory',n:'짝 맞추기 카드',s:'對',d:'작품 그림과 이름의 짝을 찾아요.'}];
 function renderPlay(s,body){const H=HALL[s];
@@ -3845,22 +3861,40 @@ const ATTR={bangudae:'o1100',suryeop:'p1111',cheonma:'p0101',hyangno:'o1111',ban
 const known=w=>!/장인|사람들|미상|도공|화가$/.test(w.artist);
 function twentyQs(s){const Q=[['평평한 화면에 그린 그림인가요? (회화·벽화·모자이크)',w=>ATTR[w.id][0]==='p'],['조각·공예품·건축물인가요?',w=>ATTR[w.id][0]==='o'],['사람이 등장하나요?',w=>ATTR[w.id][1]==='1'],['동물이 등장하나요?',w=>ATTR[w.id][2]==='1'],['산·물·하늘 같은 자연 풍경이 중요하게 나오나요?',w=>ATTR[w.id][3]==='1'],['종교·신화·무덤과 관련 있나요?',w=>ATTR[w.id][4]==='1'],['작가 이름이 알려져 있나요?',known],['서기 1000년보다 앞선 작품인가요?',w=>w.y<1000],['1500년 이후의 작품인가요?',w=>w.y>=1500],['1800년 이후의 작품인가요?',w=>w.y>=1800]];
   sideGroups(s).forEach(g=>Q.push([`‘${GROUPS[g].n}’ 작품인가요?`,w=>w.g===g]));return Q}
-function twenty(s,el){const pool=sideWorks(s),Qs=twentyQs(s);let secret,asked,used,over,picked;
-  function start(){secret=pool[rnd(pool.length)];asked=[];used=0;over=false;picked=null;draw()}
-  const alive=w=>asked.every(a=>a.fn(w)===a.ans);
-  function draw(){const left=pool.filter(alive).length;
-    el.innerHTML=`<div class="twTop"><span class="cnt">질문 <b>${used}</b> / 20</span><div class="bar"><i style="width:${used*5}%"></i></div><span class="cnt">남은 후보 <b>${left}</b></span><button type="button" class="ghost" id="twNew">새 문제</button></div>
-     <div class="twWrap"><div class="twAsk"><p class="lead">컴퓨터가 ${SIDE[s].name} 작품 하나를 마음속에 정했어요. 질문을 골라 범위를 좁힌 뒤, 오른쪽에서 정답 작품을 눌러요.</p>
-      <div class="twQs">${Qs.map((q,i)=>{const a=asked.find(x=>x.i===i);return `<button type="button" class="tq${a?(a.ans?' yes':' no'):''}" data-i="${i}" ${a||over?'disabled':''}>${q[0]}${a?`<em>${a.ans?'예':'아니요'}</em>`:''}</button>`}).join('')}</div></div>
-      <div class="twPool">${pool.map(w=>`<button type="button" class="tc${alive(w)?'':' gone'}${picked===w.id?' pk':''}" data-id="${w.id}" ${over?'disabled':''} title="${w.name}">${pic(w)}<span>${w.short}</span></button>`).join('')}</div></div><div id="twWin"></div>`;
+function hintsOf(w){const a=ATTR[w.id]||'p0000',H=[];
+  H.push(a[0]==='p'?'평평한 화면에 그린 그림이에요.':'조각·공예품·건축물처럼 입체로 만든 작품이에요.');
+  H.push(a[1]==='1'?'사람이 등장해요.':'사람은 나오지 않아요.');
+  H.push(a[2]==='1'?'동물이 등장해요.':(a[3]==='1'?'산·물·하늘 같은 자연 풍경이 중요하게 나와요.':'동물도, 자연 풍경도 중심이 아니에요.'));
+  H.push(a[4]==='1'?'종교·신화·무덤과 관련 있어요.':'종교나 신화와는 관련이 없어요.');
+  const y=w.y;H.push(y<0?'기원전에 만들어진 아주 오래된 작품이에요.':y<1000?'서기 1000년보다 앞서 만들어졌어요.':y<1500?'1000년에서 1500년 사이에 만들어졌어요.':y<1800?'1500년에서 1800년 사이에 만들어졌어요.':y<1900?'1800년대(19세기)에 만들어졌어요.':'1900년 이후에 만들어졌어요.');
+  H.push(`‘${GROUPS[w.g].n}’ 시대의 작품이에요.`);
+  H.push(`지금은 ${w.place}에 있어요.`);
+  H.push(known(w)?`${w.artist}의 작품이에요.`:`만든 사람: ${w.artist}`);
+  const mask=t=>[w.name,w.short].filter(Boolean).sort((x,y)=>y.length-x.length).reduce((s,n)=>s.split(n).join('○○'),t);
+  H.push('마지막 힌트! '+mask(w.story[0]));return H}
+const HINT_PTS=[100,90,80,70,60,50,35,20,10];
+function twenty(s,el){const pool=sideWorks(s);let secret,hints,shown,over,total,streak,used=[],wrong=null;
+  const bestKey='hint-best-'+s;
+  function newGame(){total=0;streak=0;used=[];next()}
+  function next(){const left=pool.filter(w=>!used.includes(w.id));if(!left.length)used=[];const L2=pool.filter(w=>!used.includes(w.id));secret=L2[rnd(L2.length)];used.push(secret.id);hints=hintsOf(secret);shown=1;over=false;wrong=null;draw();SFX.ask()}
+  function draw(){const pts=HINT_PTS[shown-1],best=store.get(bestKey,0);
+    el.innerHTML=`<div class="htTop"><div class="htStat"><small>이번 문제 점수</small><b class="htPts">${over?'-':pts}</b></div><div class="htStat"><small>총점</small><b>${total}</b></div><div class="htStat"><small>연속 정답</small><b>${streak}</b></div><div class="htStat"><small>최고 기록</small><b>${best}</b></div><button type="button" class="ghost" id="htNew">처음부터</button></div>
+     <div class="htWrap"><div class="htHints"><p class="lead">숨은 작품을 찾아라! 힌트를 적게 보고 맞힐수록 점수가 높아요. <b>틀린 작품을 고르면 게임 끝!</b></p>
+       <ol class="htList">${hints.slice(0,shown).map((h,i)=>`<li class="${i===shown-1?'new':''}"><span>${i+1}</span>${h}</li>`).join('')}</ol>
+       ${!over&&shown<hints.length?`<button type="button" class="btn htMore" id="htMore">💡 힌트 하나 더 보기 <small>(${pts}점 → ${HINT_PTS[shown]}점)</small></button>`:''}
+       <div class="htMeter">${HINT_PTS.map((v,i)=>`<i class="${i<shown?'on':''}" title="힌트 ${i+1}개: ${v}점"></i>`).join('')}</div></div>
+      <div class="twPool">${pool.map(w=>`<button type="button" class="tc${over&&w===secret?' ans':''}${wrong===w.id?' bad':''}" data-id="${w.id}" ${over?'disabled':''} title="${w.name}">${pic(w)}<span>${w.short}</span></button>`).join('')}</div></div><div id="twWin"></div>`;
     paintAll(el);
-    $('#twNew').onclick=start;
-    el.querySelectorAll('.tq').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;asked.push({i,fn:Qs[i][1],ans:Qs[i][1](secret)});used++;SFX.ask();if(used>=20)over=true;draw();if(over)lose()});
-    el.querySelectorAll('.tc').forEach(b=>b.onclick=()=>{const w=BY[b.dataset.id];used++;if(w===secret){over=true;draw();const ace=used<=8;if(ace)stat('twentyAce',true);SFX.win(s);
-        $('#twWin').innerHTML=winBox('정답이에요!',`숨은 작품은 ‘${secret.name}’. 질문과 추측 ${used}번 만에 맞혔어요.${ace?' 명탐정 실력이네요!':''}`,'<button class="btn verm" id="twAgain">한 판 더</button><button class="btn" id="twSee">작품 감상하기</button>');$('#twAgain').onclick=start;$('#twSee').onclick=()=>openArt(secret)}
-      else{buzz();picked=w.id;if(used>=20){over=true;draw();lose()}else draw()}})}
-  function lose(){$('#twWin').innerHTML=winBox('스무 번을 다 썼어요','숨은 작품은 ‘'+secret.name+'’였어요.','<button class="btn verm" id="twAgain">다시 도전</button><button class="btn" id="twSee">작품 감상하기</button>');$('#twAgain').onclick=start;$('#twSee').onclick=()=>openArt(secret)}
-  start()}
+    $('#htNew').onclick=newGame;
+    const m=$('#htMore');if(m)m.onclick=()=>{shown++;SFX.flip?SFX.flip():SFX.click();draw()};
+    el.querySelectorAll('.tc').forEach(b=>b.onclick=()=>{const w=BY[b.dataset.id];
+      if(w===secret){const g=HINT_PTS[shown-1];total+=g;streak++;if(shown<=2)stat('twentyAce',true);if(total>store.get(bestKey,0))store.set(bestKey,total);SFX.win(s);over=true;draw();
+        $('#twWin').innerHTML=winBox(`정답! +${g}점`,`숨은 작품은 ‘${secret.name}’. 힌트 ${shown}개 만에 맞혔어요.${shown<=2?' 명탐정 실력이네요!':''} 지금까지 ${streak}문제 연속 정답, 총 ${total}점!`,'<button class="btn verm" id="twAgain">다음 문제 →</button><button class="btn" id="twSee">작품 감상하기</button>');
+        $('#twAgain').onclick=next;$('#twSee').onclick=()=>openArt(secret);$('#twWin').scrollIntoView({block:'nearest',behavior:'smooth'})}
+      else{buzz();wrong=w.id;over=true;const best=store.get(bestKey,0);draw();
+        $('#twWin').innerHTML=winBox('게임 끝!',`‘${w.short}’이(가) 아니었어요. 숨은 작품은 ‘${secret.name}’였어요. 최종 점수 <b>${total}점</b> (연속 정답 ${streak}개)${total>0&&total>=best?' · 🏆 최고 기록!':''}`,'<button class="btn verm" id="twAgain">다시 도전</button><button class="btn" id="twSee">정답 작품 감상하기</button>');
+        $('#twAgain').onclick=newGame;$('#twSee').onclick=()=>openArt(secret);$('#twWin').scrollIntoView({block:'nearest',behavior:'smooth'})}})}
+  newGame()}
 
 /* --- 시대 순서 맞추기 --- */
 function orderGame(s,el){let set,seq,checked;
@@ -3981,7 +4015,7 @@ function liveHome(){LIVE.role=null;
    <div class="lvPick"><button type="button" class="lvCard" id="lvHost"><span class="seal big">師</span><b>교사용 · 방 만들기</b><small>교사 PC나 전자칠판에서 눌러요. 방 번호와 큰 보드판이 나타나요.</small></button>
    <button type="button" class="lvCard" id="lvJoin"><span class="seal big gold">組</span><b>모둠용 · 방 참가하기</b><small>모둠 크롬북에서 눌러요. 방 번호와 모둠 이름을 넣으면 내 조종기가 열려요.</small></button></div>
    <ol class="lvHow"><li>선생님이 <b>방 만들기</b>를 누르면 4자리 방 번호가 나와요.</li><li>모둠은 같은 주소에서 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b>를 눌러 번호를 입력해요.</li><li>모두 들어오면 선생님이 <b>게임 시작</b>! 자기 차례에 크롬북으로 주사위를 굴리고 퀴즈를 풀어요.</li></ol>`;
-  $('#lvBack').onclick=()=>showView('game');$('#lvHost').onclick=hostStart;$('#lvJoin').onclick=joinForm}
+  $('#lvBack').onclick=()=>showView('game');$('#lvHost').onclick=hostStart;$('#lvJoin').onclick=()=>joinForm()}
 function lvError(msg){lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn">${msg}</div>`)}
 function peerErr(e){const t=e&&e.type;
   return t==='peer-unavailable'?'그 번호의 방을 찾을 수 없어요. 방 번호를 다시 확인해 주세요.':t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'?'연결 서버에 닿지 못했어요. 인터넷 연결이나 학교 방화벽을 확인해 주세요.':t==='browser-incompatible'?'이 브라우저는 실시간 연결을 지원하지 않아요. 크롬을 사용해 주세요.':'연결 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.'}
