@@ -784,6 +784,7 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 .hqO .pk{box-shadow:0 0 0 3px rgba(0,0,0,.08)}.hqO .pk::after{content:"← 선택";margin-left:auto;font-size:.8em;font-weight:700;color:#555}
 .hqE{margin-top:6px;font-size:.88em;color:#4a443a;line-height:1.45}
 .center.spot .evArt{min-height:60px}
+.resetRow{display:flex;gap:8px;flex-wrap:wrap}.ghost.danger{color:#c8372b;border-color:#e9a39c}.ghost.danger:hover{background:#c8372b;color:#fff}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -833,7 +834,7 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
     </section>
     <section id="view-live" hidden></section>
     <section id="view-badge" hidden>
-      <div class="sechead"><div><h2>나의 배지</h2><p>시대별 작품의 퀴즈를 모두 맞히면 그 시대 대표 유물이 그려진 ‘마스터 배지’를 받아요. 퀴즈 놀이터의 여러 놀이로 도전 배지도 모아 보세요.</p></div><button type="button" class="ghost" id="resetBtn">기록 지우기</button></div>
+      <div class="sechead"><div><h2>나의 배지</h2><p>시대별 작품의 퀴즈를 모두 맞히면 그 시대 대표 유물이 그려진 ‘마스터 배지’를 받아요. 퀴즈 놀이터의 여러 놀이로 도전 배지도 모아 보세요.</p></div><div class="resetRow"><button type="button" class="ghost" id="resetBtn">기록 지우기</button><button type="button" class="ghost danger" id="resetAll">전체 초기화</button></div></div>
       <div class="prog" id="prog"></div>
       <div id="badges"></div>
     </section>
@@ -3766,6 +3767,8 @@ function boot(data){
     if(e.code==='Space'&&!open&&VIEW==='game'&&!/INPUT|TEXTAREA|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();onRoll()}});
   let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>paintAll(document.body),200)});
   renderRankChip();$('#rankChip').onclick=()=>showView('badge');
+  let armAll=false;$('#resetAll').onclick=e=>{const b=e.currentTarget;if(!armAll){armAll=true;b.textContent='정말요? 한 번 더 누르면 모두 지워져요';setTimeout(()=>{armAll=false;b.textContent='전체 초기화'},3500);return}
+    try{Object.keys(localStorage).filter(k=>/^(artmarble|lv-|pz-|pop-|hint-)/.test(k)&&k!=='artmarble-sound').forEach(k=>localStorage.removeItem(k))}catch(_){}location.hash='';location.reload()};
   const v=store.get('artmarble-view2','game');showView(['k','w','game','badge','book'].includes(v)?v:'game');
 }
 /* ============ 배지 · 등급 ============ */
