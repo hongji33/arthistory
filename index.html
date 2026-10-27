@@ -707,6 +707,21 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 .acClose{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;white-space:nowrap}
 .acClose:hover{background:var(--text);color:#fff}
 @media (max-width:820px){.acHead{top:0;margin:0 -18px;padding:8px 18px}}
+
+/* 소장 도전 버튼 = 반짝이는 골드 카드 */
+.acHead .btn[data-act="goQuiz"],.acHead .btn[data-act="buy"],.acHead .btn[data-act="up"],.jActs .btn[data-act="buy"],.jActs .btn[data-act="up"]{
+ position:relative;overflow:hidden;isolation:isolate;border:0!important;color:#3a2604!important;font-weight:800;letter-spacing:-.2px;font-size:16px!important;padding:12px 22px 12px 16px!important;border-radius:12px!important;
+ background:linear-gradient(135deg,#fff6cf 0%,#f3cf6b 22%,#d9a636 45%,#f8e08e 62%,#c48a22 82%,#f6dc86 100%)!important;background-size:200% 200%!important;
+ box-shadow:0 0 0 2px #8a5f12,inset 0 0 0 2px rgba(255,255,255,.6),0 6px 16px rgba(160,105,10,.45)!important;text-shadow:0 1px 0 rgba(255,255,255,.6);
+ animation:gbGlow 1.6s ease-in-out infinite,gbFlow 4s linear infinite}
+.acHead .btn[data-act="goQuiz"]::before,.acHead .btn[data-act="buy"]::before,.acHead .btn[data-act="up"]::before,.jActs .btn[data-act="buy"]::before,.jActs .btn[data-act="up"]::before{content:"★";margin-right:6px;color:#fff;text-shadow:0 0 4px #b07a14,0 0 1px #8a5f12;display:inline-block;animation:gbStar 1.6s ease-in-out infinite}
+.acHead .btn[data-act="goQuiz"]::after,.acHead .btn[data-act="buy"]::after,.acHead .btn[data-act="up"]::after,.jActs .btn[data-act="buy"]::after,.jActs .btn[data-act="up"]::after{content:"";position:absolute;inset:-50%;z-index:-1;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.9) 50%,transparent 58%);animation:gbShine 1.9s ease-in-out infinite;pointer-events:none}
+.acHead .btn[data-act]:is([data-act="goQuiz"],[data-act="buy"],[data-act="up"]):hover{transform:translateY(-2px) scale(1.04)}
+.acHead .btn[data-act]:is([data-act="buy"],[data-act="up"])[disabled]{filter:grayscale(.7);opacity:.6;animation:none}
+@keyframes gbShine{0%{transform:translateX(-70%)}55%,100%{transform:translateX(70%)}}
+@keyframes gbGlow{0%,100%{box-shadow:0 0 0 2px #8a5f12,inset 0 0 0 2px rgba(255,255,255,.6),0 6px 16px rgba(160,105,10,.45)}50%{box-shadow:0 0 0 2px #8a5f12,inset 0 0 0 2px rgba(255,255,255,.6),0 6px 26px 6px rgba(240,190,60,.75)}}
+@keyframes gbFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes gbStar{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.35) rotate(20deg)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
