@@ -685,7 +685,9 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
  .artcard{height:100%;width:100%;min-height:0}
  .artcard .wall{min-height:0;height:100%;overflow:hidden}
  .artcard .wall .pic{min-height:0;padding:20px 20px 10px}
- .artcard .wall .pic img{max-height:calc(100dvh - 150px);max-width:100%;object-fit:contain}
+ .artcard .wall .pic{flex:1 1 0;overflow:hidden;display:flex!important;align-items:center;justify-content:center}
+ .artcard .wall .pic>a{height:100%;width:100%;display:flex;align-items:center;justify-content:center}
+ .artcard .wall .pic img{max-height:100%;max-width:100%;object-fit:contain}
  .artcard .acBody{overflow-y:auto;height:100%;padding:20px 24px 14px;gap:10px}
  .artcard .acBody h2{font-size:clamp(24px,3.4vh,34px)}
 }
@@ -696,6 +698,15 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
  .jBody{overflow-y:auto;min-height:0}
 }
 .jActs{padding:4px 0}
+
+/* 작품명 옆 버튼 */
+.acHead{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;position:sticky;top:-20px;z-index:4;margin:0 -24px;padding:8px 24px;background:var(--paper);border-bottom:1px solid transparent}
+.acHead .acTitle{margin:0;margin-right:auto}
+.acHead .acActions{margin:0!important;padding:0!important;display:flex;gap:6px;flex-wrap:wrap}
+.acHead .btn{padding:8px 14px;font-size:14px}
+.acClose{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;white-space:nowrap}
+.acClose:hover{background:var(--text);color:#fff}
+@media (max-width:820px){.acHead{top:0;margin:0 -18px;padding:8px 18px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -3476,11 +3487,11 @@ function openArt(w,mode='browse',pos=null){SFX.open(w.side);
   const cap=w.cr?`<span>이 작품은 아직 저작권이 보호되고 있어서 앱에는 색과 분위기만 본뜬 스케치를 넣었어요. 진짜 작품은 미술관 공식 누리집에서 감상해요.</span>${w.official?`<a class="bigBtn" href="${w.official}" target="_blank" rel="noopener">${w.offName}에서 진짜 작품 보기 ↗</a>`:''}`
    :`${w.imgNote?`<span>${w.imgNote}</span>`:''}<a class="bigBtn" href="${M.page}" target="_blank" rel="noopener">고화질 원본 크게 보기 ↗</a><span>이미지: ${M.artist} · ${M.lic} · <a href="${M.page}" target="_blank" rel="noopener">위키미디어 커먼즈</a></span>`;
   showModal(`<div class="artcard"><figure class="wall"><div class="pic">${w.cr?pic(w):`<a href="${M.page}" target="_blank" rel="noopener" title="새 창에서 고화질로 보기">${pic(w)}</a>`}</div><figcaption>${cap}${mode==='browse'?`<div class="navArrows"><button type="button" id="prevW" ${idx<=0?'disabled':''}>← 이전 작품</button><button type="button" id="nextW" ${idx>=list.length-1?'disabled':''}>다음 작품 →</button></div>`:''}</figcaption></figure>
-   <div class="acBody"><div class="eyebrow"><i style="--c:${G.c}"></i>${w.side==='k'?'한국미술':'서양미술'} · ${G.n}</div><h2 class="acTitle">${w.name}</h2>
+   <div class="acBody"><div class="eyebrow"><i style="--c:${G.c}"></i>${w.side==='k'?'한국미술':'서양미술'} · ${G.n}</div><div class="acHead"><h2 class="acTitle">${w.name}</h2><div class="acActions" id="acActions"></div>${mode!=='game'?'<button type="button" class="acClose" id="acClose" aria-label="창 닫기">✕ 닫기</button>':''}</div>
     <dl class="meta"><div><dt>작가</dt><dd>${w.artist}</dd></div><div><dt>시기</dt><dd>${w.year}</dd></div><div><dt>소장·위치</dt><dd>${w.place}</dd></div></dl>
     <div id="ownStrip"></div>
     <div class="acTabs" role="tablist">${[['story','이야기'],['see','감상하기'],['video','영상'],['quiz','퀴즈']].map(([k,l])=>`<button type="button" role="tab" data-tab="${k}">${l}</button>`).join('')}</div>
-    <div class="acPane" id="acPane"></div><div class="acActions" id="acActions"></div></div></div>`,mode!=='game');
+    <div class="acPane" id="acPane"></div></div></div>`,mode!=='game');$('#modalX').hidden=true;{const c=$('#acClose');if(c)c.onclick=closeModal}
   requestAnimationFrame(()=>paintAll($('#modalBody')));
   $$('.acTabs button').forEach(b=>b.onclick=()=>{A.tab=b.dataset.tab;renderArt()});
   $('#acActions').onclick=e=>{const b=e.target.closest('[data-act]');if(b&&!b.disabled)artAct(b.dataset.act)};
