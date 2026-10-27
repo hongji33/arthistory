@@ -472,6 +472,143 @@ button.cmp{cursor:pointer}
 .jBody{padding:20px;display:grid;gap:10px;align-content:start}.jBody h3{margin:0;font-family:var(--f-display);font-size:26px}
 .jStory summary{cursor:pointer;font-weight:700;color:var(--verm)}.jStory p{margin:8px 0 0;font-size:14.5px}
 .jActs{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ===== 밝은 테마 (흰 배경 · 검은 글씨) ===== */
+:root{color-scheme:light;--ink:#fbf9f4;--ink2:#ffffff;--ink3:#f5f1e8;--line:#e4ddcf;--text:#1d1a16;--muted:#6f685c;
+  --paper:#fffaf1;--paper2:#f5eddc;--gold:#c0902f;--celadon:#2f8a72;--ultra:#3d55b8}
+body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06),transparent 65%),radial-gradient(900px 520px at 100% 0%,rgba(61,85,184,.06),transparent 65%)}
+.brand h1,.logo{background:linear-gradient(180deg,#d9a33f,#8f5f0c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{background:#fff;box-shadow:0 2px 10px rgba(60,40,10,.06)}
+.nav button{display:inline-flex;align-items:center;gap:6px;color:#4a443a}
+.nav button .nIc{width:22px;height:22px;display:inline-block}.nav button .nIc svg{width:100%;height:100%}
+.nav .navBig{font-size:16px;padding:9px 18px;background:linear-gradient(180deg,#fff3d6,#ffe2a0);color:#5a3b00;box-shadow:inset 0 0 0 1.5px #e9c06a}
+.nav .navBig .nIc{width:28px;height:28px}
+.nav button[aria-current="true"]{background:var(--text);color:#fff;box-shadow:none}
+.nav button[aria-current="true"].navBig{background:linear-gradient(180deg,#f0c35c,#d39a2a);color:#2a1d00}
+.seal{background:transparent!important;box-shadow:none!important;transform:none!important;border-radius:0;color:var(--text)}
+.seal svg,.medal>span svg{width:100%;height:100%;display:block}
+.hallHead{border-color:var(--line)}.hallHead .mos{opacity:.55}
+.hallHead::after{background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(251,249,244,.97) 74%)}
+.hallIn p{color:#3c362e}
+.subtabs button{background:rgba(255,255,255,.9);color:#4a443a}
+.subtabs button b{width:22px;height:22px;display:inline-block}.subtabs button b svg{width:100%;height:100%}
+.subtabs button[aria-pressed="true"]{background:var(--text);color:#fff;border-color:var(--text)}
+.chHead p{color:#3c362e}.lead{color:#3c362e}
+.ytBtn{background:#fff1ee;border-color:#f2b8ad;color:#a12a1a}.ytBtn:hover{background:#ffe3de}
+.wcard,.trow button,.pcard,.pbox,.bdg,.gcard,.lvCard,.keys div,.gstage,.jHead{background:#fff;box-shadow:0 2px 10px rgba(60,40,10,.05)}
+.wcard:hover{box-shadow:0 16px 36px rgba(60,40,10,.16)}
+.wcard .frame,.qzCard .qzImg,.pzSide .mini,.psOut,.jPic{background:#f1ece2}
+.wcard .st,.crTag{background:rgba(255,255,255,.92);border:1px solid var(--line)}.crTag{color:#b5643a}
+.board{background:#eadfca;box-shadow:0 0 0 1px #d9ccb2,0 20px 50px rgba(60,40,10,.18)}
+.cell{background:#fff}.cell:hover{box-shadow:0 8px 24px rgba(60,40,10,.25)}
+.corner{background:#fbf6ec}.keycell{background:linear-gradient(160deg,#fff4d1,#ffd9a8)}
+.corner b,.keycell b{color:var(--text)}.corner small,.keycell small{color:var(--muted)}
+.cell .seal{width:clamp(24px,6cqw,54px)}
+.center{background:linear-gradient(45deg,transparent 49.85%,rgba(192,144,47,.35) 50%,transparent 50.15%),linear-gradient(45deg,rgba(47,138,114,.10),#fffdf8 50%,rgba(61,85,184,.10)),#fffdf8}
+.edBadge{color:var(--text);background:#fff}.turn{background:#fff;color:var(--text)}
+.overlay{background:rgba(40,32,20,.45)}
+.wall{background:radial-gradient(circle at 50% 35%,#fffdf8,#ece5d6 78%)}
+.wall .pic img{box-shadow:0 0 0 6px #fff,0 0 0 8px #c9a55a,0 18px 40px rgba(60,40,10,.25)}
+.wall figcaption{color:var(--pMuted)}.wall figcaption a{color:#8f5f0c}.wall figcaption a.bigBtn{color:#2a1d08}
+.navArrows button{border-color:#cbbfa6;background:#fff;color:var(--text)}
+.rankChip{background:#fff}.rankChip .rk{color:#fff}
+.medal{background:conic-gradient(from 200deg,#e6e6e6,#bdbdbd,#e6e6e6,#bdbdbd,#e6e6e6);opacity:.55}
+.medal>span{background:radial-gradient(circle at 35% 30%,#ffffff,#e9e9e9);padding:16%}
+.medal.on>span{background:radial-gradient(circle at 35% 30%,#fffdf3,#fff3cf 60%,#f5dc9a)}
+.rankCard{background:linear-gradient(120deg,#fff7e3,#eef7f3)}
+.rankCard .seal.big{width:72px;height:72px}
+.pzBoard{background:#d9ccb2}
+.mmFull{background:var(--ink)}
+.mmWin{background:rgba(255,255,255,.65)}
+.mc .back{background:repeating-linear-gradient(45deg,#fff1d9 0 8px,#fbe4bd 8px 16px);border-color:#ecd3a3}
+.mc .back .seal{width:46px;height:46px}
+.lvWarn{background:#fff1ec;border-color:#f2b8ad;color:#9a2a14}
+.codeCard{background:linear-gradient(160deg,#fff7e3,#ffeec4)}.codeCard>b{color:#a8730d}
+.bigCode{color:var(--text)}.cHint{color:#3c362e}
+.rankBig div{background:rgba(255,255,255,.85)}
+.chip{background:rgba(0,0,0,.06)}
+.cc{border:1px solid var(--line)}
+.gcard .seal{width:54px;height:54px}.lvCard .seal.big{width:64px;height:64px}
+.tmi .seal{width:40px;height:40px}.gbar .seal{width:36px;height:36px}.mmBar .seal{width:32px;height:32px}
+.info .seal.big{width:84px;height:84px}.jWait .seal.big,.joinBox .seal.big,.winBox .seal{width:72px;height:72px}
+.brand .seal{width:52px;height:52px}.hallIn h2 .seal{width:58px;height:58px}
+
+/* ===== 3D 주사위 ===== */
+.die.d3{background:none!important;padding:0!important;box-shadow:none!important;display:block;--ds:clamp(34px,8.5cqw,68px);width:var(--ds);height:var(--ds);perspective:420px;border-radius:0}
+.d3 .cube{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s ease}
+.d3 .cube.tumble{animation:tumble 1.1s cubic-bezier(.2,.75,.25,1) both}
+@keyframes tumble{0%{transform:rotateX(calc(var(--rx) + var(--sx))) rotateY(calc(var(--ry) + var(--sy))) scale(.8)}60%{transform:rotateX(calc(var(--rx) + var(--sx)*.08)) rotateY(calc(var(--ry) + var(--sy)*.08)) scale(1.08)}100%{transform:rotateX(var(--rx)) rotateY(var(--ry)) scale(1)}}
+.d3.hop{animation:hop 1.1s cubic-bezier(.3,.6,.4,1) both}
+@keyframes hop{0%{translate:0 0}18%{translate:0 -70%}36%{translate:0 0}50%{translate:0 -28%}64%{translate:0 0}74%{translate:0 -9%}84%,100%{translate:0 0}}
+.d3.spinning .cube{animation:spinAll .5s linear infinite}
+@keyframes spinAll{from{transform:rotateX(0) rotateY(0)}to{transform:rotateX(360deg) rotateY(720deg)}}
+.d3 .face{position:absolute;inset:0;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:14%;border-radius:16%;background:linear-gradient(150deg,#fff,#f1ebdd);border:1.5px solid #d9cfba;box-shadow:inset 0 0 8px rgba(120,90,40,.18);backface-visibility:hidden}
+.d3 .f1{transform:translateZ(calc(var(--ds)/2))}.d3 .f6{transform:rotateY(180deg) translateZ(calc(var(--ds)/2))}
+.d3 .f2{transform:rotateX(90deg) translateZ(calc(var(--ds)/2))}.d3 .f5{transform:rotateX(-90deg) translateZ(calc(var(--ds)/2))}
+.d3 .f3{transform:rotateY(90deg) translateZ(calc(var(--ds)/2))}.d3 .f4{transform:rotateY(-90deg) translateZ(calc(var(--ds)/2))}
+.d3 .pip{width:74%;aspect-ratio:1;border-radius:50%;background:#1d1b18;place-self:center;visibility:hidden}
+.d3 .pip.on{visibility:visible}.d3 .face.one .pip.on{background:#d2452f;width:100%}
+.dice{gap:clamp(10px,3cqw,26px)!important;filter:drop-shadow(0 10px 10px rgba(60,40,10,.25))}
+/* ===== 골드 소장 카드 ===== */
+.goldCard{--c:#c0902f;position:relative;overflow:hidden;width:150px;border-radius:14px;padding:9px 9px 10px;color:#3d2a07;
+ background:linear-gradient(135deg,#fff6cf 0%,#f3cf6b 22%,#c99327 45%,#f8e08e 62%,#b97f1c 82%,#f6dc86 100%);
+ box-shadow:0 0 0 2px #8a5f12,inset 0 0 0 3px rgba(255,255,255,.55),inset 0 0 0 5px rgba(138,95,18,.5),0 14px 30px rgba(120,80,10,.35);text-align:center;font-family:var(--f-display)}
+.goldCard .gcShine{position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.75) 50%,transparent 60%);animation:gcShine 2.6s ease-in-out infinite;pointer-events:none;z-index:3}
+@keyframes gcShine{0%{transform:translateX(-60%)}60%,100%{transform:translateX(60%)}}
+.gcTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.gcEra{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbe8,#f0d27c);box-shadow:0 0 0 2px #8a5f12,0 2px 4px rgba(0,0,0,.25);display:grid;place-items:center;padding:4px}
+.gcEra svg{width:100%;height:100%}
+.gcStars{color:#fff;font-size:14px;letter-spacing:1px;text-shadow:0 1px 0 #8a5f12,0 0 6px rgba(138,95,18,.7)}
+.gcArt{aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:#2a2116;box-shadow:0 0 0 2px #8a5f12,0 0 0 4px #fff3c4}
+.gcArt img,.gcArt canvas{width:100%;height:100%;object-fit:cover;display:block}
+.gcName{margin-top:7px;font-weight:800;font-size:15px;line-height:1.2}
+.gcSub{font-size:11px;opacity:.8;margin-top:2px;font-family:var(--f-body,inherit)}
+.goldCard.l{width:min(300px,72vw);padding:14px 14px 16px;border-radius:20px}.goldCard.l .gcEra{width:56px;height:56px}.goldCard.l .gcStars{font-size:20px}.goldCard.l .gcName{font-size:24px}.goldCard.l .gcSub{font-size:14px}
+.goldMini{--pc:#8a5f12;display:inline-grid;place-items:center;position:relative;width:26px;height:26px;padding:3px;border-radius:50%;vertical-align:middle;
+ background:radial-gradient(circle at 35% 30%,#fff8d8,#f0cd66 55%,#c08a22);box-shadow:0 0 0 2px var(--pc),0 2px 5px rgba(0,0,0,.3);animation:gmGlint 3s ease-in-out infinite}
+.goldMini svg{width:100%;height:100%}
+.goldMini b{position:absolute;right:-5px;bottom:-4px;background:#d2452f;color:#fff;border-radius:8px;font-size:9px;line-height:1;padding:2px 4px;font-style:normal}
+@keyframes gmGlint{0%,100%{filter:brightness(1)}50%{filter:brightness(1.18)}}
+.cell .own .goldMini{position:absolute;top:-6px;right:-6px;width:clamp(16px,3.4cqw,30px);height:clamp(16px,3.4cqw,30px);padding:2px;z-index:4}
+.cell .own .goldMini b{font-size:8px;padding:1px 3px}
+.ownRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}.ownRow .goldMini{width:24px;height:24px}
+.gcCele{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:rgba(255,250,235,.82);backdrop-filter:blur(4px);animation:fadeIn .25s ease}
+.gcCele.out{opacity:0;transition:opacity .4s}
+.gcBurst{position:absolute;width:140vmax;height:140vmax;background:repeating-conic-gradient(rgba(240,200,90,.35) 0 8deg,transparent 8deg 20deg);animation:spinSlow 12s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.gcWrap{position:relative;display:grid;justify-items:center;gap:14px;animation:gcPop .7s cubic-bezier(.2,1.6,.4,1) both}
+.gcWrap p{margin:0;text-align:center;font-family:var(--f-display);font-size:18px;color:#3d2a07}.gcWrap p b{font-size:26px;color:#b4771a}
+@keyframes gcPop{0%{transform:scale(.2) rotateY(540deg);opacity:0}100%{transform:scale(1) rotateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0}}
+/* ===== 복주머니 ===== */
+.pouchCard{display:grid;justify-items:center;gap:10px;text-align:center}
+.pouchBag{width:120px;height:120px;animation:pouchShake 1s cubic-bezier(.36,.07,.19,.97) both,pouchFloat 2.4s 1s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(160,40,40,.3))}
+.pouchBag svg{width:100%;height:100%}
+@keyframes pouchShake{0%{transform:scale(.3) rotate(0)}30%{transform:scale(1.1) rotate(-14deg)}45%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}75%{transform:rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes pouchFloat{50%{transform:translateY(-6px)}}
+.pouchIn{animation:fadeIn .5s .55s both}.pouchIn h2{margin:4px 0;font-family:var(--f-display);font-size:26px;color:#b8322a}.pouchIn p{margin:0 0 12px;line-height:1.6}
+/* ===== 교사 화면 작품 스포트라이트 ===== */
+.center.spot{padding:2.5%;gap:6px;justify-content:flex-start}
+.center.spot .evArt{flex:1 1 auto;min-height:0;width:100%;max-width:100%;height:auto;display:flex;align-items:center;justify-content:center;position:relative;border:0;background:none;padding:0;cursor:zoom-in}
+.center.spot .evArt img{height:100%;width:auto;max-width:100%;object-fit:contain}
+.center.spot .evArt canvas{height:100%;width:auto;max-width:100%;aspect-ratio:4/3}
+.evZoom{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:3px 8px;border-radius:12px}
+.center.spot .evName{flex:none;font-size:clamp(13px,2.4cqw,22px)}.center.spot .turn{flex:none}
+.artFull{position:fixed;inset:0;z-index:220;background:rgba(15,12,8,.94);display:grid;grid-template-rows:1fr auto;padding:2vh 2vw;cursor:zoom-out}
+.artFull .afIn{min-height:0;display:flex;align-items:center;justify-content:center}.artFull img,.artFull canvas{max-width:100%;max-height:100%;object-fit:contain}
+.artFull .afCap{color:#fff;text-align:center;padding:10px;font-size:18px}.artFull small{display:block;opacity:.6;font-size:13px}
+/* 퍼즐 화면 크게 */
+.pzWrap{flex-wrap:nowrap}.pzBoard{flex:0 1 auto;min-width:0}.pzSide{max-width:240px}
+@media (max-width:760px){.pzWrap{flex-wrap:wrap}.pzSide{max-width:none}}
+
+/* 획득 배지 = 골드 카드 */
+.shelf .medal{--s:78px}
+.bdg{position:relative;overflow:hidden}
+.bdg.on{background:linear-gradient(135deg,#fff6cf 0%,#f3cf6b 22%,#d9a636 45%,#f8e08e 62%,#c48a22 82%,#f6dc86 100%)!important;border-color:#8a5f12!important;color:#3d2a07;box-shadow:0 0 0 2px #8a5f12,inset 0 0 0 3px rgba(255,255,255,.55),0 12px 26px rgba(140,95,15,.35)!important;transform:translateY(-2px)}
+.bdg.on::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.7) 50%,transparent 60%);animation:gcShine 3s ease-in-out infinite;pointer-events:none}
+.bdg.on b{color:#3a2604!important}.bdg.on small,.bdg.on em{color:#5a3f0c!important}
+.bdg.on .medal{background:conic-gradient(from 200deg,#fff4c4,#c08a22,#fff4c4,#a8761a,#fff4c4)!important;box-shadow:0 4px 10px rgba(90,60,5,.4)}
+.bdg.on .medal::before{content:"★";position:absolute;transform:translate(26px,-30px);color:#fff;text-shadow:0 0 4px #8a5f12}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -481,14 +618,15 @@ button.cmp{cursor:pointer}
 <div class="app">
   <header class="top">
     <button type="button" class="brand" id="homeBtn" title="메인화면으로" aria-label="아트마블 미술사관 메인화면으로">
-      <span class="seal" aria-hidden="true">藝</span>
+      <span class="seal brandIc" aria-hidden="true" data-icon="palette"></span>
       <div><h1>아트마블 미술사관</h1><p>이론으로 배우고, 명화로 감상하고, 영상으로 깊이 보는 미술사</p></div>
     </button>
     <nav class="nav" aria-label="전시관 메뉴">
-      <button type="button" data-view="k" aria-current="true">한국미술사</button>
-      <button type="button" data-view="w">서양미술사</button>
-      <button type="button" data-view="game">미술사 마블</button>
-      <button type="button" data-view="book">배지·도감</button>
+      <button type="button" data-view="game" class="navBig" aria-current="true"><span class="nIc" data-icon="dice"></span>미술사 마블</button>
+      <button type="button" data-view="k"><span class="nIc" data-icon="celadon"></span>한국미술사</button>
+      <button type="button" data-view="w"><span class="nIc" data-icon="amphora"></span>서양미술사</button>
+      <button type="button" data-view="badge"><span class="nIc" data-icon="trophy"></span>배지</button>
+      <button type="button" data-view="book"><span class="nIc" data-icon="book"></span>도감</button>
     </nav>
     <button type="button" class="rankChip" id="rankChip" aria-label="나의 등급과 배지 보기"></button>
     <button type="button" class="ghost" id="soundBtn" aria-pressed="true">소리 켜짐</button>
@@ -519,9 +657,13 @@ button.cmp{cursor:pointer}
       </div>
     </section>
     <section id="view-live" hidden></section>
-    <section id="view-book" hidden>
-      <div class="sechead"><div><h2>나의 배지와 도감</h2><p>시대별 작품의 퀴즈를 모두 맞히면 그 시대의 ‘마스터 배지’를 받아요. 퀴즈 놀이터의 여러 놀이로 도전 배지도 모아 보세요.</p></div><button type="button" class="ghost" id="resetBtn">기록 지우기</button></div>
+    <section id="view-badge" hidden>
+      <div class="sechead"><div><h2>나의 배지</h2><p>시대별 작품의 퀴즈를 모두 맞히면 그 시대 대표 유물이 그려진 ‘마스터 배지’를 받아요. 퀴즈 놀이터의 여러 놀이로 도전 배지도 모아 보세요.</p></div><button type="button" class="ghost" id="resetBtn">기록 지우기</button></div>
       <div class="prog" id="prog"></div>
+      <div id="badges"></div>
+    </section>
+    <section id="view-book" hidden>
+      <div class="sechead"><div><h2>작품 도감</h2><p>감상한 작품과 퀴즈로 정복한 작품이 모여요. 카드를 누르면 다시 감상할 수 있어요.</p></div></div>
       <div id="book"></div>
     </section>
   </main>
@@ -3053,6 +3195,65 @@ var qrcode = function() {
     return qrcode;
 }));
 
+/* ============ 귀여운 유물 아이콘 (한자 도장 대체) ============ */
+const ICON=(()=>{const S='stroke="#2a2622" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"';
+  const face=(x,y,s=1)=>`<circle cx="${x-5*s}" cy="${y}" r="${1.7*s}" fill="#2a2622"/><circle cx="${x+5*s}" cy="${y}" r="${1.7*s}" fill="#2a2622"/><path d="M${x-2.6*s} ${y+3.6*s}q${2.6*s} ${2.4*s} ${5.2*s} 0" fill="none" ${S} stroke-width="${2*s}"/><ellipse cx="${x-9*s}" cy="${y+3.5*s}" rx="${2.6*s}" ry="${1.6*s}" fill="#ff9aa2" opacity=".75"/><ellipse cx="${x+9*s}" cy="${y+3.5*s}" rx="${2.6*s}" ry="${1.6*s}" fill="#ff9aa2" opacity=".75"/>`;
+  const svg=b=>`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${b}</svg>`;
+  const I={
+  /* 한국 시대 유물 */
+  comb:svg(`<path d="M16 12h32l-3 30q-1 12-13 14q-12-2-13-14z" fill="#d9a46a" ${S}/><path d="M19 18l26 0M18 23l8 5 8-5 8 5 4-2M19 33l7 4 7-4 7 4 5-3" fill="none" stroke="#8a5a2b" stroke-width="2"/>${face(32,42,.8)}`),
+  pagoda:svg(`<path d="M32 4v8" ${S}/><path d="M14 20h36l-6-8H20z" fill="#c9c2b2" ${S}/><rect x="22" y="20" width="20" height="9" fill="#e9e2d2" ${S}/><path d="M11 36h42l-6-7H17z" fill="#c9c2b2" ${S}/><rect x="20" y="36" width="24" height="10" fill="#e9e2d2" ${S}/><path d="M8 54h48l-6-8H14z" fill="#b8b0a0" ${S}/>${face(32,41,.6)}`),
+  celadon:svg(`<path d="M25 6h14q1 5 7 9q8 6 5 20q-3 14-8 18v5H21v-5q-5-4-8-18q-3-14 5-20q6-4 7-9z" fill="#8fc7b4" ${S}/><path d="M18 22q4 2 8-1M38 22q4 2 8-1" fill="none" stroke="#fff" stroke-width="2"/><path d="M40 13l4 2-4 1" fill="none" stroke="#fff" stroke-width="1.8"/>${face(32,34)}`),
+  sundial:svg(`<path d="M8 26h48q0 22-24 24Q8 48 8 26z" fill="#c99b54" ${S}/><path d="M14 30q18 14 36 0" fill="none" stroke="#7a5524" stroke-width="2"/><path d="M32 26V10" ${S}/><path d="M32 10l10 6" ${S}/><path d="M20 50l-4 8M44 50l4 8M32 50v8" ${S}/>${face(32,38,.7)}`),
+  brush:svg(`<rect x="27" y="4" width="10" height="34" rx="3" fill="#b5643a" ${S}/><rect x="25" y="34" width="14" height="6" rx="2" fill="#e9c06a" ${S}/><path d="M25 40q7 26 7 20q0 4 7-20z" fill="#2a2622" ${S}/><ellipse cx="14" cy="54" rx="10" ry="5" fill="#2a2622" opacity=".8"/>${face(32,18,.7)}`),
+  moonjar:svg(`<path d="M24 8h16v4q16 6 16 22t-16 22v2H24v-2Q8 50 8 34t16-22z" fill="#fbfaf4" ${S}/><path d="M12 34h40" stroke="#e5ddcb" stroke-width="2"/>${face(32,32)}`),
+  palette:svg(`<path d="M32 6C16 6 6 18 6 32s10 26 24 26c6 0 7-5 4-9s0-9 6-9h6c8 0 12-5 12-11C58 16 46 6 32 6z" fill="#f2d8a7" ${S}/><circle cx="20" cy="22" r="5" fill="#e23b2e" ${S} stroke-width="2"/><circle cx="34" cy="16" r="5" fill="#ffd21f" ${S} stroke-width="2"/><circle cx="47" cy="24" r="5" fill="#1e5bb8" ${S} stroke-width="2"/><circle cx="17" cy="37" r="5" fill="#3f9a6b" ${S} stroke-width="2"/>`),
+  /* 서양 시대 유물 */
+  amphora:svg(`<path d="M26 6h12v6q12 6 12 22q0 16-10 22v4H24v-4Q14 50 14 34q0-16 12-22z" fill="#d9773f" ${S}/><path d="M26 14q-12-2-10 12M38 14q12-2 10 12" fill="none" ${S}/><path d="M17 40h30" stroke="#2a2622" stroke-width="2.5"/><path d="M19 44l4-3 4 3 4-3 4 3 4-3 4 3" fill="none" stroke="#2a2622" stroke-width="1.8"/>${face(32,30)}`),
+  window:svg(`<path d="M14 58V26q0-18 18-20q18 2 18 20v32z" fill="#fff" ${S}/><path d="M18 56V27q0-14 14-16q14 2 14 16v29z" fill="#7cc6ff"/><path d="M32 11v45M18 34h28M18 46h28" stroke="#2a2622" stroke-width="2.2"/><path d="M18 34h14V22q-12 1-14 12z" fill="#ff8a7a"/><path d="M32 46h14V34H32z" fill="#ffd21f"/><path d="M18 46h14v10H18z" fill="#8fdc8a"/><path d="M14 58V26q0-18 18-20q18 2 18 20v32z" fill="none" ${S}/>`),
+  mona:svg(`<rect x="8" y="6" width="48" height="52" rx="3" fill="#e9c06a" ${S}/><rect x="14" y="12" width="36" height="40" fill="#6f7d55"/><path d="M20 52q2-14 12-16q10 2 12 16z" fill="#3a2a1a"/><ellipse cx="32" cy="27" rx="8" ry="10" fill="#f1cf9a"/><path d="M24 30q-2-16 8-17q10 1 8 17" fill="none" stroke="#3a2a1a" stroke-width="4"/><circle cx="29" cy="26" r="1.2" fill="#2a2622"/><circle cx="35" cy="26" r="1.2" fill="#2a2622"/><path d="M29.5 31q2.5 2 5 0" fill="none" stroke="#2a2622" stroke-width="1.6" stroke-linecap="round"/><rect x="8" y="6" width="48" height="52" rx="3" fill="none" ${S}/>`),
+  pearl:svg(`<path d="M20 22q4-16 18-14q14 4 10 18" fill="#3b63c4" ${S}/><path d="M44 22q8 10 2 26" fill="none" stroke="#f0c74a" stroke-width="6" stroke-linecap="round"/><ellipse cx="32" cy="34" rx="13" ry="15" fill="#f6dcb6" ${S}/><circle cx="21" cy="46" r="6" fill="#fff" ${S}/><circle cx="19" cy="44" r="2" fill="#e6f0ff"/>${face(33,33,.8)}`),
+  flag:svg(`<path d="M10 8v52" ${S}/><path d="M12 10h40l-8 10 8 10H12z" fill="#ff6b5a" ${S}/><path d="M24 10v20M36 10v20" stroke="#fff" stroke-width="5" opacity=".9"/><path d="M24 10h12v20H24z" fill="#fff"/><path d="M12 10h12v20H12z" fill="#3d63c9"/><path d="M12 10h40l-8 10 8 10H12z" fill="none" ${S}/>`),
+  sunflower:svg(`${[0,45,90,135,180,225,270,315].map(a=>`<ellipse cx="32" cy="14" rx="6" ry="10" fill="#ffd21f" ${S} stroke-width="2" transform="rotate(${a} 32 30)"/>`).join('')}<circle cx="32" cy="30" r="11" fill="#8a5a2b" ${S}/><path d="M32 44v16" stroke="#3f9a6b" stroke-width="4"/>${face(32,29,.7)}`),
+  mondrian:svg(`<rect x="8" y="8" width="48" height="48" fill="#fff" ${S}/><rect x="10" y="10" width="26" height="28" fill="#e23b2e"/><rect x="40" y="42" width="14" height="12" fill="#ffd21f"/><rect x="10" y="42" width="12" height="12" fill="#1e5bb8"/><path d="M38 8v48M8 40h48M24 40v16M38 24h18" stroke="#2a2622" stroke-width="4"/><rect x="8" y="8" width="48" height="48" fill="none" ${S}/>`),
+  /* 보드 칸 · 메뉴 · 놀이 */
+  start:svg(`<circle cx="32" cy="32" r="26" fill="#ffe08a" ${S}/><path d="M24 18v28" ${S}/><path d="M25 19h18l-5 6 5 6H25z" fill="#ff6b5a" ${S}/><path d="M18 46h28" ${S}/>`),
+  restore:svg(`<circle cx="26" cy="26" r="15" fill="#d8f0ff" ${S}/><path d="M37 37l15 15" stroke="#2a2622" stroke-width="6" stroke-linecap="round"/><path d="M20 24q4-8 12-4" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M44 8l8 8-14 14-8-8z" fill="#e9c06a" ${S}/>`),
+  hourglass:svg(`<path d="M16 6h32M16 58h32" ${S}/><path d="M20 6q0 16 12 26Q20 42 20 58h24q0-16-12-26Q44 22 44 6z" fill="#d8f0ff" ${S}/><path d="M24 16h16q-2 8-8 12q-6-4-8-12zM32 40q-8 6-9 14h18q-1-8-9-14z" fill="#ffd21f"/>`),
+  fair:svg(`<path d="M8 24l6-14h36l6 14z" fill="#ff6b5a" ${S}/><path d="M8 24q4 6 8 0q4 6 8 0q4 6 8 0q4 6 8 0q4 6 8 0q4 6 8 0" fill="#fff" ${S}/><rect x="12" y="28" width="40" height="28" fill="#fff6dd" ${S}/><circle cx="32" cy="42" r="8" fill="#ffd21f" ${S}/><path d="M32 38v8M29 40h5" stroke="#8a5a00" stroke-width="2"/>`),
+  pouch:svg(`<path d="M20 18q-4-8 4-10q8 6 16 0q8 2 4 10z" fill="#ff6b8a" ${S}/><path d="M18 20q12 4 28 0" fill="none" stroke="#ffd21f" stroke-width="4" stroke-linecap="round"/><path d="M20 22q-14 8-12 22q2 14 24 14t24-14q2-14-12-22z" fill="#e8344e" ${S}/><circle cx="32" cy="40" r="9" fill="#ffd21f" ${S} stroke-width="2"/><path d="M27 40h10M32 35v10" stroke="#c24a00" stroke-width="2"/><path d="M42 22l8 6M22 22l-8 6" stroke="#ffd21f" stroke-width="3" stroke-linecap="round"/>`),
+  trophy:svg(`<path d="M18 8h28v14q0 14-14 16Q18 36 18 22z" fill="#ffd21f" ${S}/><path d="M18 14H8q0 12 12 12M46 14h10q0 12-12 12" fill="none" ${S}/><path d="M28 38h8v8h-8z" fill="#e9b13a" ${S}/><rect x="20" y="46" width="24" height="10" rx="2" fill="#b5643a" ${S}/><path d="M32 14l2 4 4 .6-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.6z" fill="#fff"/>`),
+  book:svg(`<path d="M8 12q12-4 24 4q12-8 24-4v40q-12-4-24 4q-12-8-24-4z" fill="#fff" ${S}/><path d="M32 16v40" ${S}/><path d="M14 22h12M14 30h12M38 22h12M38 30h12" stroke="#8fc7b4" stroke-width="3" stroke-linecap="round"/>`),
+  timeline:svg(`<path d="M6 32h52" ${S}/><circle cx="14" cy="32" r="6" fill="#ff6b5a" ${S}/><circle cx="32" cy="32" r="6" fill="#ffd21f" ${S}/><circle cx="50" cy="32" r="6" fill="#3d63c9" ${S}/><path d="M14 22v-8M32 22v-8M50 22v-8" ${S}/>`),
+  dice:svg(`<rect x="10" y="10" width="44" height="44" rx="10" fill="#fff" ${S}/><circle cx="22" cy="22" r="4" fill="#2a2622"/><circle cx="42" cy="42" r="4" fill="#2a2622"/><circle cx="32" cy="32" r="5" fill="#e8344e"/><circle cx="42" cy="22" r="4" fill="#2a2622"/><circle cx="22" cy="42" r="4" fill="#2a2622"/>`),
+  question:svg(`<path d="M8 28q0-20 24-20t24 20q0 20-24 20h-4l-12 10 2-12Q8 42 8 28z" fill="#ffe08a" ${S}/><path d="M26 22q0-6 7-6t7 6q0 5-7 7v4" fill="none" ${S} stroke-width="3.2"/><circle cx="33" cy="39" r="2.4" fill="#2a2622"/>`),
+  puzzle:svg(`<path d="M10 14h14q-2-8 6-8t6 8h14v14q8-2 8 6t-8 6v14H36q2 8-6 8t-6-8H10V40q-8 2-8-6t8-6z" fill="#8fc7b4" ${S}/>`),
+  cross:svg(`<rect x="22" y="6" width="12" height="12" fill="#fff" ${S}/><rect x="22" y="18" width="12" height="12" fill="#ffd21f" ${S}/><rect x="10" y="30" width="12" height="12" fill="#fff" ${S}/><rect x="22" y="30" width="12" height="12" fill="#fff" ${S}/><rect x="34" y="30" width="12" height="12" fill="#fff" ${S}/><rect x="46" y="30" width="12" height="12" fill="#fff" ${S}/><rect x="22" y="42" width="12" height="12" fill="#fff" ${S}/>`),
+  detective:svg(`<circle cx="26" cy="26" r="16" fill="#fff6dd" ${S}/><path d="M38 38l16 16" stroke="#2a2622" stroke-width="7" stroke-linecap="round"/><text x="26" y="33" text-anchor="middle" font-size="20" font-weight="900" fill="#e8344e" font-family="sans-serif">?</text>`),
+  order:svg(`<rect x="6" y="36" width="14" height="20" rx="3" fill="#ffd21f" ${S}/><rect x="25" y="24" width="14" height="32" rx="3" fill="#ff8a7a" ${S}/><rect x="44" y="10" width="14" height="46" rx="3" fill="#7cc6ff" ${S}/><text x="13" y="51" text-anchor="middle" font-size="11" font-weight="900" fill="#2a2622" font-family="sans-serif">1</text><text x="32" y="51" text-anchor="middle" font-size="11" font-weight="900" fill="#2a2622" font-family="sans-serif">2</text><text x="51" y="51" text-anchor="middle" font-size="11" font-weight="900" fill="#2a2622" font-family="sans-serif">3</text>`),
+  cards:svg(`<rect x="6" y="14" width="26" height="36" rx="5" fill="#ff8a7a" ${S} transform="rotate(-10 19 32)"/><rect x="30" y="12" width="26" height="36" rx="5" fill="#fff" ${S} transform="rotate(8 43 30)"/><path d="M43 24l2.5 5 5.5.8-4 3.8 1 5.4-5-2.6-5 2.6 1-5.4-4-3.8 5.5-.8z" fill="#ffd21f" ${S} stroke-width="1.6" transform="rotate(8 43 30)"/>`),
+  pop:svg(`<path d="M32 4l6 12 13-6-3 14 14 2-10 10 10 10-14 2 3 14-13-6-6 12-6-12-13 6 3-14-14-2 10-10L2 26l14-2-3-14 13 6z" fill="#ffd21f" ${S}/><text x="32" y="39" text-anchor="middle" font-size="15" font-weight="900" fill="#e23b2e" font-family="sans-serif">POP</text>`),
+  bulb:svg(`<path d="M32 6q16 0 16 16q0 9-8 15v7H24v-7q-8-6-8-15Q16 6 32 6z" fill="#ffe08a" ${S}/><rect x="24" y="44" width="16" height="10" rx="3" fill="#c9c2b2" ${S}/><path d="M28 58h8" ${S}/><path d="M26 22q2-8 9-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`),
+  teacher:svg(`<rect x="8" y="8" width="48" height="32" rx="3" fill="#3f9a6b" ${S}/><path d="M16 18h18M16 26h26" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M20 40l-6 18M44 40l6 18M32 40v18" ${S}/>`),
+  group:svg(`<circle cx="20" cy="22" r="8" fill="#ffd9b0" ${S}/><circle cx="44" cy="22" r="8" fill="#ffd9b0" ${S}/><circle cx="32" cy="30" r="9" fill="#ffd9b0" ${S}/><path d="M6 54q2-16 14-16q5 0 8 3M58 54q-2-16-14-16q-5 0-8 3M16 58q2-16 16-16t16 16" fill="#7cc6ff" ${S}/>`),
+  wait:svg(`<circle cx="32" cy="32" r="24" fill="#fff6dd" ${S}/><path d="M32 18v14l10 6" ${S} stroke-width="3.4"/>`),
+  run:svg(`<path d="M10 40q0-10 12-12l14-2q10 0 14 8l4 10q2 6-4 6H14q-4 0-4-4z" fill="#ff6b5a" ${S}/><path d="M10 46h44" stroke="#fff" stroke-width="3"/><path d="M26 28l2 8M34 27l2 8" stroke="#fff" stroke-width="2.4"/><path d="M4 22h12M2 30h8" ${S}/>`),
+  star:svg(`<path d="M32 4l8 17 18 2-13 13 4 18-17-9-17 9 4-18L6 23l18-2z" fill="#ffd21f" ${S}/>`),
+  arrowup:svg(`<path d="M32 6l20 22H40v28H24V28H12z" fill="#8fdc8a" ${S}/>`),
+  eye:svg(`<path d="M4 32q12-18 28-18t28 18q-12 18-28 18T4 32z" fill="#fff" ${S}/><circle cx="32" cy="32" r="10" fill="#3d63c9" ${S}/><circle cx="35" cy="29" r="3" fill="#fff"/>`),
+  ticket:svg(`<path d="M6 18h52v8q-6 0-6 6t6 6v8H6v-8q6 0 6-6t-6-6z" fill="#ffd21f" ${S}/><path d="M40 18v28" stroke="#2a2622" stroke-width="2" stroke-dasharray="3 3"/><path d="M14 28h18M14 36h14" stroke="#b5643a" stroke-width="3" stroke-linecap="round"/>`),
+  cap:svg(`<path d="M4 24l28-12 28 12-28 12z" fill="#3d3a5c" ${S}/><path d="M16 30v12q16 10 32 0V30l-16 6z" fill="#5a5680" ${S}/><path d="M54 26v16" ${S}/><circle cx="54" cy="44" r="3" fill="#ffd21f" ${S}/>`),
+  museum:svg(`<path d="M6 22L32 8l26 14z" fill="#ffe08a" ${S}/><path d="M10 22h44v4H10z" fill="#fff" ${S}/><path d="M14 26v22M24 26v22M40 26v22M50 26v22" stroke="#2a2622" stroke-width="4"/><path d="M8 48h48v8H8z" fill="#fff" ${S}/>`)
+  };
+  const ERA={k1:'comb',k2:'pagoda',k3:'celadon',k4:'sundial',k5:'brush',k6:'moonjar',k7:'palette',w1:'amphora',w2:'window',w3:'mona',w4:'pearl',w5:'flag',w6:'sunflower',w7:'mondrian'};
+  const SEAL={'藝':'palette','韓':'celadon','洋':'amphora','論':'book','年':'timeline','遊':'dice','始':'start','復':'restore','時':'hourglass','市':'fair','鍵':'pouch','賞':'trophy','法':'book','待':'wait','組':'group','師':'teacher','走':'run','問':'question','片':'puzzle','字':'cross','廿':'detective','序':'order','對':'cards','波':'pop','妙':'bulb','滿':'star','昇':'arrowup','探':'detective','見':'eye','觀':'ticket','覽':'ticket','學':'cap','館':'museum',
+    '古':'comb','佛':'pagoda','麗':'celadon','朝':'sundial','景':'brush','白':'moonjar','新':'palette','洞':'amphora','聖':'window','光':'pearl','情':'flag','印':'sunflower','現':'mondrian'};
+  return{I,ERA,SEAL,get:k=>I[k]||I[SEAL[k]]||'',era:g=>I[ERA[g]]||''}})();
+/* 화면에 남아 있는 한자 도장을 유물 아이콘으로 자동 교체 */
+function iconizeSeals(root){(root||document).querySelectorAll('.seal:not([data-ic]),.medal>span:not([data-ic])').forEach(el=>{const t=el.textContent.trim();const s=ICON.get(t);if(s){el.innerHTML=s;el.dataset.ic='1'}})}
+new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1){if(n.matches&&n.matches('.seal,.medal>span'))iconizeSeals(n.parentNode);else iconizeSeals(n)}}).observe(document.documentElement,{childList:true,subtree:true});
+setTimeout(()=>iconizeSeals(),0);
+
 /* ============ 효과음 엔진 (파일 없이 브라우저에서 직접 합성) ============ */
 const SFX=(()=>{let ctx=null,master,wet;
   function init(){if(ctx)return ctx;try{ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=.55;master.connect(ctx.destination);
@@ -3147,7 +3348,7 @@ function stateTag(w){return progress.solved[w.id]?'<span class="st solved">퀴�
 function renderHall(s){const el=$('#view-'+s),info=SIDE[s],list=sideWorks(s),H=HALL[s];
   const mos=list.filter(w=>IMG[w.id]).filter((_,i)=>i%2===0).slice(0,6).map(w=>`<img src="${IMG[w.id]}" alt="">`).join('');
   el.innerHTML=`<div class="hallHead"><div class="mos" aria-hidden="true">${mos}</div><div class="hallIn"><div class="eb">${info.eb}</div><h2><span class="seal">${info.seal}</span>${info.name}</h2><p>${info.intro}</p>
-   <div class="subtabs" role="tablist">${[['learn','시대별 이론·감상','論'],['tl','연표로 보기','年'],['quiz','퀴즈 놀이터','遊']].map(([k,l,c])=>`<button type="button" data-sub="${k}" aria-pressed="${H.sub===k}"><b>${c}</b>${l}</button>`).join('')}</div></div></div><div class="hallBody"></div>`;
+   <div class="subtabs" role="tablist">${[['learn','시대별 이론·감상','論'],['tl','연표로 보기','年'],['quiz','퀴즈 놀이터','遊']].map(([k,l,c])=>`<button type="button" data-sub="${k}" aria-pressed="${H.sub===k}"><b class="seal">${c}</b>${l}</button>`).join('')}</div></div></div><div class="hallBody"></div>`;
   el.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{H.sub=b.dataset.sub;SFX.tab(s);store.set('artmarble-sub-'+s,H.sub);renderHall(s)});
   const body=el.querySelector('.hallBody');
   if(H.sub==='learn')body.innerHTML=learnHTML(s);
@@ -3237,7 +3438,7 @@ const EDITIONS={
   k:{name:'한국미술사편',seal:'韓',ids:()=>sideWorks('k').filter(w=>!w.cr).map(w=>w.id),zones:['선사~고려의 길','조선~근대의 길'],desc:'선사부터 근대까지 한국 명작 22점'},
   w:{name:'서양미술사편',seal:'洋',ids:()=>sideWorks('w').filter(w=>!w.cr).map(w=>w.id),zones:['고대~르네상스의 길','바로크~현대의 길'],desc:'동굴벽화부터 추상화까지 서양 명작 22점'},
   mix:{name:'한국+서양 통합편',seal:'合',ids:()=>MIXK.concat(MIXW),zones:['한국미술의 길','서양미술의 길'],desc:'한국 11점 + 서양 11점, 같은 시대 비교'}};
-const CORNER={start:{s:'始',n:'출발',d:'지날 때마다 +100',info:'한 바퀴를 돌아 출발점을 지날 때마다 장학금 100코인을 받아요.'},rest:{s:'復',n:'복원실',d:'1턴 쉬기',info:'오래된 작품 복원을 돕느라 한 번 쉬어요. 다음 차례에 퀴즈를 맞히면 바로 탈출!'},time:{s:'時',n:'타임머신',d:'원하는 작품으로',info:'가고 싶은 시대의 작품 칸을 골라 바로 이동해요.'},fair:{s:'市',n:'아트페어',d:'주사위×20 코인',info:'작품 판매 부스를 열어요. 주사위 숫자 × 20코인을 벌어요.'},key:{s:'鍵',n:'황금열쇠',d:'행운 카드',info:'경매 대박, 도슨트 퀴즈, 타임머신 오작동… 무엇이 나올지 몰라요!'}};
+const CORNER={start:{s:'始',n:'출발',d:'지날 때마다 +100',info:'한 바퀴를 돌아 출발점을 지날 때마다 장학금 100코인을 받아요.'},rest:{s:'復',n:'복원실',d:'1턴 쉬기',info:'오래된 작품 복원을 돕느라 한 번 쉬어요. 다음 차례에 퀴즈를 맞히면 바로 탈출!'},time:{s:'時',n:'타임머신',d:'원하는 작품으로',info:'가고 싶은 시대의 작품 칸을 골라 바로 이동해요.'},fair:{s:'市',n:'아트페어',d:'주사위×20 코인',info:'작품 판매 부스를 열어요. 주사위 숫자 × 20코인을 벌어요.'},key:{s:'鍵',n:'복주머니',d:'행운 카드',info:'우리 조상들이 복을 담아 차고 다니던 주머니예요. 도깨비 방망이, 거꾸로 시간 여행, 호랑이의 장난… 무엇이 나올지 몰라요!'}};
 const TOKENS=[{e:'🖌️',c:'#cf5638'},{e:'🎨',c:'#5068cc'},{e:'🏺',c:'#2f8a5c'},{e:'🖼️',c:'#c9952f'}];
 let CELLS=[],S=null;
 function makeCells(ed){const c=Array.from({length:28},()=>({t:'art'}));c[0]={t:'start'};c[7]={t:'rest'};c[14]={t:'time'};c[21]={t:'fair'};c[5]={t:'key'};c[23]={t:'key'};
@@ -3270,20 +3471,20 @@ function buildBoard(){const b=$('#board');b.querySelectorAll('.cell').forEach(e=
   const E=EDITIONS[S.ed];$('#zoneA').textContent=E.zones[0];$('#zoneB').textContent=E.zones[1];$('#edBadge').textContent=E.name;
   requestAnimationFrame(()=>paintAll(b))}
 function renderBoard(){$$('#board .cell').forEach(el=>{const i=+el.dataset.i,o=S.owners[i],ov=el.querySelector('.own');
-  if(ov){if(o){const pc=TOKENS[S.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=`<i style="background:${pc}">${'★'.repeat(o.lvl)}</i>`;ov.hidden=false}else ov.hidden=true}
+  if(ov){if(o){const pc=TOKENS[S.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=goldMini(CELLS[i].art,o.lvl,pc);ov.hidden=false}else ov.hidden=true}
   el.querySelector('.tokens').innerHTML=S.players.map((p,k)=>p.out||p.pos!==i?'':`<i class="tok${k===S.turn&&S.phase!=='over'?' me':''}" style="--pc:${TOKENS[p.tok].c}" title="${p.name}">${TOKENS[p.tok].e}</i>`).join('');
   el.classList.toggle('here',i===S.here)})}
 function renderPanel(){$('#roundInfo').textContent=S.phase==='over'?'게임 종료':`${Math.min(S.round,S.maxRounds)} / ${S.maxRounds} 라운드`;
   $('#players').innerHTML=S.players.map((p,i)=>{const t=TOKENS[p.tok];const chips=(p.out?'<span class="chip">파산</span>':'')+(p.skip?'<span class="chip">쉬는 중</span>':'')+(p.freePass?'<span class="chip">자유이용권</span>':'');
-    return `<div class="pl${i===S.turn&&S.phase!=='over'?' now':''}${p.out?' out':''}"><span class="tk" style="background:${t.c}">${t.e}</span><span class="nm"><b>${p.name}${chips}</b><small>소장 ${ownedCount(i)}점 · 총자산 ${assets(i)}</small></span><span class="cn">${p.coins}<small>코인</small></span></div>`}).join('')}
+    return `<div class="pl${i===S.turn&&S.phase!=='over'?' now':''}${p.out?' out':''}"><span class="tk" style="background:${t.c}">${t.e}</span><span class="nm"><b>${p.name}${chips}</b><small>총자산 ${assets(i)}</small><span class="ownRow">${Object.keys(S.owners).filter(k=>S.owners[k].p===i).map(k=>goldMini(CELLS[k].art,S.owners[k].lvl)).join('')}</span></span><span class="cn">${p.coins}<small>코인</small></span></div>`}).join('')}
 function renderLog(){$('#log').innerHTML=S.log.slice(0,12).map(m=>`<li>${m}</li>`).join('')}
 function renderCenter(){const P=cur(),t=TOKENS[P.tok],btn=$('#rollBtn');
   if(S.phase==='over'){$('#turnInfo').innerHTML='<b>게임이 끝났어요</b>';btn.textContent='결과 보기';btn.disabled=false;return}
   $('#turnInfo').innerHTML=`<i style="background:${t.c}">${t.e}</i><b>${P.name}</b> 차례`;btn.textContent=P.skip?'복원실 탈출 퀴즈':'주사위 굴리기';btn.disabled=S.phase!=='roll'}
 function render(){renderBoard();renderPanel();renderCenter();renderLog()}
 const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
-function setDie(el,n){if(!el.children.length)el.innerHTML='<i class="pip"></i>'.repeat(9);[...el.children].forEach((p,k)=>p.classList.toggle('on',PIPS[n].includes(k)));el.classList.toggle('one',n===1);el.setAttribute('aria-label','주사위 '+n)}
-async function rollDice(){const d1=$('#d1'),d2=$('#d2');SFX.dice();d1.classList.add('rolling');d2.classList.add('rolling');for(let k=0;k<10;k++){setDie(d1,1+rnd(6));setDie(d2,1+rnd(6));await sleep(65)}const a=1+rnd(6),b=1+rnd(6);setDie(d1,a);setDie(d2,b);d1.classList.remove('rolling');d2.classList.remove('rolling');return[a,b]}
+function setDieOld(el,n){if(!el.children.length)el.innerHTML='<i class="pip"></i>'.repeat(9);[...el.children].forEach((p,k)=>p.classList.toggle('on',PIPS[n].includes(k)));el.classList.toggle('one',n===1);el.setAttribute('aria-label','주사위 '+n)}
+async function rollDiceOld(){const d1=$('#d1'),d2=$('#d2');SFX.dice();d1.classList.add('rolling');d2.classList.add('rolling');for(let k=0;k<10;k++){setDie(d1,1+rnd(6));setDie(d2,1+rnd(6));await sleep(65)}const a=1+rnd(6),b=1+rnd(6);setDie(d1,a);setDie(d2,b);d1.classList.remove('rolling');d2.classList.remove('rolling');return[a,b]}
 async function moveSteps(n,speed=170){const P=cur();for(let k=0;k<n;k++){P.pos=(P.pos+1)%28;if(P.pos===0){P.coins+=100;log(`${P.name} 출발점 통과! 장학금 +100`);SFX.coin()}S.here=P.pos;renderBoard();renderPanel();SFX.move(k);await sleep(speed)}save()}
 async function moveTo(t){await moveSteps((t-cur().pos+28)%28,75)}
 async function onRoll(){if(S.phase==='over'){gameOver();return}if(S.phase!=='roll')return;const P=cur();
@@ -3297,6 +3498,7 @@ function resolve(){const P=cur(),c=CELLS[P.pos];S.phase='action';renderCenter();
   if(c.t==='fair'){const n=1+rnd(6);P.coins+=n*20;log(`${P.name} 아트페어 수익 +${n*20}`);SFX.coin();return info({s:'市',title:'아트페어',body:`작품 판매 부스가 대성공! 주사위 ${n} × 20코인을 벌었어요.`,big:'+'+n*20,ok:'턴 마치기',on:endTurn})}
   if(c.t==='time')return timeMachine();if(c.t==='key')return goldenKey()}
 function endTurn(){$('#modal').hidden=true;A=null;S.here=-1;if(checkGameOver())return;const P=cur();
+  if(S.extra&&!P.out&&!P.skip){S.extra=false;S.phase='roll';log(`${P.name} 도깨비 방망이! 한 번 더 굴려요`);render();save();return}S.extra=false;
   if(S.dbl&&S.dblCount<2&&!P.out&&!P.skip){S.dblCount++;S.dbl=false;S.phase='roll';log(`${P.name} 더블 보너스! 한 번 더`);render();save();return}
   S.dbl=false;S.dblCount=0;let n=S.turn,g=0;do{n=(n+1)%S.players.length;if(n===0)S.round++;g++}while(S.players[n].out&&g<10);S.turn=n;
   if(S.round>S.maxRounds){gameOver();return}S.phase='roll';render();save()}
@@ -3312,9 +3514,9 @@ function quizModal(w,title,sub,done){showModal(`<div class="info" style="text-al
 function timeMachine(){const half=(a,b)=>SLOTS.filter(p=>p>=a&&p<b).map(p=>{const w=CELLS[p].art,o=S.owners[p];return `<button type="button" class="tmBtn" data-pos="${p}">${pic(w)}<span>${w.short}<small>${w.ys}${o?' · '+S.players[o.p].name:''}</small></span></button>`}).join('');const E=EDITIONS[S.ed];
   showModal(`<div class="info wide"><span class="seal big">時</span><h2>타임머신</h2><p>가고 싶은 시대의 작품을 고르세요. 출발점을 지나가면 장학금도 받아요.</p><h3>${E.zones[0]}</h3><div class="tmGrid">${half(1,14)}</div><h3>${E.zones[1]}</h3><div class="tmGrid">${half(15,28)}</div><div class="acts"><button class="btn" id="tmStay">여기 머무르기</button></div></div>`,false);
   paintAll($('#modalBody'));$$('.tmBtn').forEach(b=>b.onclick=async()=>{$('#modal').hidden=true;log(`${cur().name} 타임머신 출발!`);await moveTo(+b.dataset.pos);resolve()});$('#tmStay').onclick=endTurn}
-function goldenKey(){const P=cur(),k=KEYS[rnd(KEYS.length)];SFX.key();
-  showModal(`<div class="info keycard"><span class="seal big gold">鍵</span><div class="keyEyebrow">황금열쇠</div><h2>${k.t}</h2><p>${k.d}</p><div class="acts"><button class="btn primary" id="kOk">${k.quiz?'퀴즈 풀기':'확인'}</button></div></div>`,false,true);
-  $('#kOk').onclick=async()=>{log(`${P.name} 황금열쇠: ${k.t}`);
+function goldenKeyOld(){const P=cur(),k=KEYS[rnd(KEYS.length)];SFX.key();
+  showModal(`<div class="info keycard"><span class="seal big gold">鍵</span><div class="keyEyebrow">복주머니</div><h2>${k.t}</h2><p>${k.d}</p><div class="acts"><button class="btn primary" id="kOk">${k.quiz?'퀴즈 풀기':'확인'}</button></div></div>`,false,true);
+  $('#kOk').onclick=async()=>{log(`${P.name} 복주머니: ${k.t}`);
     if(k.quiz){const ids=EDITIONS[S.ed].ids();return quizModal(BY[ids[rnd(ids.length)]],'도슨트 퀴즈','맞히면 80코인을 받아요.',ok=>{if(ok){P.coins+=80;log(`${P.name} 도슨트 퀴즈 정답 +80`)}endTurn()})}
     if(k.f){k.f(P);return endTurn()}
     $('#modal').hidden=true;const target=k.goRandom?SLOTS[rnd(SLOTS.length)]:k.go;await moveTo(target);
@@ -3334,7 +3536,7 @@ function renderActions(){const el=$('#acActions');if(!el||!A)return;const B=(t,a
   el.innerHTML=h}
 function artAct(act){if(act==='goQuiz'){A.tab='quiz';renderArt();return}const P=cur(),pos=A.pos,w=A.art,o=S.owners[pos];
   if(act==='pass')return endTurn();
-  if(act==='buy'){const pr=CELLS[pos].price;if(P.coins>=pr){P.coins-=pr;S.owners[pos]={p:S.turn,lvl:1};log(`${P.name} ‘${w.name}’ 소장! (-${pr})`);SFX.coin()}return endTurn()}
+  if(act==='buy'){const pr=CELLS[pos].price;if(P.coins>=pr){P.coins-=pr;S.owners[pos]={p:S.turn,lvl:1};log(`${P.name} ‘${w.name}’ 소장! (-${pr})`);SFX.coin();endTurn();goldCelebrate(w,P.name);return}return endTurn()}
   if(act==='up'){const c=upCost(pos);if(o&&P.coins>=c&&o.lvl<3){P.coins-=c;o.lvl++;log(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);SFX.match()}return endTurn()}
   if(act==='free'){P.freePass=false;log(`${P.name} 자유이용권 사용`);return endTurn()}
   if(act==='pay'){let t=tollOf(pos);if(A.answered)t=Math.ceil(t/2);const ow=S.players[o.p];P.coins-=t;ow.coins+=t;log(`${P.name} → ${ow.name} 관람료 ${t}코인`);handleDebt(P);return endTurn()}}
@@ -3355,7 +3557,7 @@ function rules(){showModal(`<div class="info"><span class="seal big">法</span><
   <li><b>주인 없는 작품 칸</b>: 작품을 감상하고 퀴즈를 맞히면 소장할 수 있어요. 정답 보너스 20코인!</li>
   <li><b>다른 사람의 소장품</b>: 관람료를 내요. 할인 퀴즈를 맞히면 반값이에요.</li>
   <li><b>내 소장품</b>: 특별전을 열면 관람료가 올라가요(최대 별 3개).</li>
-  <li><b>특수 칸</b>: 출발(+100), 복원실(1턴 쉬기), 타임머신(원하는 작품으로), 아트페어(주사위×20), 황금열쇠.</li>
+  <li><b>특수 칸</b>: 출발(+100), 복원실(1턴 쉬기), 타임머신(원하는 작품으로), 아트페어(주사위×20), 복주머니.</li>
   <li>더블이면 한 번 더! 정한 라운드가 끝나면 코인+작품 가치가 가장 큰 사람이 우승해요.</li></ol><div class="acts"><button class="btn primary" id="infoOk">알겠어요</button></div></div>`,true,true);$('#infoOk').onclick=closeModal}
 
 /* ============ 도감 ============ */
@@ -3367,32 +3569,32 @@ function renderBook(){const all=WORKS.length,r=WORKS.filter(w=>progress.read[w.i
 
 /* ============ 화면 전환 ============ */
 let VIEW='k';
-function showView(v){VIEW=v;['k','w','game','book','live'].forEach(k=>{const e=$('#view-'+k);if(e)e.hidden=k!==v});$$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===v||(v==='live'&&b.dataset.view==='game')));if(v==='live'&&typeof renderLive==='function')renderLive();
-  if(v==='k'||v==='w')renderHall(v);if(v==='book')renderBook();if(v==='game')requestAnimationFrame(()=>paintAll($('#board')));
-  if(v!=='live')store.set('artmarble-view',v);window.scrollTo({top:0})}
-function refreshCurrent(){if(VIEW==='book')renderBook();else if((VIEW==='k'||VIEW==='w')&&HALL[VIEW].sub!=='quiz'){const y=window.scrollY;renderHall(VIEW);window.scrollTo({top:y})}}
+function showView(v){VIEW=v;['k','w','game','badge','book','live'].forEach(k=>{const e=$('#view-'+k);if(e)e.hidden=k!==v});$$('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===v||(v==='live'&&b.dataset.view==='game')));if(v==='live'&&typeof renderLive==='function')renderLive();
+  if(v==='k'||v==='w')renderHall(v);if(v==='book')renderBook();if(v==='badge')renderBadges();if(v==='game')requestAnimationFrame(()=>paintAll($('#board')));
+  if(v!=='live')store.set('artmarble-view2',v);window.scrollTo({top:0})}
+function refreshCurrent(){if(VIEW==='book')renderBook();else if(VIEW==='badge')renderBadges();else if((VIEW==='k'||VIEW==='w')&&HALL[VIEW].sub!=='quiz'){const y=window.scrollY;renderHall(VIEW);window.scrollTo({top:y})}}
 
 function boot(data){
   ['k','w'].forEach(s=>{const v=store.get('artmarble-sub-'+s,'learn');HALL[s].sub=['learn','tl','quiz'].includes(v)?v:'learn'});
   S=(data&&data.S)||store.get('artmarble-game',null);if(!S||S.v!==2||!EDITIONS[S.ed])S=newGame(['1모둠','2모둠'],10,'mix');
   CELLS=makeCells(S.ed);buildBoard();setDie($('#d1'),5);setDie($('#d2'),1);if(S.phase==='moving'||S.phase==='action')S.phase='roll';render();
   $$('.nav button').forEach(b=>b.onclick=()=>{showView(b.dataset.view);SFX.nav(b.dataset.view)});
-  const home=$('#homeBtn');if(home)home.onclick=()=>{HALL.k.sub='learn';HALL.k.game=null;store.set('artmarble-sub-k','learn');$('#modal').hidden=true;A=null;showView('k');SFX.nav('k')};
+  const home=$('#homeBtn');if(home)home.onclick=()=>{$('#modal').hidden=true;A=null;showView('game');SFX.nav('game')};
   $('#rollBtn').onclick=onRoll;$('#newBtn').onclick=setup;$('#rulesBtn').onclick=rules;
   const sb=$('#soundBtn'),upd=()=>{sb.textContent=soundOn?'소리 켜짐':'소리 꺼짐';sb.setAttribute('aria-pressed',soundOn)};upd();sb.onclick=()=>{soundOn=!soundOn;store.set('artmarble-sound',soundOn);upd();SFX.click()};
-  let armed=false;$('#resetBtn').onclick=e=>{if(!armed){armed=true;e.target.textContent='한 번 더 누르면 지워져요';setTimeout(()=>{armed=false;e.target.textContent='기록 지우기'},3000);return}progress={read:{},solved:{},stats:{},badges:{}};saveProg();armed=false;e.target.textContent='기록 지우기';renderBook()};
+  let armed=false;$('#resetBtn').onclick=e=>{if(!armed){armed=true;e.target.textContent='한 번 더 누르면 지워져요';setTimeout(()=>{armed=false;e.target.textContent='기록 지우기'},3000);return}progress={read:{},solved:{},stats:{},badges:{}};saveProg();armed=false;e.target.textContent='기록 지우기';renderBadges()};
   $('#modalX').onclick=closeModal;$('#modal').addEventListener('click',e=>{if(e.target.id==='modal'&&modalClosable)closeModal()});
   document.addEventListener('keydown',e=>{const open=!$('#modal').hidden;
     if(e.key==='Escape'&&open&&modalClosable)closeModal();
     if(open&&A&&A.mode==='browse'){if(e.key==='ArrowRight'&&$('#nextW')&&!$('#nextW').disabled)$('#nextW').click();if(e.key==='ArrowLeft'&&$('#prevW')&&!$('#prevW').disabled)$('#prevW').click()}
     if(e.code==='Space'&&!open&&VIEW==='game'&&!/INPUT|TEXTAREA|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();onRoll()}});
   let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>paintAll(document.body),200)});
-  renderRankChip();$('#rankChip').onclick=()=>showView('book');
-  const v=store.get('artmarble-view','k');showView(['k','w','game','book'].includes(v)?v:'k');
+  renderRankChip();$('#rankChip').onclick=()=>showView('badge');
+  const v=store.get('artmarble-view2','game');showView(['k','w','game','badge','book'].includes(v)?v:'game');
 }
 /* ============ 배지 · 등급 ============ */
 progress.stats=progress.stats||{};progress.badges=progress.badges||{};
-const ERA_SEAL={k1:'古',k2:'佛',k3:'麗',k4:'朝',k5:'景',k6:'白',k7:'新',w1:'洞',w2:'聖',w3:'藝',w4:'光',w5:'情',w6:'印',w7:'現'};
+const ERA_SEAL=ICON.ERA;
 const RANKS=[[0,'새내기 관람객'],[20,'꼬마 도슨트'],[60,'도슨트'],[120,'학예사'],[200,'수석 큐레이터'],[300,'미술관장']];
 function badgeDefs(){const P=progress,st=P.stats,L=[];
   Object.keys(GROUPS).forEach(g=>{const ws=WORKS.filter(w=>w.g===g);L.push({id:'era-'+g,seal:ERA_SEAL[g],c:GROUPS[g].c,n:GROUPS[g].n+' 마스터',d:`이 시대 작품 ${ws.length}점의 퀴즈를 모두 맞히기`,cur:ws.filter(w=>P.solved[w.id]).length,max:ws.length,grp:g[0]})});
@@ -3445,7 +3647,7 @@ function puzzle(s,el){const pool=sideWorks(s).filter(w=>IMG[w.id]);let w=pool[rn
   function draw(){const M=META[w.id],ratio=M.w/M.h;
     el.innerHTML=`<div class="pzTop"><label>작품 <select id="pzSel">${pool.map(x=>`<option value="${x.id}" ${x===w?'selected':''}>${x.name}</option>`).join('')}</select></label>
      <div class="seg2">${[3,4,5].map(k=>`<button type="button" data-n="${k}" aria-pressed="${k===n}">${k}×${k}</button>`).join('')}</div><button type="button" class="ghost" id="pzNew">무작위 작품</button><span class="cnt">이동 <b>${moves}</b></span></div>
-     <div class="pzWrap"><div class="pzBoard" id="pzB" style="aspect-ratio:${ratio};width:min(100%,${Math.round(520*Math.min(ratio,1.9))}px);grid-template:repeat(${n},1fr)/repeat(${n},1fr)">${tiles.map((p,k)=>`<button type="button" class="pt${sel===k?' sel':''}${done?' ok':''}" data-k="${k}" aria-label="조각 ${k+1}" style="background-size:${n*100}% ${n*100}%;background-position:${n>1?(p%n)/(n-1)*100:0}% ${n>1?Math.floor(p/n)/(n-1)*100:0}%"></button>`).join('')}</div>
+     <div class="pzWrap"><div class="pzBoard" id="pzB" style="aspect-ratio:${ratio};width:min(100%,calc((100vh - 190px) * ${ratio.toFixed(3)}));grid-template:repeat(${n},1fr)/repeat(${n},1fr)">${tiles.map((p,k)=>`<button type="button" class="pt${sel===k?' sel':''}${done?' ok':''}" data-k="${k}" aria-label="조각 ${k+1}" style="background-size:${n*100}% ${n*100}%;background-position:${n>1?(p%n)/(n-1)*100:0}% ${n>1?Math.floor(p/n)/(n-1)*100:0}%"></button>`).join('')}</div>
      <aside class="pzSide"><div class="mini">${pic(w)}</div><p>완성 그림을 보며 조각 두 개를 차례로 눌러 자리를 바꿔요.</p><p class="muted">${w.name} · ${w.artist}</p></aside></div><div id="pzWin"></div>`;
     $('#pzB').style.setProperty('--img',`url(${IMG[w.id]})`);
     $('#pzSel').onchange=e=>{w=BY[e.target.value];start()};$('#pzNew').onclick=()=>{w=pool[rnd(pool.length)];start()};
@@ -3558,14 +3760,16 @@ function memory(s,el){let cards,open,matched,moves,lock,won=false;
   launch()}
 
 /* ============ 배지·도감 화면 ============ */
-function renderBook(){const all=WORKS.length,r=WORKS.filter(w=>progress.read[w.id]).length,s=WORKS.filter(w=>progress.solved[w.id]).length,p=points(),R=rankOf(p),B=badgeDefs(),got=B.filter(b=>b.done).length;
+function renderBadges(){const all=WORKS.length,r=WORKS.filter(w=>progress.read[w.id]).length,s=WORKS.filter(w=>progress.solved[w.id]).length,p=points(),R=rankOf(p),B=badgeDefs(),got=B.filter(b=>b.done).length;
   const nxt=R.next?`다음 등급 ‘${R.next[1]}’까지 ${R.next[0]-p}점`:'최고 등급에 올랐어요!',pct=R.next?(p-RANKS[R.i][0])/(R.next[0]-RANKS[R.i][0])*100:100;
   $('#prog').innerHTML=`<div class="rankCard"><span class="seal big">${'見觀覽學藝館'[R.i]}</span><div><small>나의 등급</small><b>${R.name}</b><div class="bar"><i style="width:${pct}%"></i></div><p>${p}점 · ${nxt}</p><p class="muted">점수 = 감상 1점 + 퀴즈 정복 3점 + 배지 10점</p></div></div>
    <div class="pbox"><b>${r}</b> <span>/ ${all} 작품 감상</span><div class="bar"><i style="width:${r/all*100}%"></i></div></div>
    <div class="pbox"><b>${s}</b> <span>/ ${all} 퀴즈 정복</span><div class="bar"><i style="width:${s/all*100}%"></i></div></div>
    <div class="pbox"><b>${got}</b> <span>/ ${B.length} 배지</span><div class="bar"><i style="width:${got/B.length*100}%"></i></div></div>`;
   const shelf=(title,list)=>`<div class="bookSec"><h3>${title}</h3><div class="shelf">${list.map(b=>`<div class="bdg${b.done?' on':''}">${medal(b)}<b>${b.n}</b><small>${b.d}</small><div class="bar sm"><i style="width:${b.cur/b.max*100}%;background:${b.c}"></i></div><em>${b.cur} / ${b.max}</em></div>`).join('')}</div></div>`;
-  $('#book').innerHTML=shelf('한국미술 시대 마스터',B.filter(b=>b.grp==='k'))+shelf('서양미술 시대 마스터',B.filter(b=>b.grp==='w'))+shelf('도전 배지',B.filter(b=>b.grp==='x'))
+  $('#badges').innerHTML=shelf('한국미술 시대 마스터',B.filter(b=>b.grp==='k'))+shelf('서양미술 시대 마스터',B.filter(b=>b.grp==='w'))+shelf('도전 배지',B.filter(b=>b.grp==='x'))}
+function renderBook(){const r=WORKS.filter(w=>progress.read[w.id]).length,s=WORKS.filter(w=>progress.solved[w.id]).length;
+  $('#book').innerHTML=`<div class="prog"><div class="pbox"><b>${r}</b> <span>/ ${WORKS.length} 작품 감상</span><div class="bar"><i style="width:${r/WORKS.length*100}%"></i></div></div><div class="pbox"><b>${s}</b> <span>/ ${WORKS.length} 퀴즈 정복</span><div class="bar"><i style="width:${s/WORKS.length*100}%"></i></div></div></div>`
    +['k','w'].map(x=>`<div class="bookSec"><h3>${SIDE[x].name} 작품 도감</h3><div class="works">${sideWorks(x).map(workCard).join('')}</div></div>`).join('');
   paintAll($('#book'));$$('#book [data-open]').forEach(b=>b.onclick=()=>openArt(BY[b.dataset.open],'browse'))}
 function eraMasterLine(g){const ws=WORKS.filter(w=>w.g===g),n=ws.filter(w=>progress.solved[w.id]).length,done=n>=ws.length;
@@ -3642,9 +3846,9 @@ async function hostStart(){lv().innerHTML='<p class="lead">방을 만드는 중�
   try{await loadPeer()}catch(e){liveHome();lvError('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');return}
   const tryOpen=n=>{const code=String(1000+rnd(9000));const p=new Peer(PEER_PREFIX+code,{debug:0});
     p.on('open',()=>{LIVE.peer=p;LIVE.code=code;LIVE.role='host';LIVE.conns=[];LIVE.L={code,ed:'mix',maxRounds:10,phase:'lobby',players:[],owners:{},turn:0,round:1,log:['방을 만들었어요. 모둠이 들어오기를 기다리는 중…'],dice:[5,1],here:-1,pending:null,ev:null,dbl:false,dblCount:0};LIVE.cells=makeCells('mix');renderHost()});
-    LIVE.clients={};relayListen(p,(src,d)=>{if(!d)return;let c=LIVE.clients[src];if(!c)c=LIVE.clients[src]={peer:src,open:true,send:m=>relaySend(src,m)};c.last=Date.now();
+    LIVE.clients={};relayListen(p,(src,d)=>{if(!d)return;let c=LIVE.clients[src];if(!c)c=LIVE.clients[src]={peer:src,open:true,send:m=>relaySend(src,m)};c.last=Date.now();{const L=LIVE.L,P=L&&c.pid!=null&&L.players[c.pid];if(P&&P.cid===src&&!P.online){P.online=true;hlog(`${P.name} 다시 연결됐어요`);push()}}
       if(d.t==='ping'){c.send({t:'pong'});const L=LIVE.L,P=L&&L.players[c.pid];if(P&&P.cid===src&&!P.online){P.online=true;hlog(`${P.name} 다시 연결됐어요`);push()}return}hostMsg(c,d)});
-    clearInterval(LIVE.hb);LIVE.hb=setInterval(()=>{const now=Date.now();Object.values(LIVE.clients||{}).forEach(c=>{if(c.pid!=null&&now-c.last>16000){const P=LIVE.L&&LIVE.L.players[c.pid];if(P&&P.cid===c.peer&&P.online){P.online=false;hlog(`${P.name} 연결이 끊어졌어요`);push()}}})},5000);
+    clearInterval(LIVE.hb);LIVE.hb=setInterval(()=>{const now=Date.now();Object.values(LIVE.clients||{}).forEach(c=>{if(c.pid!=null&&now-c.last>45000){const P=LIVE.L&&LIVE.L.players[c.pid];if(P&&P.cid===c.peer&&P.online){P.online=false;hlog(`${P.name} 응답 대기 중…`);push()}}})},5000);
     p.on('error',e=>{if(e.type==='unavailable-id'&&n<5){p.destroy();tryOpen(n+1)}else if(!LIVE.L){liveHome();lvError(peerErr(e))}});
     p.on('disconnected',()=>{try{p.reconnect()}catch(_){}})};
   tryOpen(0)}
@@ -3672,7 +3876,7 @@ function hostMsg(c,d){const L=LIVE.L;if(!d||!L)return;
   if(d.t==='time'&&pd.type==='time'){if(d.pos==null)return hostEnd();return hostMove((+d.pos-hcur().pos+28)%28,90).then(hostResolve)}}
 function hostStartGame(){const L=LIVE.L;if(!L.players.length)return;L.phase='roll';L.turn=0;L.round=1;L.players.forEach(p=>{p.coins=500;p.pos=0;p.skip=0;p.out=false;p.freePass=false});L.owners={};L.pending={type:'roll'};L.ev=null;LIVE.cells=makeCells(L.ed);hlog(`${EDITIONS[L.ed].name} 시작! ${L.players[0].name}부터`);SFX.fanfare();buildLiveBoard();push()}
 async function hostRoll(){const L=LIVE.L,P=hcur();if(P.skip>0){const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'rest',id:ids[rnd(ids.length)],answered:null};L.ev={who:L.turn,text:`${P.name} 복원실 탈출 퀴즈 도전 중`};push();return}
-  LIVE.busy=true;L.phase='moving';L.pending=null;L.rolling=true;push();SFX.dice();await sleep(700);
+  LIVE.busy=true;L.phase='moving';L.pending=null;L.rolling=true;push();SFX.dice();await sleep(800);
   const a=1+rnd(6),b=1+rnd(6);L.dice=[a,b];L.rolling=false;L.dbl=a===b;hlog(`${P.name} 주사위 ${a}+${b}=${a+b}${L.dbl?' (더블!)':''}`);L.ev={who:L.turn,text:`${P.name} 주사위 ${a+b}`};push();
   await hostMove(a+b,260);LIVE.busy=false;hostResolve()}
 async function hostMove(n,speed){const L=LIVE.L,P=hcur();for(let k=0;k<n;k++){P.pos=(P.pos+1)%28;if(P.pos===0){P.coins+=100;hlog(`${P.name} 출발점 통과 +100`);SFX.coin()}else SFX.move(k);L.here=P.pos;push();await sleep(speed)}}
@@ -3683,7 +3887,7 @@ function hostResolve(){const L=LIVE.L,P=hcur(),c=LIVE.cells[P.pos];L.phase='acti
   else if(c.t==='rest'){P.skip=1;L.dbl=false;L.pending={type:'info',seal:'復',title:'복원실',body:'작품 복원을 돕느라 다음 차례에 한 번 쉬어요. 다음 차례에 퀴즈를 맞히면 바로 탈출!'};hlog(`${P.name} 복원실 입장`)}
   else if(c.t==='fair'){const n=1+rnd(6);P.coins+=n*20;SFX.coin();hlog(`${P.name} 아트페어 +${n*20}`);L.pending={type:'info',seal:'市',title:'아트페어',body:`주사위 ${n} × 20 = ${n*20}코인을 벌었어요!`}}
   else if(c.t==='time'){L.pending={type:'time'};L.ev={who:L.turn,text:`${P.name} 타임머신으로 갈 곳을 고르는 중`};push();return}
-  else if(c.t==='key'){const k=rnd(LKEYS.length);L.pending={type:'key',k};SFX.key();L.ev={who:L.turn,text:`${P.name} 황금열쇠: ${LKEYS[k].t}`};hlog(`${P.name} 황금열쇠: ${LKEYS[k].t}`);push();return}
+  else if(c.t==='key'){const k=rnd(POUCH.length);L.pending={type:'key',k};SFX.key();L.ev={who:L.turn,pouch:k,text:`${P.name} 복주머니: ${POUCH[k].t}`};hlog(`${P.name} 복주머니: ${POUCH[k].t}`);push();return}
   L.ev={who:L.turn,text:`${P.name} · ${L.pending.title}`};push();clearTimeout(LIVE.autoT);const turnAt=L.turn,rd=L.round;LIVE.autoT=setTimeout(()=>{if(LIVE.L.pending&&LIVE.L.pending.type==='info'&&LIVE.L.turn===turnAt&&LIVE.L.round===rd)hostEnd()},6000)}
 const LKEYS=[
  {t:'경매 대박!',d:'소장품 이야기가 화제가 됐어요. 축하금 100코인!',f:P=>{P.coins+=100}},
@@ -3694,13 +3898,23 @@ const LKEYS=[
  {t:'명화 도난 사건',d:'수사를 돕느라 복원실에서 1턴 쉬어요.',go:7,rest:true},
  {t:'장학금',d:'출발점으로 이동하며 장학금 100코인!',go:0},
  {t:'나눔 전시회',d:'다른 모둠에게 20코인씩 나눠 줘요.',f:(P,L)=>{L.players.forEach((q,i)=>{if(i!==L.turn&&!q.out){P.coins-=20;q.coins+=20}})}}];
-async function keyApply(){const L=LIVE.L,P=hcur(),k=LKEYS[L.pending.k];
-  if(k.quiz){const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'key',id:ids[rnd(ids.length)],answered:null};push();return}
-  if(k.f){k.f(P,L);hostDebt(P);return hostEnd()}
-  const target=k.goRandom?SLOTS[rnd(SLOTS.length)]:k.go;L.pending=null;LIVE.busy=true;await hostMove((target-P.pos+28)%28,90);LIVE.busy=false;
-  if(k.rest){P.skip=1;L.dbl=false;return hostEnd()}if(target===0)return hostEnd();hostResolve()}
+async function keyApply(){const L=LIVE.L,P=hcur(),k=POUCH[L.pending.k];L.pending=null;
+  const mv=async(n,sp=150,back=false)=>{LIVE.busy=true;for(let i=0;i<n;i++){P.pos=back?(P.pos-1+28)%28:(P.pos+1)%28;if(!back&&P.pos===0){P.coins+=100;hlog(`${P.name} 출발점 통과 +100`);SFX.coin()}else SFX.move(i);L.here=P.pos;push();await sleep(sp)}LIVE.busy=false};
+  const to=async t=>mv((t-P.pos+28)%28,90);
+  switch(k.kind){
+    case 'coin':P.coins+=k.v;if(k.v<0)hostDebt(P);return hostEnd();
+    case 'extra':L.extra=true;return hostEnd();
+    case 'free':P.freePass=true;return hostEnd();
+    case 'share':L.players.forEach((q,i)=>{if(i!==L.turn&&!q.out){P.coins-=20;q.coins+=20}});hostDebt(P);return hostEnd();
+    case 'swap':{const o=L.players.map((q,i)=>i).filter(i=>i!==L.turn&&!L.players[i].out);if(!o.length){P.coins+=50;hlog(`${P.name} 바꿀 상대가 없어 대신 +50`);return hostEnd()}const j=o[rnd(o.length)],Q=L.players[j];[P.pos,Q.pos]=[Q.pos,P.pos];hlog(`${P.name} ↔ ${Q.name} 자리 바꾸기!`);SFX.pop();push();await sleep(700);return hostEnd()}
+    case 'back':await mv(k.v,200,true);return hostResolve();
+    case 'fwd':await mv(k.v);return hostResolve();
+    case 'rest':await to(7);P.skip=1;L.dbl=false;return hostEnd();
+    case 'start':await to(0);return hostEnd();
+    case 'random':await to(SLOTS[rnd(SLOTS.length)]);return hostResolve();
+    case 'quiz':{const ids=EDITIONS[L.ed].ids();L.pending={type:'quiz',reason:'key',id:ids[rnd(ids.length)],answered:null};push();return}}}
 function hostAct(act){const L=LIVE.L,P=hcur(),pd=L.pending,pos=pd.pos,o=L.owners[pos],cell=LIVE.cells[pos],w=cell.art;
-  if(act==='buy'&&!o&&pd.answered&&P.coins>=cell.price){P.coins-=cell.price;L.owners[pos]={p:L.turn,lvl:1};hlog(`${P.name} ‘${w.name}’ 소장!`);SFX.coin()}
+  if(act==='buy'&&!o&&pd.answered&&P.coins>=cell.price){P.coins-=cell.price;L.owners[pos]={p:L.turn,lvl:1};hlog(`${P.name} ‘${w.name}’ 소장!`);SFX.coin();goldCelebrate(w,P.name)}
   else if(act==='up'&&o&&o.p===L.turn&&o.lvl<3){const c=Math.round(cell.price*.5);if(P.coins>=c){P.coins-=c;o.lvl++;hlog(`${P.name} ‘${w.short}’ 특별전 Lv${o.lvl}`);SFX.match()}}
   else if(act==='free'&&o&&o.p!==L.turn&&P.freePass){P.freePass=false;hlog(`${P.name} 자유이용권 사용`)}
   else if(act==='pay'&&o&&o.p!==L.turn){let t=H_TOLL(pos);if(pd.answered)t=Math.ceil(t/2);P.coins-=t;L.players[o.p].coins+=t;hlog(`${P.name} → ${L.players[o.p].name} 관람료 ${t}`);hostDebt(P)}
@@ -3708,6 +3922,7 @@ function hostAct(act){const L=LIVE.L,P=hcur(),pd=L.pending,pos=pd.pos,o=L.owners
   hostEnd()}
 function hostDebt(P){const L=LIVE.L,idx=L.players.indexOf(P);while(P.coins<0){const mine=Object.keys(L.owners).filter(k=>L.owners[k].p===idx).map(Number).sort((a,b)=>LIVE.cells[a].price-LIVE.cells[b].price);if(!mine.length)break;const pos=mine[0],pr=Math.round(LIVE.cells[pos].price/2);delete L.owners[pos];P.coins+=pr;hlog(`${P.name} ‘${LIVE.cells[pos].art.short}’ 매각 +${pr}`)}if(P.coins<0){P.out=true;P.coins=0;hlog(`${P.name} 파산…`)}}
 function hostEnd(){const L=LIVE.L;if(!L||L.phase==='over')return;clearTimeout(LIVE.autoT);L.here=-1;const P=hcur();
+  if(L.extra&&!P.out&&!P.skip){L.extra=false;L.phase='roll';L.pending={type:'roll'};L.ev={who:L.turn,text:`${P.name} 도깨비 방망이! 한 번 더`};hlog(`${P.name} 한 번 더 굴려요`);push();return}L.extra=false;
   const alive=L.players.filter(p=>!p.out).length;if(alive===0||(L.players.length>1&&alive<=1))return hostOver();
   if(L.dbl&&L.dblCount<2&&!P.out&&!P.skip){L.dblCount++;L.dbl=false;L.phase='roll';L.pending={type:'roll'};L.ev={who:L.turn,text:`${P.name} 더블! 한 번 더`};hlog(`${P.name} 더블 보너스`);push();return}
   L.dbl=false;L.dblCount=0;let n=L.turn,g=0;do{n=(n+1)%L.players.length;if(n===0)L.round++;g++}while(L.players[n].out&&g<10);L.turn=n;
@@ -3726,7 +3941,7 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
      <div class="pcard" id="lvSet"></div><div class="btnrow" id="lvCtl"></div><div class="pcard"><h3>게임 기록</h3><ul class="log" id="lvLog"></ul></div></aside></div>`;buildLiveBoard()}
   $('#lvCode').textContent=L.code;
   $('#lvRound').textContent=L.phase==='lobby'?'대기 중':L.phase==='over'?'게임 종료':`${Math.min(L.round,L.maxRounds)} / ${L.maxRounds} 라운드`;
-  $('#lvPlayers').innerHTML=L.players.length?L.players.map((p,i)=>{const t=TOKENS[p.tok];return `<div class="pl${i===L.turn&&L.phase!=='lobby'&&L.phase!=='over'?' now':''}${p.out?' out':''}"><span class="tk" style="background:${t.c}">${t.e}</span><span class="nm"><b>${esc2(p.name)}<i class="dot${p.online?' on':''}" title="${p.online?'연결됨':'연결 끊김'}"></i>${p.skip?'<span class="chip">쉬는 중</span>':''}</b><small>소장 ${Object.values(L.owners).filter(o=>o.p===i).length}점</small></span><span class="cn">${p.coins}<small>코인</small></span></div>`}).join(''):'<p class="muted">아직 들어온 모둠이 없어요.</p>';
+  $('#lvPlayers').innerHTML=L.players.length?L.players.map((p,i)=>{const t=TOKENS[p.tok];return `<div class="pl${i===L.turn&&L.phase!=='lobby'&&L.phase!=='over'?' now':''}${p.out?' out':''}"><span class="tk" style="background:${t.c}">${t.e}</span><span class="nm"><b>${esc2(p.name)}<i class="dot${p.online?' on':''}" title="${p.online?'연결됨':'연결 끊김'}"></i>${p.skip?'<span class="chip">쉬는 중</span>':''}</b><span class="ownRow">${Object.keys(L.owners).filter(k=>L.owners[k].p===i).map(k=>goldMini(LIVE.cells[k].art,L.owners[k].lvl)).join('')||'<small>아직 소장품 없음</small>'}</span></span><span class="cn">${p.coins}<small>코인</small></span></div>`}).join(''):'<p class="muted">아직 들어온 모둠이 없어요.</p>';
   $('#lvLog').innerHTML=L.log.slice(0,12).map(m=>`<li>${esc2(m)}</li>`).join('');
   const set=$('#lvSet');
   if(L.phase==='lobby'){set.hidden=false;set.innerHTML=`<h3>게임 설정</h3><div class="seg2 lvEd">${Object.entries(EDITIONS).map(([k,E])=>`<button type="button" data-ed="${k}" aria-pressed="${L.ed===k}">${E.name}</button>`).join('')}</div><div class="seg2" style="margin-top:8px">${[6,10,15].map(n=>`<button type="button" data-r="${n}" aria-pressed="${L.maxRounds===n}">${n}라운드</button>`).join('')}</div>`;
@@ -3741,7 +3956,7 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
   on('lvQuit',()=>{try{LIVE.peer.destroy()}catch(_){}LIVE.L=null;liveHome()});
   // 보드
   $$('#lvBoard .cell').forEach(el=>{const i=+el.dataset.i,o=L.owners[i],ov=el.querySelector('.own');
-    if(ov){if(o){const pc=TOKENS[L.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=`<i style="background:${pc}">${'★'.repeat(o.lvl)}</i>`;ov.hidden=false}else ov.hidden=true}
+    if(ov){if(o){const pc=TOKENS[L.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=goldMini(LIVE.cells[i].art,o.lvl,pc);ov.hidden=false}else ov.hidden=true}
     el.querySelector('.tokens').innerHTML=L.phase==='lobby'?'':L.players.map((p,k)=>p.out||p.pos!==i?'':`<i class="tok${k===L.turn?' me':''}" style="--pc:${TOKENS[p.tok].c}">${TOKENS[p.tok].e}</i>`).join('');
     el.classList.toggle('here',i===L.here)});
   // 가운데
@@ -3750,10 +3965,12 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
     c.innerHTML=`<div class="logo">아트마블</div><div class="edBadge">${EDITIONS[L.ed].name} · 실시간 대전</div><div class="lobbyRow">${web?`<div class="qrBox">${qrSvg(jurl)}<small>카메라로 찍으면 바로 참가</small></div>`:''}<div class="bigCode"><small>방 번호</small>${L.code}</div></div><p class="cHint">QR을 찍거나, 이 주소에서 <b>미술사 마블 → 실시간 대전 → 방 참가하기</b></p><p class="cUrl">${esc2(base)}</p>`}
   else if(L.phase==='over')c.innerHTML=`<div class="logo">게임 종료</div><div class="rankBig">${L.rank.map((r,k)=>`<div><b>${k+1}</b><span class="tk" style="background:${TOKENS[r.tok].c}">${TOKENS[r.tok].e}</span><span>${esc2(r.name)}</span><em>${r.v}</em></div>`).join('')}</div>`;
   else{const w=ev&&ev.id?BY[ev.id]:null,t=cur?TOKENS[cur.tok]:null;
-    c.innerHTML=`${w?`<div class="evArt">${pic(w)}</div><div class="evName">${w.name}<small>${w.artist} · ${w.ys}</small></div>`:`<div class="logo">아트마블</div>`}
+    c.classList.toggle('spot',!!w);c.innerHTML=`${w?`<button type="button" class="evArt" data-full="${w.id}" title="크게 보기">${pic(w)}<span class="evZoom">⤢ 크게</span></button><div class="evName">${w.name}<small>${w.artist} · ${w.ys}</small></div>`:`<div class="logo">아트마블</div>`}
      <div class="turn">${t?`<i style="background:${t.c}">${t.e}</i>`:''}<b>${esc2(ev?ev.text:(cur?cur.name+' 차례':''))}</b></div>
-     ${w?'':`<div class="dice"><div class="die${L.rolling?' rolling':''}" id="lvD1"></div><div class="die${L.rolling?' rolling':''}" id="lvD2"></div></div>`}`;
-    if(!w){setDie($('#lvD1'),L.rolling?1+rnd(6):L.dice[0]);setDie($('#lvD2'),L.rolling?1+rnd(6):L.dice[1])}
+     ${w?'':`<div class="dice"><div class="die" id="lvD1"></div><div class="die" id="lvD2"></div></div>`}`;
+    if(!w){const an=!L.rolling&&!!LIVE.wasRolling;['#lvD1','#lvD2'].forEach((s,k)=>{setDie($(s),L.dice[k],an);$(s).classList.toggle('spinning',!!L.rolling)})}
+    LIVE.wasRolling=!!L.rolling;
+    const fb=c.querySelector('[data-full]');if(fb)fb.onclick=()=>artFull(BY[fb.dataset.full]);
     paintAll(c)}}
 
 /* ---------- 모둠(참가자) ---------- */
@@ -3794,7 +4011,7 @@ function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LI
   else if(L.phase==='moving')main=`<div class="jWait"><span class="seal big">走</span><h3>말이 움직이는 중…</h3><p>선생님 화면을 봐요!</p></div>`;
   else if(pd&&pd.type==='roll')main=`<div class="jRoll"><h3>우리 모둠 차례!</h3>${me.skip?'<p>복원실에 있어요. 퀴즈를 맞히면 바로 탈출해요.</p>':''}<button type="button" class="roll" id="jRollBtn">${me.skip?'탈출 퀴즈 풀기':'주사위 굴리기'}</button></div>`;
   else if(pd&&pd.type==='info')main=`<div class="jWait"><span class="seal big">${pd.seal}</span><h3>${pd.title}</h3><p>${pd.body}</p><button type="button" class="btn primary" id="jOk">확인 · 턴 마치기</button></div>`;
-  else if(pd&&pd.type==='key'){const k=LKEYS[pd.k];main=`<div class="jWait keycard"><span class="seal big gold">鍵</span><div class="keyEyebrow">황금열쇠</div><h3>${k.t}</h3><p>${k.d}</p><button type="button" class="btn primary" id="jOk">${k.quiz?'퀴즈 풀기':'확인'}</button></div>`}
+  else if(pd&&pd.type==='key'){const k=POUCH[pd.k];main=`<div class="jWait">${pouchHTML(k,`<button type="button" class="btn primary" id="jOk">${k.kind==='quiz'?'퀴즈 풀기':'확인'}</button>`)}</div>`}
   else if(pd&&pd.type==='time')main=`<div class="jWait" style="text-align:left"><h3>타임머신: 갈 곳을 골라요</h3><div class="tmGrid">${SLOTS.map(p=>{const w=cells[p].art;return `<button type="button" class="tmBtn" data-pos="${p}">${pic(w)}<span>${w.short}<small>${w.ys}</small></span></button>`}).join('')}</div><button type="button" class="btn" id="jStay" style="margin-top:10px">여기 머무르기</button></div>`;
   else if(pd&&pd.type==='quiz'){const w=BY[pd.id];main=`<div class="jArt"><div class="jPic">${pic(w)}</div><div class="jBody"><div class="keyEyebrow">${pd.reason==='rest'?'복원실 탈출 퀴즈':'도슨트 퀴즈 (맞히면 +80)'}</div><h3>${w.name}</h3>${pd.answered==null?'<div id="jQuiz"></div>':`<div class="qdone ${pd.answered?'ok':'no'}"><b>${pd.answered?'정답!':'아쉬워요.'}</b> ${w.q.e}</div>`}</div></div>`}
   else if(pd&&pd.type==='art'){const w=BY[pd.id],o=L.owners[pd.pos],price=cells[pd.pos].price;const toll=o?Math.round(price*[0,.4,.8,1.3][o.lvl]):0;
@@ -3821,6 +4038,56 @@ function liveInit(){const bar=document.createElement('div');bar.className='modeB
   $('#view-game').prepend(bar);$('#toLive').onclick=()=>{showView('live');SFX.nav('game')};
   const m=location.hash.match(/^#join(\d{4})?$/);if(m){showView('live');joinForm('',m[1]||'');setTimeout(()=>{const n=$('#jName');if(n)n.focus()},50)}else if(location.hash==='#host'){showView('live')}}
 setTimeout(liveInit,0);
+
+function artFull(w){const d=document.createElement('div');d.className='artFull';d.innerHTML=`<div class="afIn">${pic(w)}</div><div class="afCap"><b>${w.name}</b> ${w.artist} · ${w.ys}<small>화면을 누르면 닫혀요</small></div>`;document.body.appendChild(d);paintAll(d);SFX.open();d.onclick=()=>d.remove()}
+
+/* ============ 골드 소장 카드 · 3D 주사위 · 복주머니 ============ */
+function goldCard(w,{lvl=1,size='m',who=''}={}){const G=GROUPS[w.g];
+  return `<div class="goldCard ${size}" style="--c:${G.c}"><i class="gcShine"></i><div class="gcTop"><span class="gcEra">${ICON.era(w.g)}</span><span class="gcStars">${'★'.repeat(lvl)}</span></div><div class="gcArt">${pic(w)}</div><div class="gcName">${w.short}</div><div class="gcSub">${who?esc3(who)+' 소장 · ':''}${G.n}</div></div>`}
+function goldMini(w,lvl=1,col=''){return `<span class="goldMini" title="${w.name} (특별전 Lv${lvl})" style="--c:${GROUPS[w.g].c};${col?`--pc:${col}`:''}">${ICON.era(w.g)}${lvl>1?`<b>${lvl}</b>`:''}</span>`}
+const esc3=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function goldCelebrate(w,who){const d=document.createElement('div');d.className='gcCele';d.innerHTML=`<div class="gcBurst"></div><div class="gcWrap">${goldCard(w,{size:'l',who})}<p>‘${w.name}’<br><b>골드 소장 카드 획득!</b></p></div>`;
+  document.body.appendChild(d);paintAll(d);SFX.badge({grp:w.side});const close=()=>{d.classList.add('out');setTimeout(()=>d.remove(),400)};d.onclick=close;setTimeout(close,3200)}
+/* 3D 주사위 */
+const D_ROT={1:[0,0],2:[-90,0],3:[0,-90],4:[0,90],5:[90,0],6:[0,180]};
+function setDie(el,n,anim){if(!el)return;if(!el.querySelector('.cube')){el.classList.add('d3');el.innerHTML=`<div class="cube">${[1,2,3,4,5,6].map(f=>`<div class="face f${f}${f===1?' one':''}">${[0,1,2,3,4,5,6,7,8].map(k=>`<i class="pip${PIPS[f].includes(k)?' on':''}"></i>`).join('')}</div>`).join('')}</div>`}
+  const c=el.querySelector('.cube'),[rx,ry]=D_ROT[n];c.style.setProperty('--rx',rx+'deg');c.style.setProperty('--ry',ry+'deg');c.style.setProperty('--sx',(Math.random()<.5?-1:1)*(720+rnd(3)*90)+'deg');c.style.setProperty('--sy',(Math.random()<.5?-1:1)*(540+rnd(3)*90)+'deg');
+  el.setAttribute('aria-label','주사위 '+n);if(anim){el.classList.remove('hop');c.classList.remove('tumble');void c.offsetWidth;c.classList.add('tumble');el.classList.add('hop')}}
+async function rollDice(){const d1=$('#d1'),d2=$('#d2');SFX.dice();const a=1+rnd(6),b=1+rnd(6);setDie(d1,a,true);setDie(d2,b,true);await sleep(1150);SFX.click();return[a,b]}
+/* 복주머니 */
+const POUCH=[
+ {t:'까치의 기쁜 소식',d:'까치가 반가운 소식을 물어 왔어요. 축하금 100코인!',kind:'coin',v:100},
+ {t:'도깨비 방망이 뚝딱!',d:'“금 나와라 뚝딱!” 주사위를 한 번 더 굴려요.',kind:'extra'},
+ {t:'거꾸로 시간 여행',d:'시간이 거꾸로 흘러요! 뒤로 3칸 돌아가요.',kind:'back',v:3},
+ {t:'해치의 보호',d:'정의를 지키는 상상의 동물 해치가 지켜 줘요. 다음 관람료 한 번이 무료!',kind:'free'},
+ {t:'호랑이의 장난',d:'장난꾸러기 호랑이가 말을 바꿔 놓았어요! 다른 모둠과 자리를 바꿔요.',kind:'swap'},
+ {t:'도슨트 퀴즈',d:'관람객 앞에서 해설을 맡았어요. 맞히면 80코인!',kind:'quiz'},
+ {t:'복원 비용',d:'오래된 작품을 고치는 데 40코인을 내요.',kind:'coin',v:-40},
+ {t:'거북선 순풍',d:'순풍을 타고 앞으로 4칸 쭉쭉!',kind:'fwd',v:4},
+ {t:'명화 도난 사건',d:'1911년 모나리자가 사라졌던 것처럼! 수사를 돕느라 복원실에서 1턴 쉬어요.',kind:'rest'},
+ {t:'설날 세뱃돈',d:'복 많이 받으세요! 출발점으로 가며 장학금 100코인!',kind:'start'},
+ {t:'복 나눔',d:'받은 복을 나눠요. 다른 모둠에게 20코인씩!',kind:'share'},
+ {t:'타임머신 오작동',d:'시간 여행 장치가 고장! 무작위 작품 칸으로 순간 이동!',kind:'random'}];
+function pouchHTML(k,btn){return `<div class="pouchCard"><div class="pouchBag">${ICON.get('pouch')}</div><div class="pouchIn"><div class="keyEyebrow">복주머니</div><h2>${k.t}</h2><p>${k.d}</p>${btn||''}</div></div>`}
+async function moveBack(n){const P=cur();for(let k=0;k<n;k++){P.pos=(P.pos-1+28)%28;S.here=P.pos;renderBoard();SFX.move(k);await sleep(190)}save()}
+function goldenKey(){const P=cur(),k=POUCH[rnd(POUCH.length)];SFX.key();
+  showModal(`<div class="info">${pouchHTML(k,`<div class="acts"><button class="btn primary" id="kOk">${k.kind==='quiz'?'퀴즈 풀기':'확인'}</button></div>`)}</div>`,false,true);
+  $('#kOk').onclick=async()=>{log(`${P.name} 복주머니: ${k.t}`);$('#modal').hidden=true;
+    switch(k.kind){
+      case 'coin':P.coins+=k.v;if(k.v<0)handleDebt(P);return endTurn();
+      case 'extra':S.extra=true;return endTurn();
+      case 'free':P.freePass=true;return endTurn();
+      case 'share':S.players.forEach((q,i)=>{if(i!==S.turn&&!q.out){P.coins-=20;q.coins+=20}});handleDebt(P);return endTurn();
+      case 'swap':{const o=S.players.map((q,i)=>i).filter(i=>i!==S.turn&&!S.players[i].out);if(!o.length){P.coins+=50;log(`${P.name} 바꿀 상대가 없어 대신 +50`);return endTurn()}const j=o[rnd(o.length)],Q=S.players[j];[P.pos,Q.pos]=[Q.pos,P.pos];log(`${P.name} ↔ ${Q.name} 자리 바꾸기!`);SFX.pop();render();await sleep(600);return endTurn()}
+      case 'back':await moveBack(k.v);return resolve();
+      case 'fwd':await moveSteps(k.v,160);return resolve();
+      case 'rest':await moveTo(7);P.skip=1;S.dbl=false;return endTurn();
+      case 'start':await moveTo(0);return endTurn();
+      case 'random':await moveTo(SLOTS[rnd(SLOTS.length)]);return resolve();
+      case 'quiz':{const ids=EDITIONS[S.ed].ids();return quizModal(BY[ids[rnd(ids.length)]],'도슨트 퀴즈','맞히면 80코인을 받아요.',ok=>{if(ok){P.coins+=80;log(`${P.name} 도슨트 퀴즈 정답 +80`)}endTurn()})}}}}
+/* 아이콘 자리(data-icon) 채우기 */
+function fillIcons(root){(root||document).querySelectorAll('[data-icon]:not([data-ic])').forEach(e=>{e.innerHTML=ICON.get(e.dataset.icon);e.dataset.ic='1'})}
+new MutationObserver(()=>fillIcons()).observe(document.documentElement,{childList:true,subtree:true});setTimeout(()=>fillIcons(),0);
 
 window.claude?.hot?.snapshot?.(()=>({S}));
 window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
