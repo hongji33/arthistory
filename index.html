@@ -786,6 +786,23 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 .center.spot .evArt{min-height:60px}
 .resetRow{display:flex;gap:8px;flex-wrap:wrap}.ghost.danger{color:#c8372b;border-color:#e9a39c}.ghost.danger:hover{background:#c8372b;color:#fff}
 .lvResume{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff7e0;border:2px solid #e9c06a;border-radius:14px;padding:12px 16px;margin-bottom:14px}.lvResume>div{flex:1;min-width:200px;display:grid;gap:2px}.lvResume small{color:var(--muted)}
+
+/* 게임 방식 선택 크게 */
+.modeBar{display:grid!important;grid-template-columns:1fr;gap:8px!important;background:none!important;border:0!important;padding:0!important;margin:0 0 12px!important}
+.modeBar button{display:flex!important;align-items:center;gap:8px;text-align:left;padding:10px 12px!important;border-radius:14px!important;min-height:58px;font-size:inherit!important;border:2px solid var(--line)!important;background:#fff!important;color:var(--text)!important;transition:transform .15s}
+.modeBar button b{display:block;font-size:15px;line-height:1.2}.modeBar button small{display:block;font-size:11.5px;opacity:.75;font-weight:400}
+.modeBar .mbIc{font-size:20px}
+.modeBar button.on{background:var(--text)!important;color:#fff!important;border-color:var(--text)!important}
+.modeBar .mbLive{position:relative;overflow:hidden;color:#fff!important;border:0!important;background:linear-gradient(135deg,#ff7a4d,#e5482f 55%,#b8321f)!important;box-shadow:0 6px 0 #8f2412,0 10px 24px rgba(229,72,47,.4);animation:mbPulse 1.8s ease-in-out infinite}
+.modeBar .mbLive::after{content:"";position:absolute;inset:-50%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.55) 50%,transparent 58%);animation:gbShine 2.4s ease-in-out infinite;pointer-events:none}
+.modeBar .mbLive:hover{transform:translateY(-2px)}
+.mbDot{flex:none;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.8);animation:mbDot 1.4s ease-out infinite}
+.mbGo{margin-left:auto;font-size:20px;font-weight:900;animation:mbGo 1.2s ease-in-out infinite}
+@keyframes mbPulse{50%{transform:scale(1.03)}}
+@keyframes mbDot{0%{box-shadow:0 0 0 0 rgba(255,255,255,.85)}100%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+@keyframes mbGo{50%{transform:translateX(4px)}}
+@media (max-width:960px){.modeBar{grid-template-columns:1fr 1.15fr}}
+.modeBar .mbOne{min-height:46px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -4241,7 +4258,7 @@ function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LI
 
 /* ---------- 연결 ---------- */
 function renderLive(){if(LIVE.role==='host'&&LIVE.L){const b=$('#lvBoard');if(!b){renderHost()}else{renderHost()}}else if(LIVE.role==='join'&&LIVE.L){LIVE.lastKey=null;renderJoin()}else if(LIVE.role==='join')joinForm();else liveHome()}
-function liveInit(){const bar=document.createElement('div');bar.className='modeBar';bar.innerHTML=`<span class="muted">게임 방식</span><button type="button" class="ghost on">한 기기에서</button><button type="button" class="ghost" id="toLive" title="교사 화면 + 모둠 크롬북">실시간 대전</button>`;
+function liveInit(){const bar=document.createElement('div');bar.className='modeBar';bar.innerHTML=`<span class="muted">게임 방식</span><button type="button" class="ghost on mbOne"><span class="mbIc">🖥️</span><span><b>한 기기에서</b><small>한 화면에 모여서</small></span></button><button type="button" class="ghost mbLive" id="toLive" title="교사 화면 + 모둠 크롬북"><span class="mbDot"></span><span><b>실시간 대전</b><small>모둠별 크롬북으로</small></span><span class="mbGo">→</span></button>`;
   $('#view-game .panel').prepend(bar);$('#toLive').onclick=()=>{showView('live');SFX.nav('game')};
   const m=location.hash.match(/^#join(\d{4})?$/);if(m){showView('live');joinForm('',m[1]||'');setTimeout(()=>{const n=$('#jName');if(n)n.focus()},50)}else if(location.hash==='#host'){showView('live')}
   else{const sj=store.get('lv-join',null);if(sj&&sj.active&&Date.now()-sj.t<3*3600e3&&!store.get('lv-host',null)){showView('live');joinConnect(sj.code,sj.name)}}}
