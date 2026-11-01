@@ -803,6 +803,28 @@ body{background-image:radial-gradient(900px 520px at 0% 100%,rgba(47,138,114,.06
 @keyframes mbGo{50%{transform:translateX(4px)}}
 @media (max-width:960px){.modeBar{grid-template-columns:1fr 1.15fr}}
 .modeBar .mbOne{min-height:46px}
+
+/* 모둠 크롬북 화면: 보드 + 조종기 */
+.jLay{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:14px;align-items:start}
+.jBoardBox{width:100%;max-width:min(100%,calc(100dvh - 130px));margin:0 auto;position:sticky;top:8px}
+#jMain{min-width:0;max-height:calc(100dvh - 120px);overflow-y:auto;border-radius:18px}
+#jMain .jArt{grid-template-columns:minmax(0,1fr)!important;height:auto!important;min-height:0!important}
+#jMain .jPic{min-height:0;max-height:32dvh;padding:10px}#jMain .jPic img{max-height:28dvh!important}
+#jMain .jBody{overflow:visible!important}
+#jMain .tmGrid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+#jMain .jRoll{padding:24px 8px}
+.jHead{margin-bottom:10px}
+#jBoard .center{gap:clamp(3px,1.2cqw,10px)}
+#jBoard .die.d3{--ds:clamp(30px,11cqw,90px)!important}
+#jBoard .turn.meTurn{background:#c8372b;color:#fff;animation:mbPulse 1.2s ease-in-out infinite}
+.jcArt{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}.jcArt img,.jcArt canvas{max-height:100%;max-width:100%;object-fit:contain;border-radius:6px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.jcName{flex:none;font-family:var(--f-display);font-weight:700;font-size:clamp(12px,3cqw,22px)}
+.jcEv{flex:none;font-size:clamp(10px,2.2cqw,15px);color:var(--muted);max-width:90%}
+#jBoard .center:has(.jcArt){justify-content:flex-start;padding:3%}
+#jBoard .cell.mine{box-shadow:inset 0 0 0 3px #fff}
+#jBoard .mpHost .mpSpin{width:clamp(60px,26cqw,170px);height:clamp(60px,26cqw,170px)}
+@media (min-width:901px){#jMain .jArt .jPic{display:none}}
+@media (max-width:900px){.jLay{grid-template-columns:minmax(0,1fr)}.jBoardBox{position:static;max-width:min(100%,60dvh)}#jMain{max-height:none;overflow:visible}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -4227,12 +4249,15 @@ const jsend=m=>{try{LIVE.conn&&LIVE.conn.open&&LIVE.conn.send(m)}catch(_){}};
 function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LIVE.me];if(!me)return;const t=TOKENS[me.tok],mine=L.turn===LIVE.me,pd=L.pending;
   const cells=makeCells(L.ed);const here=cells[me.pos];
   const keyOf=JSON.stringify([L.phase,L.turn,pd&&pd.type,pd&&pd.id,pd&&pd.pos,pd&&pd.answered,pd&&pd.k,me.coins,me.pos,L.round,L.rolling,L.owners]);
-  if(LIVE.lastKey===keyOf&&$('#jMain'))return;LIVE.lastKey=keyOf;
+  if(!$('#jBoard')){lv().innerHTML=`<div id="jHeadBox"></div><div class="jLay"><div class="jBoardBox"><div class="board" id="jBoard"><div class="center" id="jCenter"></div></div></div><div id="jMain"></div></div>`;LIVE.jEd=null;LIVE.lastKey=null;LIVE.jcKey=null}
+  if(LIVE.jEd!==L.ed){LIVE.jEd=L.ed;buildJoinBoard(cells);TOKPOS.j={}}
+  updateJoinBoard(L,cells);
+  if(LIVE.lastKey===keyOf&&$('#jMain').innerHTML)return;LIVE.lastKey=keyOf;
   let main='';
   if(L.phase==='lobby')main=`<div class="jWait"><span class="seal big">待</span><h3>입장 완료!</h3><p>선생님이 게임을 시작할 때까지 기다려 주세요.</p><p class="muted">지금 들어온 모둠: ${L.players.map(p=>esc2(p.name)).join(', ')}</p></div>`;
   else if(L.phase==='over'){const r=L.rank.findIndex(x=>x.i===LIVE.me);main=`<div class="jWait"><span class="seal big gold">賞</span><h3>${r===0?'우승이에요!':`${r+1}등이에요`}</h3><p>총자산 ${L.rank[r].v} · 소장 ${L.rank[r].n}점</p><p class="muted">선생님 화면에서 최종 순위를 확인해요.</p></div>`}
   else if(!mine){const c=L.players[L.turn];main=`<div class="jWait"><span class="tkBig" style="background:${TOKENS[c.tok].c}">${TOKENS[c.tok].e}</span><h3>${esc2(c.name)} 차례예요</h3><p>${esc2(L.ev&&L.ev.text||'')}</p><p class="muted">내 차례가 되면 소리와 함께 화면이 바뀌어요.</p></div>`}
-  else if(L.phase==='moving')main=`<div class="jWait"><span class="seal big">走</span><h3>말이 움직이는 중…</h3><p>선생님 화면을 봐요!</p></div>`;
+  else if(L.phase==='moving')main=`<div class="jWait"><span class="seal big">走</span><h3>말이 움직이는 중…</h3><p>왼쪽 보드에서 우리 말을 지켜봐요!</p></div>`;
   else if(pd&&pd.type==='roll')main=`<div class="jRoll"><h3>우리 모둠 차례!</h3>${me.skip?'<p>복원실에 있어요. 퀴즈를 맞히면 바로 탈출해요.</p>':''}<button type="button" class="roll" id="jRollBtn">${me.skip?'탈출 퀴즈 풀기':'주사위 굴리기'}</button></div>`;
   else if(pd&&pd.type==='info')main=`<div class="jWait"><span class="seal big">${pd.seal}</span><h3>${pd.title}</h3><p>${pd.body}</p><button type="button" class="btn primary" id="jOk">확인 · 턴 마치기</button></div>`;
   else if(pd&&pd.type==='key'){const k=POUCH[pd.k];main=`<div class="jWait">${pouchHTML(k,`<button type="button" class="btn primary" id="jOk">${k.kind==='quiz'?'시험 문제 풀기':'확인'}</button>`)}</div>`;LIVE.runMapae=true}
@@ -4248,8 +4273,8 @@ function renderJoin(prev){if(VIEW!=='live')return;const L=LIVE.L,me=L.players[LI
     main=`<div class="jArt"><div class="jPic">${pic(w)}</div><div class="jBody"><div class="eyebrow"><i style="--c:${GROUPS[w.g].c}"></i>${GROUPS[w.g].n}</div><h3>${w.name}</h3><small class="muted">${w.artist} · ${w.year}</small><div class="strip">${strip}</div>
       <details class="jStory" ${needQuiz||pd.answered!==null?'':'open'}><summary>작품 이야기 읽기</summary>${w.story.map(p=>`<p>${p}</p>`).join('')}</details>
       ${needQuiz?'<div id="jQuiz"></div>':pd.answered!==null?`<div class="qdone ${pd.answered?'ok':'no'}"><b>${pd.answered?'정답!':'아쉬워요.'}</b> ${w.q.e}</div>`:''}<div class="acts jActs">${acts}</div></div></div>`}
-  lv().innerHTML=`<div class="jHead"><span class="tk" style="background:${t.c}">${t.e}</span><b>${esc2(me.name)}</b><span class="cnt">코인 <b>${me.coins}</b></span><span class="cnt">소장 <b>${Object.values(L.owners).filter(o=>o.p===LIVE.me).length}</b>점</span><span class="cnt">위치 <b>${here.t==='art'?here.art.short:CORNER[here.t].n}</b></span><span class="cnt">${L.phase==='lobby'?'대기 중':`${Math.min(L.round,L.maxRounds)}/${L.maxRounds} 라운드`}</span></div><div id="jMain">${main}</div>`;
-  paintAll(lv());if(LIVE.runMapae){LIVE.runMapae=false;mapaeRun(lv())}{const jb=lv().querySelector('.jBody');if(jb&&pd&&pd.answered!=null){jb.scrollTop=jb.scrollHeight;const r=jb.getBoundingClientRect();if(r.bottom>innerHeight)scrollTo({top:scrollY+r.bottom-innerHeight+12,behavior:'smooth'})}}
+  $('#jHeadBox').innerHTML=`<div class="jHead"><span class="tk" style="background:${t.c}">${t.e}</span><b>${esc2(me.name)}</b><span class="cnt">코인 <b>${me.coins}</b></span><span class="cnt">소장 <b>${Object.values(L.owners).filter(o=>o.p===LIVE.me).length}</b>점</span><span class="cnt">위치 <b>${here.t==='art'?here.art.short:CORNER[here.t].n}</b></span><span class="cnt">${L.phase==='lobby'?'대기 중':`${Math.min(L.round,L.maxRounds)}/${L.maxRounds} 라운드`}</span></div>`;$('#jMain').innerHTML=main;
+  paintAll($('#jMain'));if(LIVE.runMapae){LIVE.runMapae=false;mapaeRun(lv())}{const jb=lv().querySelector('.jBody');if(jb&&pd&&pd.answered!=null){jb.scrollTop=jb.scrollHeight;const r=jb.getBoundingClientRect();if(r.bottom>innerHeight)scrollTo({top:scrollY+r.bottom-innerHeight+12,behavior:'smooth'})}}
   const on=(id,f)=>{const e=$('#'+id);if(e)e.onclick=f};
   on('jRollBtn',()=>{$('#jRollBtn').disabled=true;SFX.dice();jsend({t:'roll'})});on('jOk',()=>{jsend({t:'ok'});SFX.click()});on('jStay',()=>jsend({t:'time',pos:null}));
   $$('#jMain .tmBtn').forEach(b=>b.onclick=()=>jsend({t:'time',pos:+b.dataset.pos}));
@@ -4271,6 +4296,32 @@ function hostQuizHTML(L,w){const pd=L.pending;if(!pd||!(pd.type==='quiz'||pd.typ
   const q=w.q,ans=pd.answered,P=L.players[L.turn];
   const st=ans==null?`<span class="hqWait">⏳ ${esc2(P?P.name:'')} 모둠이 푸는 중…</span>`:ans?'<span class="hqRes ok">⭕ 정답!</span>':'<span class="hqRes no">❌ 아쉬워요</span>';
   return `<div class="hq${ans==null?'':' done'}"><div class="hqQ"><b>Q.</b> ${q.q} ${st}</div><div class="hqO">${q.o.map((t,i)=>`<div class="${ans!=null&&i===q.a?'right':''}${ans!=null&&pd.pick===i&&i!==q.a?' wrong':''}${ans!=null&&pd.pick===i?' pk':''}"><i>${'ABCD'[i]}</i>${t}</div>`).join('')}</div>${ans!=null?`<div class="hqE">${q.e}</div>`:''}</div>`}
+
+/* 모둠 크롬북용 보드 */
+function buildJoinBoard(cells){const b=$('#jBoard');if(!b)return;b.querySelectorAll('.cell').forEach(e=>e.remove());const f=document.createDocumentFragment();
+  cells.forEach((c,i)=>{const[r,col]=gp(i),d=document.createElement('div');d.className='cell';d.style.gridRow=r;d.style.gridColumn=col;d.dataset.i=i;
+    if(c.t==='art'){const a=c.art;d.classList.add('art',sideCls(i));d.style.setProperty('--g',GROUPS[a.g].c);d.innerHTML=`${pic(a)}<span class="lbl"><b>${a.short}</b><span>${c.price}코인</span></span><span class="own" hidden></span><span class="tokens"></span>`}
+    else{const k=CORNER[c.t];d.classList.add(c.t==='key'?'keycell':'corner');d.innerHTML=`<span class="seal">${k.s}</span><b>${k.n}</b><small>${k.d}</small><span class="tokens"></span>`}
+    f.appendChild(d)});b.prepend(f);requestAnimationFrame(()=>paintAll(b))}
+function updateJoinBoard(L,cells){const b=$('#jBoard');if(!b)return;
+  b.querySelectorAll('.cell').forEach(el=>{const i=+el.dataset.i,o=L.owners[i],ov=el.querySelector('.own');
+    if(ov){if(o){const pc=TOKENS[L.players[o.p].tok].c;ov.style.borderColor=pc;ov.innerHTML=goldMini(cells[i].art,o.lvl,pc);ov.hidden=false}else ov.hidden=true}
+    el.querySelector('.tokens').innerHTML=L.phase==='lobby'?'':L.players.map((p,k)=>p.out||p.pos!==i?'':tokHTML(p,k,k===L.turn&&L.phase!=='over',TOKPOS.j)).join('');
+    const P=L.players[L.turn];const isCur=L.phase!=='lobby'&&L.phase!=='over'&&P&&!P.out&&P.pos===i;el.classList.toggle('curCell',isCur);if(isCur)el.style.setProperty('--cc',TOKENS[P.tok].c);
+    el.classList.toggle('mine',L.players[LIVE.me]&&L.players[LIVE.me].pos===i&&L.phase!=='lobby')});
+  if(L.phase!=='lobby')tokCommit(TOKPOS.j,L.players);
+  const c=$('#jCenter'),cur=L.players[L.turn],t=cur?TOKENS[cur.tok]:null,ev=L.ev,w=ev&&ev.id?BY[ev.id]:null;
+  const mine=L.turn===LIVE.me;
+  if(L.phase==='lobby'){c.innerHTML=`<div class="logo">아트마블</div><div class="edBadge">${EDITIONS[L.ed].name}</div><p class="cHint">선생님이 게임을 시작하면 보드에 말이 나타나요</p>`;return}
+  if(L.phase==='over'){c.innerHTML=`<div class="logo">게임 종료</div>`;return}
+  const key=[L.turn,L.round,L.dice.join(),L.rolling,w&&w.id,ev&&ev.text,ev&&ev.pouch].join('|');if(LIVE.jcKey===key)return;LIVE.jcKey=key;
+  const mp=ev&&ev.pouch!=null&&L.pending&&L.pending.type==='key';
+  c.innerHTML=`${w?`<div class="jcArt">${pic(w)}</div><div class="jcName">${w.name}</div>`:mp?`<div class="mpHost"><div class="mpSpin">${ICON.get('mapae')}</div></div>`:`<div class="logo">아트마블</div>`}
+   <div class="turn${mine?' meTurn':''}">${t?`<i style="background:${t.c}">${t.e}</i>`:''}<b>${mine?'우리 모둠 차례!':esc2(cur?cur.name+' 차례':'')}</b></div>
+   ${w||mp?'':`<div class="dice"><div class="die" id="jD1"></div><div class="die" id="jD2"></div></div>`}
+   ${ev&&ev.text?`<div class="jcEv">${esc2(ev.text)}</div>`:''}`;
+  if(!w&&!mp){const an=!L.rolling&&!!LIVE.jWasRolling;['#jD1','#jD2'].forEach((s,k)=>{setDie($(s),L.dice[k],an);$(s).classList.toggle('spinning',!!L.rolling)})}
+  LIVE.jWasRolling=!!L.rolling;paintAll(c)}
 
 /* ============ 골드 소장 카드 · 3D 주사위 · 암행어사 마패 ============ */
 function goldCard(w,{lvl=1,size='m',who=''}={}){const G=GROUPS[w.g];
@@ -4331,7 +4382,7 @@ new MutationObserver(()=>fillIcons()).observe(document.documentElement,{childLis
 
 /* ===== 유물 말(토큰) · 코인 효과 ===== */
 const TOK_IC=['amphora','mona','celadon','moonjar'];TOKENS.forEach((t,i)=>t.e=ICON.get(TOK_IC[i]));
-const TOKPOS={g:{},l:{}};
+const TOKPOS={g:{},l:{},j:{}};
 function tokHTML(p,k,isTurn,mem){const moved=mem[k]!==undefined&&mem[k]!==p.pos;
   return `<i class="tok${isTurn?' me':''}${moved?' hop':''}" style="--pc:${TOKENS[p.tok].c}" title="${esc3(p.name)}"><span class="tkSh"></span><span class="tkBase"></span><span class="tkFig">${TOKENS[p.tok].e}</span></i>`}
 function tokCommit(mem,players){players.forEach((p,k)=>mem[k]=p.pos)}
