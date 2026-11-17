@@ -4440,27 +4440,27 @@ function renderHost(){const L=LIVE.L;if(!L||LIVE.role!=='host'||VIEW!=='live')re
     paintAll(c)}}
 
 /* ---------- 모둠(참가자) ---------- */
-function joinForm(msg='',pre=''){LIVE.role='join';const saved=store.get('lv-join',{code:'',name:''});if(pre)saved.code=pre;
+function joinForm(msg='',pre='',keep=false){LIVE.role='join';const sv=store.get('lv-join',null)||{};const fresh=sv.t&&Date.now()-sv.t<3*3600e3;const saved={code:pre||(fresh||keep?sv.code||'':''),name:keep?sv.name||'':''};
   lv().innerHTML=`<div class="joinBox"><span class="seal big gold">組</span><h2>방 참가하기</h2>${msg?`<div class="lvWarn">${msg}</div>`:''}
    <form id="jf"><label>방 번호<input id="jCode" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" required value="${esc2(saved.code)}" placeholder="4자리 숫자"></label>
    <label>모둠 이름<input id="jName" maxlength="10" required value="${esc2(saved.name)}" placeholder="예: 1모둠"></label>
    <button class="btn verm">들어가기</button></form><p class="muted">연결이 끊기면 같은 방 번호와 같은 모둠 이름으로 다시 들어오면 이어서 할 수 있어요.</p><button type="button" class="ghost" id="jBack">← 처음으로</button></div>`;
   $('#jBack').onclick=liveHome;
-  $('#jf').onsubmit=e=>{e.preventDefault();const code=$('#jCode').value.trim(),name=$('#jName').value.trim();if(!/^\d{4}$/.test(code)||!name)return;store.set('lv-join',{code,name});joinConnect(code,name)}}
+  $('#jf').onsubmit=e=>{e.preventDefault();const code=$('#jCode').value.trim(),name=$('#jName').value.trim();if(!/^\d{4}$/.test(code)||!name)return;store.set('lv-join',{code,name,t:Date.now()});joinConnect(code,name)}}
 async function joinConnect(code,name){lv().innerHTML='<p class="lead">방에 연결하는 중이에요…</p>';LIVE.code=code;LIVE.name=name;
-  try{await loadPeer()}catch(e){joinForm('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.');return}
+  try{await loadPeer()}catch(e){joinForm('연결 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.','',true);return}
   if(LIVE.peer){try{LIVE.peer.destroy()}catch(_){}}
   const p=new Peer({debug:0});LIVE.peer=p;let opened=false;const hostId=PEER_PREFIX+code;clearInterval(LIVE.ping);clearInterval(LIVE.watch);
-  const to=setTimeout(()=>{if(!opened){try{p.destroy()}catch(_){}joinForm('10초 안에 연결되지 않았어요. 방 번호를 확인해 주세요. 선생님 화면에 방이 열려 있는지도 확인해 주세요.')}},10000);
+  const to=setTimeout(()=>{if(!opened){try{p.destroy()}catch(_){}joinForm('10초 안에 연결되지 않았어요. 방 번호를 확인해 주세요. 선생님 화면에 방이 열려 있는지도 확인해 주세요.','',true)}},10000);
   p.on('open',()=>{LIVE.conn={open:true,send:m=>relaySend(hostId,m)};LIVE.lastRx=Date.now();
     relayListen(p,(src,d)=>{if(src!==hostId)return;if(!opened){opened=true;clearTimeout(to)}LIVE.lastRx=Date.now();const lost=$('#jLost');if(lost)lost.remove();if(d.t!=='pong')joinMsg(d)});
     LIVE.conn.send({t:'join',name});
     LIVE.ping=setInterval(()=>LIVE.conn.send({t:'ping'}),5000);
     LIVE.watch=setInterval(()=>{if(opened&&Date.now()-LIVE.lastRx>16000&&LIVE.role==='join')joinLost()},4000)});
   p.on('disconnected',()=>{try{p.reconnect()}catch(_){}});
-  p.on('error',e=>{if(!opened){clearTimeout(to);try{p.destroy()}catch(_){}joinForm(peerErr(e))}})}
+  p.on('error',e=>{if(!opened){clearTimeout(to);try{p.destroy()}catch(_){}joinForm(peerErr(e),'',true)}})}
 function joinLost(){if($('#jLost'))return;lv().insertAdjacentHTML('afterbegin',`<div class="lvWarn" id="jLost">선생님 화면과 연결이 끊어졌어요. <button type="button" class="btn" id="jRe">다시 연결</button></div>`);$('#jRe').onclick=()=>joinConnect(LIVE.code,LIVE.name)}
-function joinMsg(d){if(!d)return;if(d.t==='rejoin'){if(LIVE.conn&&LIVE.name)LIVE.conn.send({t:'join',name:LIVE.name});return}if(d.t==='err'){LIVE.role='join';joinForm(d.m);return}
+function joinMsg(d){if(!d)return;if(d.t==='rejoin'){if(LIVE.conn&&LIVE.name)LIVE.conn.send({t:'join',name:LIVE.name});return}if(d.t==='err'){LIVE.role='join';joinForm(d.m,'',true);return}
   if(d.t==='welcome'){LIVE.me=d.pid;SFX.nav('game');store.set('lv-join',{code:LIVE.code,name:LIVE.name,active:true,t:Date.now()});return}
   if(d.t==='state'){const prev=LIVE.L;LIVE.L=d.L;if(d.L&&d.L.phase==='over'){const sj=store.get('lv-join',{});if(sj.active)store.set('lv-join',{code:sj.code,name:sj.name})}if(d.you!=null)LIVE.me=d.you;
     const myTurnNow=LIVE.L.turn===LIVE.me&&LIVE.L.pending&&LIVE.L.pending.type==='roll';if(myTurnNow&&!(prev&&prev.turn===LIVE.me&&prev.pending&&prev.pending.type==='roll'))SFX.nav('game');
@@ -4507,7 +4507,9 @@ function renderLive(){if(LIVE.role==='host'&&LIVE.L){const b=$('#lvBoard');if(!b
 function liveInit(){const bar=document.createElement('div');bar.className='modeBar';bar.innerHTML=`<span class="muted">게임 방식</span><button type="button" class="ghost on mbOne"><span class="mbIc">🖥️</span><span><b>한 기기에서</b><small>한 화면에 모여서</small></span></button><button type="button" class="ghost mbLive" id="toLive" title="교사 화면 + 모둠 크롬북"><span class="mbDot"></span><span><b>실시간 대전</b><small>모둠별 크롬북으로</small></span><span class="mbGo">→</span></button>`;
   $('#view-game .panel').prepend(bar);$('#toLive').onclick=()=>{showView('live');SFX.nav('game')};
   const m=location.hash.match(/^#join(\d{4})?$/);if(m){showView('live');joinForm('',m[1]||'');setTimeout(()=>{const n=$('#jName');if(n)n.focus()},50)}else if(location.hash==='#host'){showView('live')}
-  else{const sj=store.get('lv-join',null);if(sj&&sj.active&&Date.now()-sj.t<3*3600e3&&!store.get('lv-host',null)){showView('live');joinConnect(sj.code,sj.name)}}}
+  else{const sj=store.get('lv-join',null);if(sj&&sj.active&&Date.now()-sj.t<3*3600e3&&!store.get('lv-host',null)){showView('live');rejoinPrompt(sj)}}}
+function rejoinPrompt(sj){LIVE.role='join';lv().innerHTML=`<div class="joinBox"><span class="seal big gold">組</span><h2>이어서 할까요?</h2><p class="lead">이 크롬북은 방 <b>${esc2(sj.code)}</b>에 <b>‘${esc2(sj.name)}’</b> 모둠으로 참가하고 있었어요.</p><div class="acts" style="justify-content:center;flex-wrap:wrap"><button type="button" class="btn verm" id="rjGo">‘${esc2(sj.name)}’(으)로 이어서 하기</button><button type="button" class="btn" id="rjNew">다른 모둠으로 새로 참가</button></div><p class="muted">다른 학생이 쓰는 크롬북이라면 ‘새로 참가’를 눌러 주세요.</p></div>`;paintAll&&0;
+  $('#rjGo').onclick=()=>joinConnect(sj.code,sj.name);$('#rjNew').onclick=()=>{try{localStorage.removeItem('lv-join')}catch(_){}joinForm()}}
 setTimeout(liveInit,0);
 
 function artFull(w){const d=document.createElement('div');d.className='artFull';d.innerHTML=`<div class="afIn">${pic(w)}</div><div class="afCap"><b>${w.name}</b> ${w.artist} · ${w.ys}<small>화면을 누르면 닫혀요</small></div>`;document.body.appendChild(d);paintAll(d);SFX.open();d.onclick=()=>d.remove()}
